@@ -9,7 +9,7 @@ import com.google.android.material.tabs.TabLayout
 import com.slc.amarn.adapters.PagerAdapter
 import com.slc.amarn.views.MatchFragment
 import com.slc.amarn.views.ProfileFragment
-import com.slc.amarn.views.SearchFragment
+import com.slc.amarn.views.SwipeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         val adapter = PagerAdapter(supportFragmentManager)
 
         adapter.addFragment(ProfileFragment(), "")
-        adapter.addFragment(SearchFragment(), "")
+        adapter.addFragment(SwipeFragment(), "")
         adapter.addFragment(MatchFragment(), "")
 
         viewPager.adapter = adapter
