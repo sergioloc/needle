@@ -234,11 +234,11 @@ class SwipeFragment : Fragment(), CardStackListener {
 
     private fun createSpots(): List<User> {
         val spots = ArrayList<User>()
-        spots.add(User(id= 1, name = "Sergio López", age = 24, lbg = "LBG Madrid", membership = 3, gender = 1, orientation = 2, description = "Hola"))
-        spots.add(User(id= 1, name = "Sergio López", age = 24, lbg = "LBG Madrid", membership = 3, gender = 1, orientation = 2, description = "Hola"))
-        spots.add(User(id= 1, name = "Sergio López", age = 24, lbg = "LBG Madrid", membership = 3, gender = 1, orientation = 2, description = "Hola"))
-        spots.add(User(id= 1, name = "Sergio López", age = 24, lbg = "LBG Madrid", membership = 3, gender = 1, orientation = 2, description = "Hola"))
-        spots.add(User(id= 1, name = "Sergio López", age = 24, lbg = "LBG Madrid", membership = 3, gender = 1, orientation = 2, description = "Hola"))
+        spots.add(User(id= 1, name = "Sergio", age = 24, lbg = "LBG Madrid", membership = 3, gender = 1, orientation = 2, description = "Hola"))
+        spots.add(User(id= 1, name = "Sergio", age = 24, lbg = "LBG Madrid", membership = 3, gender = 1, orientation = 2, description = "Hola"))
+        spots.add(User(id= 1, name = "Sergio", age = 24, lbg = "LBG Madrid", membership = 3, gender = 1, orientation = 2, description = "Hola"))
+        spots.add(User(id= 1, name = "Sergio", age = 24, lbg = "LBG Madrid", membership = 3, gender = 1, orientation = 2, description = "Hola"))
+        spots.add(User(id= 1, name = "Sergio", age = 24, lbg = "LBG Madrid", membership = 3, gender = 1, orientation = 2, description = "Hola"))
         return spots
     }
 

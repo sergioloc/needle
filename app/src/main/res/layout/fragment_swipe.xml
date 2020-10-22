@@ -15,8 +15,7 @@
         app:layout_constraintBottom_toTopOf="@id/fab_dislike"
         android:layout_marginBottom="15dp"
         android:padding="5dp"
-        android:clipToPadding="false">
-    </com.yuyakaido.android.cardstackview.CardStackView>
+        android:clipToPadding="false"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_dislike"
