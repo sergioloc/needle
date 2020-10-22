@@ -3,27 +3,26 @@ package com.slc.amarn.adapters
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.slc.amarn.views.ProfileFragment
 
 class PagerAdapter (manager: FragmentManager): FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT){
 
+    private var fragmentList = ArrayList<Fragment>()
+    private var fragmentTitleList = ArrayList<String>()
+
     override fun getItem(position: Int): Fragment {
-        return when (position){
-            0 -> ProfileFragment()
-            1 -> ProfileFragment()
-            else -> ProfileFragment()
-        }
+        return fragmentList[position]
     }
 
     override fun getCount(): Int {
-        return 3
+        return fragmentList.size
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        return when (position){
-            0 -> "One"
-            1 -> "Two"
-            else -> "Three"
-        }
+        return fragmentTitleList[position]
+    }
+
+    fun addFragment(fragment: Fragment, title: String){
+        fragmentList.add(fragment)
+        fragmentTitleList.add(title)
     }
 }
