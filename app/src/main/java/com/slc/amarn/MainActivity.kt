@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         viewPager.currentItem = 1
         val accentFilter: ColorFilter = PorterDuffColorFilter(resources.getColor(R.color.colorAccent), PorterDuff.Mode.SRC_IN)
-        val whiteFilter: ColorFilter = PorterDuffColorFilter(resources.getColor(R.color.white), PorterDuff.Mode.SRC_IN)
+        val whiteFilter: ColorFilter = PorterDuffColorFilter(resources.getColor(R.color.gray), PorterDuff.Mode.SRC_IN)
         tabs.getTabAt(1)?.icon?.colorFilter = accentFilter
 
         tabs.addOnTabSelectedListener(object :
