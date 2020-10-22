@@ -18,15 +18,15 @@ class MainActivity : AppCompatActivity() {
     private fun setupTabs(){
         val adapter = PagerAdapter(supportFragmentManager)
 
-        adapter.addFragment(ProfileFragment(), "Profile")
-        adapter.addFragment(SearchFragment(), "Seach")
-        adapter.addFragment(MatchFragment(), "Match")
+        adapter.addFragment(ProfileFragment(), "")
+        adapter.addFragment(SearchFragment(), "")
+        adapter.addFragment(MatchFragment(), "")
 
         viewPager.adapter = adapter
         tabs.setupWithViewPager(viewPager)
 
-        //tabs.getTabAt(0)?.setIcon(R.drawable.ic_launcher_background)
-        //tabs.getTabAt(1)?.setIcon(R.drawable.ic_launcher_background)
-        //tabs.getTabAt(1)?.setIcon(R.drawable.ic_launcher_background)
+        tabs.getTabAt(0)?.setIcon(R.drawable.ic_profile)
+        tabs.getTabAt(1)?.setIcon(R.drawable.ic_hot)
+        tabs.getTabAt(2)?.setIcon(R.drawable.ic_message)
     }
 }
