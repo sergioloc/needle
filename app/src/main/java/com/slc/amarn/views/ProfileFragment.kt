@@ -25,5 +25,10 @@ class ProfileFragment : Fragment() {
             val intent = Intent(context, EditActivity::class.java)
             startActivity(intent)
         }
+
+        fab_settings.setOnClickListener {
+            val intent = Intent(context, SettingsActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
