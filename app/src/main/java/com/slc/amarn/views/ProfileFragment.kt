@@ -30,5 +30,10 @@ class ProfileFragment : Fragment() {
             val intent = Intent(context, SettingsActivity::class.java)
             startActivity(intent)
         }
+
+        iv_icon.setOnClickListener {
+            val intent = Intent(context, UserActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
