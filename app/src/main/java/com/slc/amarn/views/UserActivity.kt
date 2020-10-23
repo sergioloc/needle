@@ -10,7 +10,6 @@ class UserActivity : AppCompatActivity() {
 
     var images = arrayOf(R.drawable.bear, R.drawable.bear,R.drawable.bear)
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
