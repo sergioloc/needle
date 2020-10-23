@@ -149,8 +149,9 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="30dp"
             android:layout_marginLeft="10dp"
-            android:text="Mostrarme en Amarn"
-            android:checked="true" />
+            android:textColor="@android:color/tab_indicator_text"
+            android:checked="true"
+            android:text="Visible in Amarn" />
 
         <View
             android:layout_width="match_parent"
