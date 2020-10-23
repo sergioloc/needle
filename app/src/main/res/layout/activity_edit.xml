@@ -20,7 +20,9 @@
             app:layout_constraintEnd_toStartOf="@id/iv_two"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
-            android:src="@color/black"/>
+            android:padding="30dp"
+            android:src="@drawable/ic_add_photo"
+            android:background="@color/gray" />
 
         <ImageView
             android:id="@+id/iv_two"
@@ -31,7 +33,9 @@
             app:layout_constraintEnd_toStartOf="@id/iv_three"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:src="@color/black"/>
+            android:padding="30dp"
+            android:src="@drawable/ic_add_photo"
+            android:background="@color/gray"/>
 
         <ImageView
             android:id="@+id/iv_three"
@@ -41,7 +45,9 @@
             app:layout_constraintStart_toEndOf="@id/iv_two"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginRight="10dp"
-            android:src="@color/black"/>
+            android:padding="30dp"
+            android:src="@drawable/ic_add_photo"
+            android:background="@color/gray"/>
 
         <ImageView
             android:id="@+id/iv_four"
@@ -52,7 +58,9 @@
             app:layout_constraintEnd_toStartOf="@id/iv_five"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
-            android:src="@color/black"/>
+            android:padding="30dp"
+            android:src="@drawable/ic_add_photo"
+            android:background="@color/gray"/>
 
         <ImageView
             android:id="@+id/iv_five"
@@ -63,7 +71,9 @@
             app:layout_constraintEnd_toStartOf="@id/iv_six"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:src="@color/black"/>
+            android:padding="30dp"
+            android:src="@drawable/ic_add_photo"
+            android:background="@color/gray"/>
 
         <ImageView
             android:id="@+id/iv_six"
@@ -73,7 +83,9 @@
             app:layout_constraintStart_toEndOf="@id/iv_five"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginRight="10dp"
-            android:src="@color/black"/>
+            android:padding="30dp"
+            android:src="@drawable/ic_add_photo"
+            android:background="@color/gray"/>
 
         <TextView
             android:id="@+id/tv_about"
