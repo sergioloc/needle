@@ -28,5 +28,13 @@ class UserActivity : AppCompatActivity() {
 
             override fun onPageScrollStateChanged(state: Int) {}
         })
+
+        btn_back.setOnClickListener {
+            if (vp_photos.currentItem != 0) vp_photos.currentItem = vp_photos.currentItem - 1
+        }
+
+        btn_next.setOnClickListener {
+            if (vp_photos.currentItem != images.size) vp_photos.currentItem = vp_photos.currentItem + 1
+        }
     }
 }
