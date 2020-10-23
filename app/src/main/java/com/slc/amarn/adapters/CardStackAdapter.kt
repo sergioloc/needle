@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.slc.amarn.R
 import com.slc.amarn.models.User
@@ -24,6 +25,12 @@ class CardStackAdapter(
         /*Glide.with(holder.image)
             .load(spot.url)
             .into(holder.image)*/
+        holder.front.setOnClickListener {
+            Toast.makeText(holder.front.context, "Front", Toast.LENGTH_SHORT).show()
+        }
+        holder.back.setOnClickListener {
+            Toast.makeText(holder.front.context, "Back", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun getItemCount(): Int {
@@ -41,6 +48,8 @@ class CardStackAdapter(
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.findViewById(R.id.item_name)
         var lbg: TextView = view.findViewById(R.id.item_lbg)
+        var front: View = view.findViewById(R.id.btn_front)
+        var back: View = view.findViewById(R.id.btn_back)
         //var image: ImageView = view.findViewById(R.id.item_image)
     }
 
