@@ -9,6 +9,7 @@
     <color name="black">#000000</color>
     <color name="black25">#40000000</color>
     <color name="gray">#aaa</color>
+    <color name="darkgray">#575757</color>
     <color name="green">#44C82D</color>
     <color name="green50">#8044C82D</color>
     <color name="red50">#80F44336</color>

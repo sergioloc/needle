@@ -6,7 +6,7 @@ import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayout
-import com.slc.amarn.adapters.PagerAdapter
+import com.slc.amarn.adapters.TabAdapter
 import com.slc.amarn.views.MatchFragment
 import com.slc.amarn.views.ProfileFragment
 import com.slc.amarn.views.SwipeFragment
@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupTabs(){
-        val adapter = PagerAdapter(supportFragmentManager)
+        val adapter = TabAdapter(supportFragmentManager)
 
         adapter.addFragment(ProfileFragment(), "")
         adapter.addFragment(SwipeFragment(), "")
