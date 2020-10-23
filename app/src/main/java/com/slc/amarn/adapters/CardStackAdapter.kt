@@ -6,12 +6,16 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import com.slc.amarn.R
 import com.slc.amarn.models.User
+import kotlinx.android.synthetic.main.activity_user.*
 
 class CardStackAdapter(
     private var users: List<User> = emptyList()
 ) : RecyclerView.Adapter<CardStackAdapter.ViewHolder>() {
+
+    var images = arrayOf(R.drawable.clouds, R.drawable.bear, R.drawable.clouds)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -19,6 +23,9 @@ class CardStackAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        var adapter = PhotoAdapter(holder.name.context, images)
+        holder.viewPager.adapter = adapter
+
         val user = users[position]
         holder.name.text = "${user.name}, ${user.age}"
         holder.lbg.text = user.lbg
@@ -30,6 +37,14 @@ class CardStackAdapter(
         }
         holder.back.setOnClickListener {
             Toast.makeText(holder.front.context, "Back", Toast.LENGTH_SHORT).show()
+        }
+
+        holder.back.setOnClickListener {
+            if (holder.viewPager.currentItem != 0) holder.viewPager.currentItem = holder.viewPager.currentItem - 1
+        }
+
+        holder.front.setOnClickListener {
+            if (holder.viewPager.currentItem != images.size) holder.viewPager.currentItem = holder.viewPager.currentItem + 1
         }
     }
 
@@ -46,6 +61,7 @@ class CardStackAdapter(
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val viewPager: ViewPager = view.findViewById(R.id.vp_photos)
         val name: TextView = view.findViewById(R.id.item_name)
         var lbg: TextView = view.findViewById(R.id.item_lbg)
         var front: View = view.findViewById(R.id.btn_front)

@@ -22,7 +22,7 @@ class PhotoAdapter(var context: Context, var images: Array<Int>): PagerAdapter()
         layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         var view = layoutInflater.inflate(R.layout.photo, container, false)
         imageView = view.findViewById(R.id.imageView)
-        imageView.setBackgroundResource(R.drawable.bear)
+        imageView.setBackgroundResource(images[position])
         container.addView(view)
         return view
     }
