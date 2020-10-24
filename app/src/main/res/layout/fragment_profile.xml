@@ -70,4 +70,15 @@
         app:backgroundTint="@color/white"
         android:src="@drawable/ic_edit"/>
 
+    <TextView
+        android:id="@+id/tv_credits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="10dp"
+        android:text="Developed for BEST by LBG Madrid"
+        android:textSize="12sp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
