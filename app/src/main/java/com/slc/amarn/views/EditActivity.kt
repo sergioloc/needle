@@ -14,6 +14,8 @@ import androidx.core.content.ContextCompat
 import com.slc.amarn.R
 import com.slc.amarn.models.User
 import kotlinx.android.synthetic.main.activity_edit.*
+import kotlinx.android.synthetic.main.activity_edit.toolbar
+import kotlinx.android.synthetic.main.activity_settings.*
 import java.io.FileNotFoundException
 import java.io.InputStream
 
@@ -61,6 +63,10 @@ class EditActivity : AppCompatActivity() {
     }
 
     private fun initButtons(){
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+        
         btn_men.setOnClickListener {
             if (chipMan)
                 btn_men.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
