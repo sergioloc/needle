@@ -20,8 +20,8 @@
             app:layout_constraintEnd_toStartOf="@id/iv_two"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
-            android:padding="0dp"
-            android:src="@drawable/bear"
+            android:padding="50dp"
+            android:src="@drawable/ic_add_photo"
             android:scaleType="centerCrop"
             android:background="@color/gray" />
 

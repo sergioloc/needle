@@ -23,8 +23,9 @@ class EditActivity : AppCompatActivity() {
     private var chipMan = false
     private var chipWoman = false
     private val RESULT_LOAD_IMG = 1
-    private var NUM_PHOTOS = 1
+    private var NUM_PHOTOS = 0
     private var user: User? = null
+    lateinit var imgView: ArrayList<ImageView>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,9 +38,18 @@ class EditActivity : AppCompatActivity() {
 
     private fun initVariables(){
         user = intent.getSerializableExtra("user") as User
+        imgView = arrayListOf(iv_one, iv_two, iv_three, iv_four, iv_five, iv_six)
+        //Photos
+        NUM_PHOTOS = user?.photos!!.size
+        for (i in 0 until NUM_PHOTOS) {
+            imgView[i].setImageResource(user!!.photos[i])
+            imgView[i].setPadding(0,0,0,0)
+        }
 
+        //Description
         et_description.text.insert(0, user?.description)
 
+        //Membership
         when (user?.membership) {
             0 -> btn_observer.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
             1 -> btn_baby.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
@@ -47,6 +57,7 @@ class EditActivity : AppCompatActivity() {
             3 -> btn_alumni.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
         }
 
+        //Orientation
         when (user?.orientation) {
             1 -> btn_men.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
             2 -> btn_women.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
@@ -74,46 +85,13 @@ class EditActivity : AppCompatActivity() {
             chipWoman = !chipWoman
         }
 
-        iv_one.setOnClickListener {
-            if (NUM_PHOTOS == 1)
-                deleteDialog()
-            else
-                addPhoto()
-        }
-
-        iv_two.setOnClickListener {
-            if (NUM_PHOTOS == 2)
-                deleteDialog()
-            else
-                addPhoto()
-        }
-
-        iv_three.setOnClickListener {
-            if (NUM_PHOTOS == 3)
-                deleteDialog()
-            else
-                addPhoto()
-        }
-
-        iv_four.setOnClickListener {
-            if (NUM_PHOTOS == 4)
-                deleteDialog()
-            else
-                addPhoto()
-        }
-
-        iv_five.setOnClickListener {
-            if (NUM_PHOTOS == 5)
-                deleteDialog()
-            else
-                addPhoto()
-        }
-
-        iv_six.setOnClickListener {
-            if (NUM_PHOTOS == 6)
-                deleteDialog()
-            else
-                addPhoto()
+        for (i in imgView.indices) {
+            imgView[i].setOnClickListener {
+                if (i < NUM_PHOTOS)
+                    deleteDialog()
+                else
+                    addPhoto()
+            }
         }
 
         btn_observer.setOnClickListener {
