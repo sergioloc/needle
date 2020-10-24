@@ -49,14 +49,6 @@ class EditActivity : AppCompatActivity() {
         //Description
         et_description.text.insert(0, user?.description)
 
-        //Membership
-        when (user?.membership) {
-            0 -> btn_observer.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
-            1 -> btn_baby.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
-            2 -> btn_full.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
-            3 -> btn_alumni.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
-        }
-
         //Orientation
         when (user?.orientation) {
             1 -> btn_men.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
@@ -92,34 +84,6 @@ class EditActivity : AppCompatActivity() {
                 else
                     addPhoto()
             }
-        }
-
-        btn_observer.setOnClickListener {
-            btn_observer.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
-            btn_baby.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
-            btn_full.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
-            btn_alumni.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
-        }
-
-        btn_baby.setOnClickListener {
-            btn_observer.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
-            btn_baby.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
-            btn_full.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
-            btn_alumni.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
-        }
-
-        btn_full.setOnClickListener {
-            btn_observer.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
-            btn_baby.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
-            btn_full.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
-            btn_alumni.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
-        }
-
-        btn_alumni.setOnClickListener {
-            btn_observer.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
-            btn_baby.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
-            btn_full.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
-            btn_alumni.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
         }
     }
 

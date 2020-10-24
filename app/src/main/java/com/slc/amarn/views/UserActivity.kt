@@ -24,17 +24,11 @@ class UserActivity : AppCompatActivity() {
         user = intent.getSerializableExtra("user") as User
         tv_name.text = user?.name
         tv_age.text = "${user?.age} years"
-        tv_lbg.text = user?.lbg
+        tv_city.text = user?.city
         tv_desciption.text = user?.description
         tv_instagram.text = user?.instagram
         tv_facebook.text = user?.facebook
         tv_phone.text = user?.phone
-        when(user?.membership){
-            0 -> btn_membership.text = "Observer"
-            1 -> btn_membership.text = "Baby"
-            2 -> btn_membership.text = "Full"
-            3 -> btn_membership.text = "Alumni"
-        }
         var adapter = PhotoAdapter(applicationContext, user!!.photos)
         vp_photos.adapter = adapter
         chip_info.text = "1/${user?.photos?.size}"

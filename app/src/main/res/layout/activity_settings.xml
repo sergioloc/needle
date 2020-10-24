@@ -35,67 +35,6 @@
             android:text="Visible in Amarn" />
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:paddingLeft="20dp"
-            android:text="Searching in..."/>
-
-        <CheckBox
-            android:id="@+id/check_barcelona"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="20dp"
-            android:paddingLeft="20dp"
-            android:text="LBG Barcelona"/>
-
-        <CheckBox
-            android:id="@+id/check_laspalmas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="20dp"
-            android:paddingLeft="20dp"
-            android:text="LBG Las Palmas"/>
-
-        <CheckBox
-            android:id="@+id/check_madrid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="20dp"
-            android:paddingLeft="20dp"
-            android:text="LBG Madrid"/>
-
-        <CheckBox
-            android:id="@+id/check_madrid2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="20dp"
-            android:paddingLeft="20dp"
-            android:text="LBG Madrid Carlos III"/>
-
-        <CheckBox
-            android:id="@+id/check_valencia"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="20dp"
-            android:paddingLeft="20dp"
-            android:text="LBG Valencia"/>
-
-        <CheckBox
-            android:id="@+id/check_valladolid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="20dp"
-            android:paddingLeft="20dp"
-            android:text="LBG Valladolid"/>
-
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
