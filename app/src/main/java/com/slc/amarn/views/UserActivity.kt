@@ -16,7 +16,6 @@ class UserActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
         initVariables()
-        initButtons()
         initListeners()
     }
 
@@ -34,15 +33,6 @@ class UserActivity : AppCompatActivity() {
         chip_info.text = "1/${user?.photos?.size}"
     }
 
-    private fun initButtons(){
-        btn_back.setOnClickListener {
-            if (vp_photos.currentItem != 0) vp_photos.currentItem = vp_photos.currentItem - 1
-        }
-
-        btn_next.setOnClickListener {
-            if (vp_photos.currentItem != user?.photos?.size) vp_photos.currentItem = vp_photos.currentItem + 1
-        }
-    }
 
     private fun initListeners(){
         vp_photos.addOnPageChangeListener(object : OnPageChangeListener {
