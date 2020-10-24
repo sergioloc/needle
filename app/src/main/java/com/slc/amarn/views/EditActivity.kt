@@ -10,6 +10,7 @@ import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.slc.amarn.R
 import kotlinx.android.synthetic.main.activity_edit.*
 import java.io.FileNotFoundException
@@ -88,6 +89,34 @@ class EditActivity : AppCompatActivity() {
                 deleteDialog()
             else
                 addPhoto()
+        }
+        
+        btn_observer.setOnClickListener {
+            btn_observer.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
+            btn_baby.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
+            btn_full.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
+            btn_alumni.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
+        }
+
+        btn_baby.setOnClickListener {
+            btn_observer.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
+            btn_baby.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
+            btn_full.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
+            btn_alumni.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
+        }
+
+        btn_full.setOnClickListener {
+            btn_observer.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
+            btn_baby.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
+            btn_full.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
+            btn_alumni.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
+        }
+
+        btn_alumni.setOnClickListener {
+            btn_observer.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
+            btn_baby.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
+            btn_full.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
+            btn_alumni.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
         }
     }
 
