@@ -10,7 +10,9 @@ import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.slc.amarn.R
+import com.slc.amarn.models.User
 import kotlinx.android.synthetic.main.activity_edit.*
 import java.io.FileNotFoundException
 import java.io.InputStream
@@ -21,73 +23,67 @@ class EditActivity : AppCompatActivity() {
     private var chipMan = false
     private var chipWoman = false
     private val RESULT_LOAD_IMG = 1
-    private var NUM_PHOTOS = 1
+    private var NUM_PHOTOS = 0
+    private var user: User? = null
+    lateinit var imgView: ArrayList<ImageView>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+        initVariables()
         initButtons()
+    }
+
+    private fun initVariables(){
+        user = intent.getSerializableExtra("user") as User
+        imgView = arrayListOf(iv_one, iv_two, iv_three, iv_four, iv_five, iv_six)
+        //Photos
+        NUM_PHOTOS = user?.photos!!.size
+        for (i in 0 until NUM_PHOTOS) {
+            imgView[i].setImageResource(user!!.photos[i])
+            imgView[i].setPadding(0,0,0,0)
+        }
+
+        //Description
+        et_description.text.insert(0, user?.description)
+
+        //Orientation
+        when (user?.orientation) {
+            1 -> btn_men.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
+            2 -> btn_women.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
+            3 -> {
+                btn_men.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
+                btn_women.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
+            }
+        }
     }
 
     private fun initButtons(){
         btn_men.setOnClickListener {
             if (chipMan)
-                btn_men.background = resources.getDrawable(R.drawable.chip_white)
+                btn_men.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
             else
-                btn_men.background = resources.getDrawable(R.drawable.chip_accent)
+                btn_men.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
             chipMan = !chipMan
         }
 
         btn_women.setOnClickListener {
             if (chipWoman)
-                btn_women.background = resources.getDrawable(R.drawable.chip_white)
+                btn_women.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
             else
-                btn_women.background = resources.getDrawable(R.drawable.chip_accent)
+                btn_women.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
             chipWoman = !chipWoman
         }
 
-        iv_one.setOnClickListener {
-            if (NUM_PHOTOS == 1)
-                deleteDialog()
-            else
-                addPhoto()
-        }
-
-        iv_two.setOnClickListener {
-            if (NUM_PHOTOS == 2)
-                deleteDialog()
-            else
-                addPhoto()
-        }
-
-        iv_three.setOnClickListener {
-            if (NUM_PHOTOS == 3)
-                deleteDialog()
-            else
-                addPhoto()
-        }
-
-        iv_four.setOnClickListener {
-            if (NUM_PHOTOS == 4)
-                deleteDialog()
-            else
-                addPhoto()
-        }
-
-        iv_five.setOnClickListener {
-            if (NUM_PHOTOS == 5)
-                deleteDialog()
-            else
-                addPhoto()
-        }
-
-        iv_six.setOnClickListener {
-            if (NUM_PHOTOS == 6)
-                deleteDialog()
-            else
-                addPhoto()
+        for (i in imgView.indices) {
+            imgView[i].setOnClickListener {
+                if (i < NUM_PHOTOS)
+                    deleteDialog()
+                else
+                    addPhoto()
+            }
         }
     }
 

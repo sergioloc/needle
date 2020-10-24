@@ -18,14 +18,13 @@
             app:tabGravity="fill"
             app:tabInlineLabel="true"
             app:tabMode="fixed"
-            app:tabIndicatorColor="@color/colorPrimary"
-            />
+            app:tabIndicatorColor="@color/colorPrimary" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.viewpager.widget.ViewPager
+    <com.slc.amarn.components.CustomViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

@@ -30,7 +30,7 @@
         app:layout_constraintTop_toTopOf="@id/cardview"
         app:layout_constraintBottom_toBottomOf="@id/cardview"
         app:layout_constraintStart_toEndOf="@id/cardview"
-        app:layout_constraintEnd_toStartOf="@id/tv_lbg"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginLeft="20dp"
         android:maxLines="1"
         android:ellipsize="end"
@@ -38,17 +38,5 @@
         android:textColor="@color/black"
         android:text="Name"/>
 
-    <TextView
-        android:id="@+id/tv_lbg"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/cardview"
-        app:layout_constraintBottom_toBottomOf="@id/cardview"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginLeft="20dp"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:textSize="12sp"
-        android:text="LBG Madrid"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
