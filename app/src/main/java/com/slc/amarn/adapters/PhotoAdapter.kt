@@ -9,7 +9,7 @@ import android.widget.LinearLayout
 import androidx.viewpager.widget.PagerAdapter
 import com.slc.amarn.R
 
-class PhotoAdapter(var context: Context, var images: Array<Int>): PagerAdapter() {
+class PhotoAdapter(var context: Context, var images: ArrayList<Int>): PagerAdapter() {
 
     lateinit var layoutInflater: LayoutInflater
 
