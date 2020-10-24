@@ -27,16 +27,30 @@
         android:id="@+id/tv_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/cardview"
-        app:layout_constraintBottom_toBottomOf="@id/cardview"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/cardview"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/chip_group"
         android:layout_marginLeft="20dp"
         android:maxLines="1"
         android:ellipsize="end"
         android:textSize="18sp"
         android:textColor="@color/black"
         android:text="Name"/>
+
+    <Button
+        android:id="@+id/chip_group"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:background="@drawable/chip_accent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:clickable="false"
+        android:stateListAnimator="@null"
+        android:textAllCaps="false"
+        android:textSize="12sp"
+        android:text="LBG Madrid"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

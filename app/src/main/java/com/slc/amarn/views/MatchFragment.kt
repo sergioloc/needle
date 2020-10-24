@@ -15,7 +15,8 @@ import kotlinx.android.synthetic.main.fragment_match.*
 class MatchFragment : Fragment(), MatchAdapter.OnMatchClickListener {
 
     private val matches = arrayListOf(
-        User(1,"Sergio",24,"Madrid", 1, 2, "Hola", arrayListOf(R.drawable.bear, R.drawable.clouds), "sergioloc", "Sergio López", "696752807")
+        User(1,"Sergio",24,"Madrid", 1, 2, "Hola", arrayListOf(R.drawable.bear, R.drawable.clouds), "sergioloc", "Sergio López", "696752807"),
+        User(1,"Cantimplora",24,"Madrid", 1, 2, "Hola", arrayListOf(R.drawable.bear, R.drawable.clouds), "sergioloc", "Sergio López", "696752807")
     )
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
