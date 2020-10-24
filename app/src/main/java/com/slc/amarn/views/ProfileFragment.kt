@@ -26,6 +26,7 @@ class ProfileFragment : Fragment() {
     private fun initButtons(){
         fab_edit.setOnClickListener {
             val intent = Intent(context, EditActivity::class.java)
+            intent.putExtra("user", myUser)
             startActivity(intent)
         }
 

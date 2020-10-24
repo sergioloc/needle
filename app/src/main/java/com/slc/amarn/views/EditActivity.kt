@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.slc.amarn.R
+import com.slc.amarn.models.User
 import kotlinx.android.synthetic.main.activity_edit.*
 import java.io.FileNotFoundException
 import java.io.InputStream
@@ -23,29 +24,53 @@ class EditActivity : AppCompatActivity() {
     private var chipWoman = false
     private val RESULT_LOAD_IMG = 1
     private var NUM_PHOTOS = 1
+    private var user: User? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+        initVariables()
         initButtons()
+    }
+
+    private fun initVariables(){
+        user = intent.getSerializableExtra("user") as User
+
+        et_description.text.insert(0, user?.description)
+
+        when (user?.membership) {
+            0 -> btn_observer.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
+            1 -> btn_baby.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
+            2 -> btn_full.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
+            3 -> btn_alumni.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
+        }
+
+        when (user?.orientation) {
+            1 -> btn_men.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
+            2 -> btn_women.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
+            3 -> {
+                btn_men.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
+                btn_women.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
+            }
+        }
     }
 
     private fun initButtons(){
         btn_men.setOnClickListener {
             if (chipMan)
-                btn_men.background = resources.getDrawable(R.drawable.chip_white)
+                btn_men.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
             else
-                btn_men.background = resources.getDrawable(R.drawable.chip_accent)
+                btn_men.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
             chipMan = !chipMan
         }
 
         btn_women.setOnClickListener {
             if (chipWoman)
-                btn_women.background = resources.getDrawable(R.drawable.chip_white)
+                btn_women.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
             else
-                btn_women.background = resources.getDrawable(R.drawable.chip_accent)
+                btn_women.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
             chipWoman = !chipWoman
         }
 
@@ -90,7 +115,7 @@ class EditActivity : AppCompatActivity() {
             else
                 addPhoto()
         }
-        
+
         btn_observer.setOnClickListener {
             btn_observer.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
             btn_baby.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
