@@ -6,25 +6,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".views.ProfileFragment">
 
-    <ImageView
-        android:id="@+id/iv_icon"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview"
         android:layout_width="100dp"
         android:layout_height="100dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="30dp"
-        android:src="@drawable/ic_heart"/>
+        app:cardCornerRadius="50dp">
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bear"/>
+
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/tv_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/iv_icon"
+        app:layout_constraintTop_toBottomOf="@id/cardview"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="10dp"
-        android:text="Name, XX"
+        android:text="Sergio, 24"
         android:textColor="@color/black"
         android:textSize="20sp"/>
 
