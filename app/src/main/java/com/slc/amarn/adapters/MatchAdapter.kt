@@ -32,7 +32,7 @@ class MatchAdapter(private val matches: ArrayList<User>): RecyclerView.Adapter<M
         }
 
         fun bind(user: User) {
-            icon?.setImageResource(R.drawable.ic_heart)
+            icon?.setImageResource(R.drawable.bear)
             name?.text = user.name
         }
     }

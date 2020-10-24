@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.fragment_match.*
 class MatchFragment : Fragment() {
 
     private val matches = arrayListOf(
+        User(1,"Sergio",24,"LBG Madrid", 3, 1, 2,"Hola"),
         User(1,"Sergio",24,"LBG Madrid", 3, 1, 2,"Hola")
     )
 
