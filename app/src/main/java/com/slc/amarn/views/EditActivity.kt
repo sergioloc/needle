@@ -66,7 +66,7 @@ class EditActivity : AppCompatActivity() {
         toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
-        
+
         btn_men.setOnClickListener {
             if (chipMan)
                 btn_men.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
