@@ -216,16 +216,13 @@ class SwipeFragment : Fragment(), CardStackListener {
     }
 
     private fun createSpot(): User {
-        return User(id= 1, name = "Sergio López", age = 24, lbg = "LBG Madrid", membership = 3, gender = 1, orientation = 2, description = "Hola")
+        return User(1,"Sergio",24,"Madrid", 1, 2, "Hola", arrayListOf(R.drawable.bear, R.drawable.clouds), "sergioloc", "Sergio López", "696752807")
     }
 
     private fun createSpots(): List<User> {
         val spots = ArrayList<User>()
-        spots.add(User(id= 1, name = "Sergio", age = 24, lbg = "LBG Madrid", membership = 3, gender = 1, orientation = 2, description = "Hola"))
-        spots.add(User(id= 1, name = "Sergio", age = 24, lbg = "LBG Madrid", membership = 3, gender = 1, orientation = 2, description = "Hola"))
-        spots.add(User(id= 1, name = "Sergio", age = 24, lbg = "LBG Madrid", membership = 3, gender = 1, orientation = 2, description = "Hola"))
-        spots.add(User(id= 1, name = "Sergio", age = 24, lbg = "LBG Madrid", membership = 3, gender = 1, orientation = 2, description = "Hola"))
-        spots.add(User(id= 1, name = "Sergio", age = 24, lbg = "LBG Madrid", membership = 3, gender = 1, orientation = 2, description = "Hola"))
+        spots.add(User(1,"Sergio",24,"Madrid", 1, 2, "Hola", arrayListOf(R.drawable.bear, R.drawable.clouds), "sergioloc", "Sergio López", "696752807"))
+        spots.add(User(1,"Sergio",24,"Madrid", 1, 2, "Hola", arrayListOf(R.drawable.bear, R.drawable.clouds), "sergioloc", "Sergio López", "696752807"))
         return spots
     }
 

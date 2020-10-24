@@ -15,7 +15,7 @@ class CardStackAdapter(
     private var users: List<User> = emptyList()
 ) : RecyclerView.Adapter<CardStackAdapter.ViewHolder>() {
 
-    var images = arrayOf(R.drawable.clouds, R.drawable.bear, R.drawable.clouds)
+    var images = arrayListOf(R.drawable.clouds, R.drawable.bear, R.drawable.clouds)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -28,7 +28,7 @@ class CardStackAdapter(
 
         val user = users[position]
         holder.name.text = "${user.name}, ${user.age}"
-        holder.lbg.text = user.lbg
+        holder.lbg.text = user.city
         /*Glide.with(holder.image)
             .load(spot.url)
             .into(holder.image)*/
