@@ -15,7 +15,7 @@ class CardStackAdapter(
     private var users: List<User> = emptyList()
 ) : RecyclerView.Adapter<CardStackAdapter.ViewHolder>() {
 
-    var images = arrayOf(R.drawable.clouds, R.drawable.bear, R.drawable.clouds)
+    var images = arrayListOf(R.drawable.clouds, R.drawable.bear, R.drawable.clouds)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
