@@ -122,10 +122,77 @@
             android:background="@color/white"/>
 
         <TextView
-            android:id="@+id/tv_orientation"
+            android:id="@+id/tv_membership"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/et_description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="30dp"
+            android:paddingLeft="10dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="I'm a..." />
+
+        <Button
+            android:id="@+id/btn_observer"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="@drawable/chip_white"
+            app:layout_constraintTop_toBottomOf="@id/tv_membership"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_baby"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            android:text="Observer"/>
+
+        <Button
+            android:id="@+id/btn_baby"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="@drawable/chip_white"
+            app:layout_constraintTop_toTopOf="@id/btn_observer"
+            app:layout_constraintStart_toEndOf="@id/btn_observer"
+            app:layout_constraintEnd_toStartOf="@id/btn_full"
+            android:layout_marginLeft="10dp"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            android:text="Baby"/>
+
+        <Button
+            android:id="@+id/btn_full"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="@drawable/chip_white"
+            app:layout_constraintTop_toTopOf="@id/btn_observer"
+            app:layout_constraintStart_toEndOf="@id/btn_baby"
+            app:layout_constraintEnd_toStartOf="@id/btn_alumni"
+            android:layout_marginLeft="10dp"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            android:text="Full"/>
+
+        <Button
+            android:id="@+id/btn_alumni"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="@drawable/chip_white"
+            app:layout_constraintTop_toTopOf="@id/btn_observer"
+            app:layout_constraintStart_toEndOf="@id/btn_full"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            android:text="Alumni"/>
+
+        <TextView
+            android:id="@+id/tv_orientation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/btn_observer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="30dp"
@@ -142,7 +209,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_orientation"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_women"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:textAllCaps="false"
             android:textSize="12sp"
             android:text="Men"/>
