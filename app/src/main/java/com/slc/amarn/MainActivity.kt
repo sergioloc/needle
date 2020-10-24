@@ -5,6 +5,7 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.slc.amarn.adapters.TabAdapter
 import com.slc.amarn.views.MatchFragment
@@ -12,15 +13,19 @@ import com.slc.amarn.views.ProfileFragment
 import com.slc.amarn.views.SwipeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-
 class MainActivity : AppCompatActivity() {
+
+    private var accentFilter: ColorFilter? = null
+    private var grayFilter: ColorFilter? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setupTabs()
+        initVariables()
+        initListeners()
     }
 
-    private fun setupTabs(){
+    private fun initVariables(){
         val adapter = TabAdapter(supportFragmentManager)
 
         adapter.addFragment(ProfileFragment(), "")
@@ -35,10 +40,13 @@ class MainActivity : AppCompatActivity() {
         tabs.getTabAt(2)?.setIcon(R.drawable.ic_message)
 
         viewPager.currentItem = 1
-        val accentFilter: ColorFilter = PorterDuffColorFilter(resources.getColor(R.color.colorAccent), PorterDuff.Mode.SRC_IN)
-        val whiteFilter: ColorFilter = PorterDuffColorFilter(resources.getColor(R.color.gray), PorterDuff.Mode.SRC_IN)
+        accentFilter = PorterDuffColorFilter(resources.getColor(R.color.colorAccent), PorterDuff.Mode.SRC_IN)
+        grayFilter = PorterDuffColorFilter(resources.getColor(R.color.gray), PorterDuff.Mode.SRC_IN)
         tabs.getTabAt(1)?.icon?.colorFilter = accentFilter
 
+    }
+
+    private fun initListeners(){
         tabs.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
@@ -46,11 +54,24 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
-                tab.icon?.colorFilter = whiteFilter
+                tab.icon?.colorFilter = grayFilter
             }
 
             override fun onTabReselected(tab: TabLayout.Tab) { }
 
+        })
+
+        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) { }
+
+            override fun onPageSelected(position: Int) {
+                if (position == 1)
+                    viewPager.setPagingEnabled(false)
+                else
+                    viewPager.setPagingEnabled(true)
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {}
         })
     }
 }

@@ -3,10 +3,12 @@ package com.slc.amarn.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TableLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.tabs.TabLayout
 import com.slc.amarn.R
 import com.slc.amarn.models.User
 import kotlinx.android.synthetic.main.activity_user.*
@@ -25,10 +27,11 @@ class CardStackAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var adapter = PhotoAdapter(holder.name.context, images)
         holder.viewPager.adapter = adapter
+        holder.indicator.setupWithViewPager(holder.viewPager)
 
         val user = users[position]
         holder.name.text = "${user.name}, ${user.age}"
-        holder.lbg.text = user.lbg
+        holder.lbg.text = user.city
         /*Glide.with(holder.image)
             .load(spot.url)
             .into(holder.image)*/
@@ -62,6 +65,7 @@ class CardStackAdapter(
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val viewPager: ViewPager = view.findViewById(R.id.vp_photos)
+        val indicator: TabLayout = view.findViewById(R.id.tab_indicator)
         val name: TextView = view.findViewById(R.id.item_name)
         var lbg: TextView = view.findViewById(R.id.item_lbg)
         var front: View = view.findViewById(R.id.btn_front)
