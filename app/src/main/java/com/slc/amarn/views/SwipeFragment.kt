@@ -14,6 +14,8 @@ import com.slc.amarn.models.UserCallback
 import com.slc.amarn.adapters.CardStackAdapter
 import com.slc.amarn.models.User
 import com.yuyakaido.android.cardstackview.*
+import kotlinx.android.synthetic.main.fragment_swipe.*
+import android.view.animation.AccelerateInterpolator
 
 class SwipeFragment : Fragment(), CardStackListener {
 
@@ -69,40 +71,25 @@ class SwipeFragment : Fragment(), CardStackListener {
     }
 
     private fun setupButton() {
-        /*
-        val skip = findViewById<View>(R.id.skip_button)
-        skip.setOnClickListener {
+        fab_dislike.setOnClickListener {
             val setting = SwipeAnimationSetting.Builder()
                 .setDirection(Direction.Left)
-                .setDuration(Duration.Normal.duration)
+                .setDuration(Duration.Slow.duration)
                 .setInterpolator(AccelerateInterpolator())
                 .build()
             manager.setSwipeAnimationSetting(setting)
             cardStackView.swipe()
         }
 
-        val rewind = findViewById<View>(R.id.rewind_button)
-        rewind.setOnClickListener {
-            val setting = RewindAnimationSetting.Builder()
-                .setDirection(Direction.Bottom)
-                .setDuration(Duration.Normal.duration)
-                .setInterpolator(DecelerateInterpolator())
-                .build()
-            manager.setRewindAnimationSetting(setting)
-            cardStackView.rewind()
-        }
-
-        val like = findViewById<View>(R.id.like_button)
-        like.setOnClickListener {
+        fab_like.setOnClickListener {
             val setting = SwipeAnimationSetting.Builder()
                 .setDirection(Direction.Right)
-                .setDuration(Duration.Normal.duration)
+                .setDuration(Duration.Slow.duration)
                 .setInterpolator(AccelerateInterpolator())
                 .build()
             manager.setSwipeAnimationSetting(setting)
             cardStackView.swipe()
         }
-        */
     }
 
     private fun initialize() {
