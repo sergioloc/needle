@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#FFFFFF</color>
-    <color name="colorPrimaryDark">#A52F26</color>
+    <color name="colorPrimaryDark">#F44336</color>
     <color name="colorAccent">#F44336</color>
     <color name="white">#FFFFFF</color>
     <color name="white25">#40FFFFFF</color>
@@ -14,4 +14,7 @@
     <color name="green50">#8044C82D</color>
     <color name="red50">#80F44336</color>
     <color name="blue50">#802D73C8</color>
+    <color name="facebook">#3b5998</color>
+    <color name="twitter">#00acee</color>
+    <color name="google">#db4a39</color>
 </resources>
