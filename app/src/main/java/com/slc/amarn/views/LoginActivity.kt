@@ -23,6 +23,7 @@ class LoginActivity : AppCompatActivity() {
     private val GOOGLE_SIGN_IN = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         loginViewModel = LoginViewModel()
