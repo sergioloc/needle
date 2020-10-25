@@ -11,6 +11,11 @@ class LoginViewModel: ViewModel() {
     val state: LiveData<Result<Boolean>>
         get() = _state
 
+    init {
+        if (FirebaseAuth.getInstance().currentUser != null)
+            _state.postValue(Result.success(true))
+    }
+
     fun signIn(email: String, password: String){
         if (email.isNullOrEmpty() || password.isNullOrEmpty()){
             _state.postValue(Result.failure(Throwable("Complete all fields")))
