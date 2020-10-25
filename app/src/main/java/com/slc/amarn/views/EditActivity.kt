@@ -12,9 +12,11 @@ import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.slc.amarn.R
 import com.slc.amarn.models.User
 import kotlinx.android.synthetic.main.activity_edit.*
@@ -24,11 +26,11 @@ import java.io.InputStream
 
 class EditActivity : AppCompatActivity() {
 
-    private var chipMan = false
-    private var chipWoman = false
-    private var chipOther = false
+    private var chipMen = false
+    private var chipWomen = false
     private val RESULT_LOAD_IMG = 1
     private var NUM_PHOTOS = 0
+    private var GENDER = 0
     private var user: User? = null
     lateinit var imgView: ArrayList<ImageView>
 
@@ -43,8 +45,9 @@ class EditActivity : AppCompatActivity() {
 
     private fun initVariables(){
         user = intent.getSerializableExtra("user") as User
-        imgView = arrayListOf(iv_one, iv_two, iv_three, iv_four, iv_five, iv_six)
+
         //Photos
+        imgView = arrayListOf(iv_one, iv_two, iv_three, iv_four, iv_five, iv_six)
         NUM_PHOTOS = user?.photos!!.size
         for (i in 0 until NUM_PHOTOS) {
             imgView[i].setImageResource(user!!.photos[i])
@@ -56,11 +59,19 @@ class EditActivity : AppCompatActivity() {
 
         //Orientation
         when (user?.orientation) {
-            1 -> btn_men.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
-            2 -> btn_women.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
+            1 -> {
+                btn_men.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
+                chipMen = true
+            }
+            2 -> {
+                btn_women.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
+                chipWomen = true
+            }
             3 -> {
                 btn_men.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
                 btn_women.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
+                chipMen = true
+                chipWomen = true
             }
         }
     }
@@ -70,26 +81,34 @@ class EditActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        btn_men.setOnClickListener {
-            if (chipMan)
-                btn_men.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
-            else
-                btn_men.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
-            chipMan = !chipMan
+        //Gender
+        btn_man.setOnClickListener {
+            checkGenderMan()
         }
-
-        btn_women.setOnClickListener {
-            if (chipWoman)
-                btn_women.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
-            else
-                btn_women.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
-            chipWoman = !chipWoman
+        btn_woman.setOnClickListener {
+            checkGenderWoman()
         }
-
         btn_other.setOnClickListener {
             showGenderDialog()
         }
 
+        //Orientation
+        btn_men.setOnClickListener {
+            if (chipMen)
+                btn_men.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
+            else
+                btn_men.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
+            chipMen = !chipMen
+        }
+        btn_women.setOnClickListener {
+            if (chipMen)
+                btn_women.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
+            else
+                btn_women.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
+            chipWomen = chipWomen
+        }
+
+        //Images
         for (i in imgView.indices) {
             imgView[i].setOnClickListener {
                 if (i < NUM_PHOTOS)
@@ -105,11 +124,40 @@ class EditActivity : AppCompatActivity() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.dialog_gender)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        /*val btDismiss = dialogView.findViewById<Button>(R.id.btDismissCustomDialog)
-        btDismiss.setOnClickListener {
-            customDialog.dismiss()
-        }*/
+        val btnOk = dialog.findViewById(R.id.fab_ok) as FloatingActionButton
+        val rbTransman = dialog.findViewById(R.id.rb_transman) as RadioButton
+        val rbTranswoman = dialog.findViewById(R.id.rb_transwoman) as RadioButton
+        btnOk.setOnClickListener {
+            if (rbTransman.isChecked){
+                checkGenderOther(3)
+            }
+            else if (rbTranswoman.isChecked){
+                checkGenderOther(4)
+            }
+            dialog.dismiss()
+        }
         dialog.show()
+    }
+
+    private fun checkGenderMan(){
+        GENDER = 1
+        btn_man.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
+        btn_woman.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
+        btn_other.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
+    }
+
+    private fun checkGenderWoman(){
+        GENDER = 2
+        btn_man.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
+        btn_woman.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
+        btn_other.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
+    }
+
+    private fun checkGenderOther(gender: Int){
+        GENDER = gender
+        btn_man.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
+        btn_woman.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
+        btn_other.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
     }
 
     private fun addPhoto(){
