@@ -25,6 +25,8 @@ class LoginActivity : AppCompatActivity() {
         initObserves()
     }
 
+    override fun onBackPressed() { }
+
     private fun initButtons(){
         tv_create.setOnClickListener {
             startActivity(Intent(this, SignUpActivity::class.java))
