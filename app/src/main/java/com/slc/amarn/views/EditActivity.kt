@@ -2,10 +2,14 @@ package com.slc.amarn.views
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.Toast
@@ -15,15 +19,14 @@ import com.slc.amarn.R
 import com.slc.amarn.models.User
 import kotlinx.android.synthetic.main.activity_edit.*
 import kotlinx.android.synthetic.main.activity_edit.toolbar
-import kotlinx.android.synthetic.main.activity_settings.*
 import java.io.FileNotFoundException
 import java.io.InputStream
-
 
 class EditActivity : AppCompatActivity() {
 
     private var chipMan = false
     private var chipWoman = false
+    private var chipOther = false
     private val RESULT_LOAD_IMG = 1
     private var NUM_PHOTOS = 0
     private var user: User? = null
@@ -83,6 +86,10 @@ class EditActivity : AppCompatActivity() {
             chipWoman = !chipWoman
         }
 
+        btn_other.setOnClickListener {
+            showGenderDialog()
+        }
+
         for (i in imgView.indices) {
             imgView[i].setOnClickListener {
                 if (i < NUM_PHOTOS)
@@ -91,6 +98,18 @@ class EditActivity : AppCompatActivity() {
                     addPhoto()
             }
         }
+    }
+
+    private fun showGenderDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_gender)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        /*val btDismiss = dialogView.findViewById<Button>(R.id.btDismissCustomDialog)
+        btDismiss.setOnClickListener {
+            customDialog.dismiss()
+        }*/
+        dialog.show()
     }
 
     private fun addPhoto(){
