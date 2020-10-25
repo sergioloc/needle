@@ -30,11 +30,14 @@ class LoginActivity : AppCompatActivity() {
         initObserves()
     }
 
-    override fun onBackPressed() { }
+    override fun onBackPressed() {
+        finish()
+    }
 
     private fun initButtons(){
         tv_create.setOnClickListener {
             startActivity(Intent(this, SignUpActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         btn_login.setOnClickListener {
@@ -51,6 +54,7 @@ class LoginActivity : AppCompatActivity() {
             Observer<Result<Boolean>> {
                 if (it.isSuccess){
                     startActivity(Intent(this, MainActivity::class.java))
+
                 }
                 else {
                     it.onFailure { result ->
