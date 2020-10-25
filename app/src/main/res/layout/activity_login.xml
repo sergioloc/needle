@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.LoginActivity">
+
+    <TextView
+        android:id="@+id/tv_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="40dp"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        android:textSize="40sp"
+        android:text="Login"/>
+
+    <TextView
+        android:id="@+id/tv_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_login"
+        app:layout_constraintStart_toStartOf="@id/tv_login"
+        android:layout_marginTop="10dp"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:text="Don't have an account?"/>
+
+    <TextView
+        android:id="@+id/tv_create"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/tv_account"
+        app:layout_constraintStart_toEndOf="@id/tv_account"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="40dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="15sp"
+        android:text="Sign up"/>
+
+    <EditText
+        android:id="@+id/et_mail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_account"
+        app:layout_constraintStart_toStartOf="@id/tv_login"
+        app:layout_constraintEnd_toEndOf="@id/tv_create"
+        android:layout_marginTop="40dp"
+        android:paddingEnd="20dp"
+        android:inputType="textEmailAddress"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:hint="Email"/>
+
+    <EditText
+        android:id="@+id/et_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/et_mail"
+        app:layout_constraintStart_toStartOf="@id/tv_login"
+        app:layout_constraintEnd_toEndOf="@id/tv_create"
+        android:layout_marginTop="20dp"
+        android:paddingEnd="20dp"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:hint="Password"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/et_mail"
+        app:layout_constraintBottom_toBottomOf="@id/et_mail"
+        app:layout_constraintEnd_toEndOf="@id/et_mail"
+        android:src="@drawable/ic_mail"
+        app:tint="@color/colorAccent"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/et_password"
+        app:layout_constraintBottom_toBottomOf="@id/et_password"
+        app:layout_constraintEnd_toEndOf="@id/et_password"
+        android:src="@drawable/ic_key"
+        app:tint="@color/colorAccent"/>
+
+    <TextView
+        android:id="@+id/tv_forgot"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/et_password"
+        app:layout_constraintEnd_toEndOf="@id/et_mail"
+        android:layout_marginTop="10dp"
+        android:textSize="14sp"
+        android:text="Forgot password"/>
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_forgot"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/chip_accent"
+        android:textColor="@color/white"
+        android:text="Login"/>
+
+    <TextView
+        android:id="@+id/tv_alternative"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/btn_login"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="40dp"
+        android:textSize="14sp"
+        android:text="Or Login with"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_facebook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_alternative"
+        app:layout_constraintStart_toStartOf="@id/btn_login"
+        app:layout_constraintEnd_toStartOf="@id/btn_twitter"
+        android:layout_marginTop="20dp"
+        app:backgroundTint="@color/facebook"
+        android:textColor="@color/white"
+        android:tint="@color/white"
+        android:src="@drawable/ic_facebook"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_twitter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/btn_facebook"
+        app:layout_constraintStart_toEndOf="@id/btn_facebook"
+        app:layout_constraintEnd_toStartOf="@id/btn_google"
+        android:layout_marginStart="10dp"
+        app:backgroundTint="@color/twitter"
+        android:tint="@color/white"
+        android:src="@drawable/ic_twitter"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_google"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/btn_facebook"
+        app:layout_constraintStart_toEndOf="@id/btn_twitter"
+        app:layout_constraintEnd_toEndOf="@id/btn_login"
+        android:layout_marginStart="10dp"
+        app:backgroundTint="@color/google"
+        android:tint="@color/white"
+        android:src="@drawable/ic_google"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

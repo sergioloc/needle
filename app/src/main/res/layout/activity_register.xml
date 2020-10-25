@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.LoginActivity">
+
+    <TextView
+        android:id="@+id/tv_register"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        android:textSize="40sp"
+        android:text="Register"/>
+
+    <EditText
+        android:id="@+id/et_mail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_register"
+        app:layout_constraintStart_toStartOf="@id/tv_register"
+        app:layout_constraintEnd_toEndOf="@id/tv_register"
+        android:layout_marginTop="40dp"
+        android:paddingEnd="20dp"
+        android:inputType="textEmailAddress"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:hint="Email"/>
+
+    <EditText
+        android:id="@+id/et_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/et_mail"
+        app:layout_constraintStart_toStartOf="@id/tv_register"
+        app:layout_constraintEnd_toEndOf="@id/tv_register"
+        android:layout_marginTop="20dp"
+        android:paddingEnd="20dp"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:hint="Password"/>
+
+    <EditText
+        android:id="@+id/et_confirm"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/et_password"
+        app:layout_constraintStart_toStartOf="@id/tv_register"
+        app:layout_constraintEnd_toEndOf="@id/tv_register"
+        android:layout_marginTop="20dp"
+        android:paddingEnd="20dp"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:hint="Confirm password"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/et_mail"
+        app:layout_constraintBottom_toBottomOf="@id/et_mail"
+        app:layout_constraintEnd_toEndOf="@id/et_mail"
+        android:src="@drawable/ic_mail"
+        app:tint="@color/colorAccent"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/et_confirm"
+        app:layout_constraintBottom_toBottomOf="@id/et_confirm"
+        app:layout_constraintEnd_toEndOf="@id/et_confirm"
+        android:src="@drawable/ic_key"
+        app:tint="@color/colorAccent"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/et_password"
+        app:layout_constraintBottom_toBottomOf="@id/et_password"
+        app:layout_constraintEnd_toEndOf="@id/et_password"
+        android:src="@drawable/ic_key"
+        app:tint="@color/colorAccent"/>
+
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/et_confirm"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/chip_accent"
+        android:textColor="@color/white"
+        android:text="Register"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
