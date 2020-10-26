@@ -48,9 +48,9 @@ class EditActivity : AppCompatActivity() {
 
         //Photos
         imgView = arrayListOf(iv_one, iv_two, iv_three, iv_four, iv_five, iv_six)
-        NUM_PHOTOS = user?.photos!!.size
+        //NUM_PHOTOS = user?.photos!!.size
         for (i in 0 until NUM_PHOTOS) {
-            imgView[i].setImageResource(user!!.photos[i])
+            //imgView[i].setImageResource(user!!.photos[i])
             imgView[i].setPadding(0,0,0,0)
         }
 

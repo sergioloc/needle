@@ -20,14 +20,14 @@ class UserActivity : AppCompatActivity() {
     private fun initVariables(){
         user = intent.getSerializableExtra("user") as User
         tv_name.text = user?.name
-        tv_age.text = "${user?.age} years"
+        //tv_age.text = "${user?.age} years"
         tv_city.text = user?.city
         tv_desciption.text = user?.description
         tv_instagram.text = user?.instagram
         tv_facebook.text = user?.facebook
         tv_phone.text = user?.phone
-        var adapter = PhotoAdapter(applicationContext, user!!.photos)
-        vp_photos.adapter = adapter
+        //var adapter = PhotoAdapter(applicationContext, user!!.photos)
+        //vp_photos.adapter = adapter
         tab_indicator.setupWithViewPager(vp_photos)
     }
 }

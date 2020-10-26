@@ -29,12 +29,12 @@ class InfoActivity : AppCompatActivity() {
     }
 
     private fun initListeners(){
-        et_birthday.setOnClickListener {
+        et_dateOfBirth.setOnClickListener {
             val date = infoViewModel.getCurrentDate()
             showCalendar(date.day, date.month, date.year)
         }
 
-        et_birthday.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
+        et_dateOfBirth.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 val date = infoViewModel.getCurrentDate()
                 showCalendar(date.day, date.month, date.year)
@@ -42,7 +42,7 @@ class InfoActivity : AppCompatActivity() {
         }
 
         btn_continue.setOnClickListener {
-            infoViewModel.saveData(et_name.text.toString(), day, month, year)
+            infoViewModel.saveData(et_name.text.toString(), et_dateOfBirth.text.toString())
         }
     }
 
@@ -61,8 +61,8 @@ class InfoActivity : AppCompatActivity() {
 
     private fun showCalendar(day: Int, month: Int, year: Int) {
         DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, newYear, newMonth, newDay ->
-            et_birthday.text.clear()
-            et_birthday.text.insert(0, "$newDay-${newMonth+1}-$newYear")
+            et_dateOfBirth.text.clear()
+            et_dateOfBirth.text.insert(0, "$newDay-${newMonth+1}-$newYear")
             this.day = newDay
             this.month = newMonth
             this.year = newYear
