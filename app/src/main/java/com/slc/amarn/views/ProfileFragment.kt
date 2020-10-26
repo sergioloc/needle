@@ -6,13 +6,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.Observer
 import com.slc.amarn.R
 import com.slc.amarn.models.User
+import com.slc.amarn.utils.Age
+import com.slc.amarn.viewmodels.ProfileViewModel
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : Fragment() {
 
-    private val myUser = User("name","dateOfBirth","Madrid", 1, 2, "ey", "sergioloc", "Sergio López", "696752807")
+    lateinit var profileViewModel: ProfileViewModel
+    private val user = User()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_profile, container, false)
@@ -20,13 +25,15 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        profileViewModel = ProfileViewModel()
         initButtons()
+        initObservers()
     }
 
     private fun initButtons(){
         fab_edit.setOnClickListener {
             val intent = Intent(context, EditActivity::class.java)
-            intent.putExtra("user", myUser)
+            intent.putExtra("user", user)
             startActivity(intent)
         }
 
@@ -37,8 +44,21 @@ class ProfileFragment : Fragment() {
 
         iv_icon.setOnClickListener {
             val intent = Intent(context, UserActivity::class.java)
-            intent.putExtra("user", myUser)
+            intent.putExtra("user", user)
             startActivity(intent)
         }
+    }
+
+    private fun initObservers(){
+        profileViewModel.user.observe(this,
+            Observer<Result<User>> {
+                it.onSuccess { user ->
+                    tv_info.text = "${user.name}, ${Age().getAge(user.dateOfBirth)}"
+                }
+                it.onFailure { result ->
+                    Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        )
     }
 }
