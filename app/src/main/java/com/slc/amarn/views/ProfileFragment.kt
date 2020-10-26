@@ -60,6 +60,7 @@ class ProfileFragment : Fragment() {
             Observer<Result<User>> {
                 it.onSuccess { user ->
                     tv_info.text = "${user.name}, ${Age().getAge(user.dateOfBirth)}"
+                    tv_city.text = user.city
                     this.user = user
                 }
                 it.onFailure { result ->
