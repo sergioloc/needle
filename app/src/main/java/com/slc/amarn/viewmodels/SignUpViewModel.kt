@@ -27,7 +27,7 @@ class SignUpViewModel: ViewModel() {
                 if (it.isSuccessful){
                     _state.postValue(Result.success(true))
                     //Firestore
-                    var user = User(name,dateOfBirth,"",0,0,"","","","")
+                    var user = User(name,dateOfBirth,"",0,0,"","","","", true)
                     FirebaseAuth.getInstance().currentUser?.email?.let { it ->
                         db.collection("users").document(it).set(user).addOnCompleteListener {
                             _state.postValue(Result.success(true))
