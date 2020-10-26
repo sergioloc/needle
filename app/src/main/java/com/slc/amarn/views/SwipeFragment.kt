@@ -216,13 +216,13 @@ class SwipeFragment : Fragment(), CardStackListener {
     }
 
     private fun createSpot(): User {
-        return User(1,"Sergio",24,"Madrid", 1, 2, "Hola", arrayListOf(R.drawable.bear, R.drawable.clouds), "sergioloc", "Sergio López", "696752807")
+        return User("name","","Madrid", 1, 2, "ey", "sergioloc", "Sergio López", "696752807")
     }
 
     private fun createSpots(): List<User> {
         val spots = ArrayList<User>()
-        spots.add(User(1,"Sergio",24,"Madrid", 1, 2, "Hola", arrayListOf(R.drawable.bear, R.drawable.clouds), "sergioloc", "Sergio López", "696752807"))
-        spots.add(User(1,"Sergio",24,"Madrid", 1, 2, "Hola", arrayListOf(R.drawable.bear, R.drawable.clouds), "sergioloc", "Sergio López", "696752807"))
+        //spots.add(User(1,"Sergio",24,"Madrid", 1, 2, "Hola", arrayListOf(R.drawable.bear, R.drawable.clouds), "sergioloc", "Sergio López", "696752807"))
+        //spots.add(User(1,"Sergio",24,"Madrid", 1, 2, "Hola", arrayListOf(R.drawable.bear, R.drawable.clouds), "sergioloc", "Sergio López", "696752807"))
         return spots
     }
 

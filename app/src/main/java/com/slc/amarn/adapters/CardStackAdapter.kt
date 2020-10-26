@@ -30,7 +30,7 @@ class CardStackAdapter(
         holder.indicator.setupWithViewPager(holder.viewPager)
 
         val user = users[position]
-        holder.name.text = "${user.name}, ${user.age}"
+        //holder.name.text = "${user.name}, ${user.age}"
         holder.lbg.text = user.city
         /*Glide.with(holder.image)
             .load(spot.url)

@@ -5,7 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorAccent"
     tools:context=".views.LoginActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/card_white"
+        android:layout_margin="20dp"/>
 
     <TextView
         android:id="@+id/tv_login"
@@ -131,7 +138,7 @@
         app:layout_constraintStart_toStartOf="@id/btn_login"
         app:layout_constraintEnd_toStartOf="@id/btn_twitter"
         android:layout_marginTop="20dp"
-        app:backgroundTint="@color/facebook"
+        app:backgroundTint="@color/gray"
         android:textColor="@color/white"
         android:tint="@color/white"
         android:src="@drawable/ic_facebook"/>
@@ -144,7 +151,7 @@
         app:layout_constraintStart_toEndOf="@id/btn_facebook"
         app:layout_constraintEnd_toStartOf="@id/btn_google"
         android:layout_marginStart="10dp"
-        app:backgroundTint="@color/twitter"
+        app:backgroundTint="@color/gray"
         android:tint="@color/white"
         android:src="@drawable/ic_twitter"/>
 
