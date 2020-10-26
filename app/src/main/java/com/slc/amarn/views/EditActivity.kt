@@ -85,6 +85,11 @@ class EditActivity : AppCompatActivity() {
                 chipWomen = true
             }
         }
+
+        //Social media
+        et_instagram.text.insert(0, user?.instagram)
+        et_facebook.text.insert(0, user?.facebook)
+        et_phone.text.insert(0, user?.phone)
     }
 
     private fun initButtons(){
@@ -142,6 +147,9 @@ class EditActivity : AppCompatActivity() {
         else
             0
         user?.orientation = ORIENTATION
+        user?.instagram = et_instagram.text.toString()
+        user?.facebook = et_facebook.text.toString()
+        user?.phone = et_phone.text.toString()
         editViewModel.saveChanges(user!!)
     }
 
