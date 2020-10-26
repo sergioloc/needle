@@ -27,14 +27,25 @@
         android:textSize="40sp"
         android:text="Info"/>
 
+    <TextView
+        android:id="@+id/tv_modify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_info"
+        app:layout_constraintStart_toStartOf="@id/tv_info"
+        android:layout_marginTop="10dp"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:text="This values ​​cannot be modified later"/>
+
     <EditText
         android:id="@+id/et_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_info"
+        app:layout_constraintTop_toBottomOf="@id/tv_modify"
         app:layout_constraintStart_toStartOf="@id/tv_info"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="40dp"
         android:paddingEnd="20dp"
         android:inputType="textEmailAddress"
@@ -51,7 +62,7 @@
         app:layout_constraintEnd_toEndOf="@id/et_name"
         android:layout_marginTop="20dp"
         android:paddingEnd="20dp"
-        android:clickable="false"
+        android:editable="false"
         android:maxLines="1"
         android:ellipsize="end"
         android:hint="Date of birth"/>
