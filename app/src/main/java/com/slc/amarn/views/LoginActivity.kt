@@ -54,11 +54,7 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.state.observe(this,
             Observer<Result<Boolean>> {
                 if (it.isSuccess){
-                    if (true)
-                        startActivity(Intent(this, InfoActivity::class.java))
-                    else
-                        startActivity(Intent(this, MainActivity::class.java))
-
+                    startActivity(Intent(this, MainActivity::class.java))
                 }
                 else {
                     it.onFailure { result ->
