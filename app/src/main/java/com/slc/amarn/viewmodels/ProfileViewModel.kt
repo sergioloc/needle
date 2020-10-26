@@ -13,11 +13,7 @@ class ProfileViewModel: ViewModel() {
     private val _user: MutableLiveData<Result<User>> = MutableLiveData()
     val user: LiveData<Result<User>> get() = _user
 
-    init {
-        getUserInfo()
-    }
-
-    private fun getUserInfo(){
+    fun getUserInfo(){
         FirebaseAuth.getInstance().currentUser?.email?.let {
             db.collection("users").document(it).get().addOnSuccessListener { documentSnapshot ->
                 val u = documentSnapshot.toObject(User::class.java)

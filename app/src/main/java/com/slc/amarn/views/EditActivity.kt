@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.slc.amarn.R
 import com.slc.amarn.models.User
+import com.slc.amarn.viewmodels.EditViewModel
 import kotlinx.android.synthetic.main.activity_edit.*
 import kotlinx.android.synthetic.main.activity_edit.toolbar
 import java.io.FileNotFoundException
@@ -31,14 +32,17 @@ class EditActivity : AppCompatActivity() {
     private val RESULT_LOAD_IMG = 1
     private var NUM_PHOTOS = 0
     private var GENDER = 0
+    private var ORIENTATION = 0
     private var user: User? = null
     lateinit var imgView: ArrayList<ImageView>
+    lateinit var editViewModel: EditViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+        editViewModel = EditViewModel()
         initVariables()
         initButtons()
     }
@@ -56,6 +60,13 @@ class EditActivity : AppCompatActivity() {
 
         //Description
         et_description.text.insert(0, user?.description)
+
+        //Gender
+        when (user?.gender){
+            1 -> setGenderMan()
+            2 -> setGenderWoman()
+            3 -> setGenderOther(user?.gender!!)
+        }
 
         //Orientation
         when (user?.orientation) {
@@ -83,10 +94,10 @@ class EditActivity : AppCompatActivity() {
 
         //Gender
         btn_man.setOnClickListener {
-            checkGenderMan()
+            setGenderMan()
         }
         btn_woman.setOnClickListener {
-            checkGenderWoman()
+            setGenderWoman()
         }
         btn_other.setOnClickListener {
             showGenderDialog()
@@ -101,59 +112,56 @@ class EditActivity : AppCompatActivity() {
             chipMen = !chipMen
         }
         btn_women.setOnClickListener {
-            if (chipMen)
+            if (chipWomen)
                 btn_women.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
             else
                 btn_women.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
-            chipWomen = chipWomen
+            chipWomen = !chipWomen
         }
 
         //Images
         for (i in imgView.indices) {
             imgView[i].setOnClickListener {
                 if (i < NUM_PHOTOS)
-                    deleteDialog()
+                    deletePhotoDialog()
                 else
                     addPhoto()
             }
         }
     }
 
-    private fun showGenderDialog() {
-        val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.dialog_gender)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val btnOk = dialog.findViewById(R.id.fab_ok) as FloatingActionButton
-        val rbTransman = dialog.findViewById(R.id.rb_transman) as RadioButton
-        val rbTranswoman = dialog.findViewById(R.id.rb_transwoman) as RadioButton
-        btnOk.setOnClickListener {
-            if (rbTransman.isChecked){
-                checkGenderOther(3)
-            }
-            else if (rbTranswoman.isChecked){
-                checkGenderOther(4)
-            }
-            dialog.dismiss()
-        }
-        dialog.show()
+    private fun saveData(){
+        user?.description = et_description.text.toString()
+        user?.gender = GENDER
+        ORIENTATION = if (chipMen && chipWomen)
+            3
+        else if (chipWomen)
+            2
+        else if (chipMen)
+            1
+        else
+            0
+        user?.orientation = ORIENTATION
+        editViewModel.saveChanges(user!!)
     }
 
-    private fun checkGenderMan(){
+    // Buttons -------------------------------------------------------------------------------------
+
+    private fun setGenderMan(){
         GENDER = 1
         btn_man.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
         btn_woman.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
         btn_other.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
     }
 
-    private fun checkGenderWoman(){
+    private fun setGenderWoman(){
         GENDER = 2
         btn_man.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
         btn_woman.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
         btn_other.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
     }
 
-    private fun checkGenderOther(gender: Int){
+    private fun setGenderOther(gender: Int){
         GENDER = gender
         btn_man.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
         btn_woman.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
@@ -166,19 +174,45 @@ class EditActivity : AppCompatActivity() {
         startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG)
     }
 
-    private fun deleteDialog(){
+    // Dialogs -------------------------------------------------------------------------------------
+
+    private fun showGenderDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_gender)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val btnOk = dialog.findViewById(R.id.fab_ok) as FloatingActionButton
+        val rbTransman = dialog.findViewById(R.id.rb_transman) as RadioButton
+        val rbTranswoman = dialog.findViewById(R.id.rb_transwoman) as RadioButton
+        btnOk.setOnClickListener {
+            if (rbTransman.isChecked){
+                setGenderOther(3)
+            }
+            else if (rbTranswoman.isChecked){
+                setGenderOther(4)
+            }
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    private fun deletePhotoDialog(){
         val alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle("Alert")
         alertDialog.setMessage("Do you want to delete this picture?")
         alertDialog.setNegativeButton("No"
         ) { dialog, _ -> dialog.dismiss() }
         alertDialog.setPositiveButton("Yes"
-        ) { _, _ -> deletePhoto() }
+        ) { _, _ -> /*deletePhoto()*/ }
         alertDialog.show()
     }
 
-    private fun deletePhoto(){
-        Toast.makeText(applicationContext, "Photo deleted", Toast.LENGTH_LONG).show()
+
+    // Overrides -----------------------------------------------------------------------------------
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        saveData()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -207,6 +241,4 @@ class EditActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "You haven't picked Image", Toast.LENGTH_LONG).show()
         }
     }
-
-
 }

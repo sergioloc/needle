@@ -6,10 +6,10 @@ data class User(
     val name: String = "",
     val dateOfBirth: String = "",
     val city: String = "",
-    val gender: Int = 0,
-    val orientation: Int = 0,
-    val description: String = "",
-    val instagram: String = "",
-    val facebook: String = "",
-    val phone: String = ""
+    var gender: Int = 0,
+    var orientation: Int = 0,
+    var description: String = "",
+    var instagram: String = "",
+    var facebook: String = "",
+    var phone: String = ""
 ): Serializable

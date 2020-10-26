@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_profile.*
 class ProfileFragment : Fragment() {
 
     lateinit var profileViewModel: ProfileViewModel
-    private val user = User()
+    private var user = User()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_profile, container, false)
@@ -26,8 +26,14 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         profileViewModel = ProfileViewModel()
+        profileViewModel.getUserInfo()
         initButtons()
         initObservers()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        profileViewModel.getUserInfo()
     }
 
     private fun initButtons(){
@@ -54,6 +60,7 @@ class ProfileFragment : Fragment() {
             Observer<Result<User>> {
                 it.onSuccess { user ->
                     tv_info.text = "${user.name}, ${Age().getAge(user.dateOfBirth)}"
+                    this.user = user
                 }
                 it.onFailure { result ->
                     Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
