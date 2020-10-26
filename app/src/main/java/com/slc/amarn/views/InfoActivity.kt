@@ -33,7 +33,7 @@ class InfoActivity : AppCompatActivity() {
             val date = infoViewModel.getCurrentDate()
             showCalendar(date.day, date.month, date.year)
         }
-        
+
         et_birthday.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 val date = infoViewModel.getCurrentDate()
