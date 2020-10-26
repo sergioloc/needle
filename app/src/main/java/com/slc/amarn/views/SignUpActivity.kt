@@ -1,15 +1,17 @@
 package com.slc.amarn.views
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import com.google.firebase.auth.FirebaseAuth
 import com.slc.amarn.MainActivity
 import com.slc.amarn.R
 import com.slc.amarn.viewmodels.SignUpViewModel
 import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.activity_register.et_dateOfBirth
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -25,7 +27,17 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun initListeners(){
         btn_signup.setOnClickListener {
-            signUpViewModel.createUser(et_mail.text.toString(), et_password.text.toString(), et_confirm.text.toString())
+            signUpViewModel.createUser(et_mail.text.toString(), et_password.text.toString(), et_confirm.text.toString(), et_name.text.toString(), et_dateOfBirth.text.toString())
+        }
+        et_dateOfBirth.setOnClickListener {
+            val date = signUpViewModel.getCurrentDate()
+            showCalendar(date.day, date.month, date.year)
+        }
+        et_dateOfBirth.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                val date = signUpViewModel.getCurrentDate()
+                showCalendar(date.day, date.month, date.year)
+            }
         }
     }
 
@@ -42,6 +54,13 @@ class SignUpActivity : AppCompatActivity() {
                 }
             }
         )
+    }
+
+    private fun showCalendar(day: Int, month: Int, year: Int) {
+        DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, newYear, newMonth, newDay ->
+            et_dateOfBirth.text.clear()
+            et_dateOfBirth.text.insert(0, "$newDay-${newMonth+1}-$newYear")
+        }, year, month, day).show()
     }
 
     override fun onBackPressed() {
