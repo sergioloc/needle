@@ -37,7 +37,6 @@ class EditActivity : AppCompatActivity() {
     lateinit var imgView: ArrayList<ImageView>
     lateinit var editViewModel: EditViewModel
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
@@ -51,7 +50,7 @@ class EditActivity : AppCompatActivity() {
         user = intent.getSerializableExtra("user") as User
 
         //Photos
-        imgView = arrayListOf(iv_one, iv_two, iv_three, iv_four, iv_five, iv_six)
+        imgView = arrayListOf(iv_one, iv_two, iv_three)
         //NUM_PHOTOS = user?.photos!!.size
         for (i in 0 until NUM_PHOTOS) {
             //imgView[i].setImageResource(user!!.photos[i])
@@ -235,9 +234,6 @@ class EditActivity : AppCompatActivity() {
                     0 -> imageView = iv_one
                     1 -> imageView = iv_two
                     2 -> imageView = iv_three
-                    3 -> imageView = iv_four
-                    4 -> imageView = iv_five
-                    5 -> imageView = iv_six
                 }
                 imageView?.setImageBitmap(selectedImage)
                 imageView?.setPadding(0,0,0,0)
