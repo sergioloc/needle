@@ -31,7 +31,6 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:padding="50dp"
-            android:src="@drawable/ic_add_photo"
             android:scaleType="centerCrop"
             android:background="@color/gray" />
 
@@ -46,7 +45,6 @@
             android:layout_marginLeft="10dp"
             android:padding="50dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_add_photo"
             android:background="@color/gray"/>
 
         <ImageView
@@ -59,7 +57,6 @@
             android:layout_marginRight="10dp"
             android:padding="50dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_add_photo"
             android:background="@color/gray"/>
 
         <TextView

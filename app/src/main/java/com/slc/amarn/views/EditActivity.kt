@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.activity_edit.toolbar
 import java.io.FileNotFoundException
 import java.io.InputStream
 
-class EditActivity : AppCompatActivity() {
+class EditActivity: AppCompatActivity() {
 
     private var chipMen = false
     private var chipWomen = false
@@ -51,6 +51,8 @@ class EditActivity : AppCompatActivity() {
 
         //Photos
         imgView = arrayListOf(iv_one, iv_two, iv_three)
+        editViewModel.getPhotosFromStorage(imgView)
+
         //NUM_PHOTOS = user?.photos!!.size
         for (i in 0 until NUM_PHOTOS) {
             //imgView[i].setImageResource(user!!.photos[i])
