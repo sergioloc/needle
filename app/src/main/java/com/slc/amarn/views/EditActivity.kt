@@ -16,9 +16,12 @@ import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.slc.amarn.R
 import com.slc.amarn.models.User
+import com.slc.amarn.utils.Info
 import com.slc.amarn.viewmodels.EditViewModel
 import kotlinx.android.synthetic.main.activity_edit.*
 import kotlinx.android.synthetic.main.activity_edit.toolbar
@@ -44,6 +47,7 @@ class EditActivity: AppCompatActivity() {
         editViewModel = EditViewModel()
         initVariables()
         initButtons()
+        initObservers()
     }
 
     private fun initVariables(){
@@ -51,7 +55,10 @@ class EditActivity: AppCompatActivity() {
 
         //Photos
         imgView = arrayListOf(iv_one, iv_two, iv_three)
-        editViewModel.getPhotosFromStorage(imgView)
+        if (Info.photos.isEmpty())
+            editViewModel.getPhotosURL(imgView)
+        else
+            editViewModel.setPhotoInImageView(imgView)
 
         //NUM_PHOTOS = user?.photos!!.size
         for (i in 0 until NUM_PHOTOS) {
@@ -132,11 +139,24 @@ class EditActivity: AppCompatActivity() {
         for (i in imgView.indices) {
             imgView[i].setOnClickListener {
                 if (i < NUM_PHOTOS)
-                    deletePhotoDialog()
+                    deletePhotoDialog(i)
                 else
-                    addPhoto()
+                    deletePhotoDialog(i)
             }
         }
+    }
+
+    private fun initObservers(){
+        editViewModel.photoState.observe(this,
+            Observer<Result<Boolean>> {
+                it.onSuccess {
+                    iv_one.setBackgroundColor(resources.getColor(R.color.gray))
+                    iv_two.setBackgroundColor(resources.getColor(R.color.gray))
+                    iv_three.setBackgroundColor(resources.getColor(R.color.gray))
+                    editViewModel.getPhotosURL(imgView)
+                }
+            }
+        )
     }
 
     private fun saveData(){
@@ -208,14 +228,14 @@ class EditActivity: AppCompatActivity() {
         dialog.show()
     }
 
-    private fun deletePhotoDialog(){
+    private fun deletePhotoDialog(i: Int){
         val alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle("Alert")
         alertDialog.setMessage("Do you want to delete this picture?")
         alertDialog.setNegativeButton("No"
         ) { dialog, _ -> dialog.dismiss() }
         alertDialog.setPositiveButton("Yes"
-        ) { _, _ -> /*deletePhoto()*/ }
+        ) { _, _ -> editViewModel.deletePhoto(i) }
         alertDialog.show()
     }
 
