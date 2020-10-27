@@ -1,19 +1,12 @@
 package com.slc.amarn.viewmodels
 
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
-import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.SimpleTarget
-import com.bumptech.glide.request.transition.Transition
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import com.slc.amarn.models.Photo
 import com.slc.amarn.models.User
 import com.slc.amarn.utils.Info
 import java.io.ByteArrayOutputStream
@@ -29,6 +22,8 @@ class EditViewModel: ViewModel() {
     private val _photoState: MutableLiveData<Result<Int>> = MutableLiveData()
     val photoState: LiveData<Result<Int>> get() = _photoState
 
+    private val _uploadPhoto: MutableLiveData<Result<Boolean>> = MutableLiveData()
+    val uploadPhoto: LiveData<Result<Boolean>> get() = _uploadPhoto
 
     fun saveChanges(user: User){
         FirebaseAuth.getInstance().currentUser?.email?.let { it ->
@@ -42,11 +37,15 @@ class EditViewModel: ViewModel() {
         val storage = FirebaseStorage.getInstance().getReference("users")
         storage.list(MAX_PHOTOS).addOnSuccessListener {
             Info.photos = ArrayList()
-            for (i in 0 until it.items.size)
-                it.items[i].downloadUrl.addOnSuccessListener {uri ->
-                    Info.photos.add(Photo(it.items[i].path, uri.toString()))
-                    _drawables.postValue(Result.success(true))
-                }
+            if (it.items.size == 0)
+                _drawables.postValue(Result.success(true))
+            else {
+                for (i in 0 until it.items.size)
+                    it.items[i].downloadUrl.addOnSuccessListener {uri ->
+                        Info.photos.add(uri.toString())
+                        _drawables.postValue(Result.success(true))
+                    }
+            }
         }
     }
 
@@ -58,15 +57,15 @@ class EditViewModel: ViewModel() {
         val data = baos.toByteArray()
 
         var uploadTask = storage.putBytes(data)
-        uploadTask.addOnFailureListener {
-           
-        }.addOnSuccessListener {
-            getPhotosURL()
+        uploadTask.addOnSuccessListener {
+            _uploadPhoto.postValue(Result.success(true))
+        }.addOnFailureListener {
+            _uploadPhoto.postValue(Result.failure(Throwable()))
         }
     }
 
     fun deletePhoto(i: Int){
-        val ref = FirebaseStorage.getInstance().getReference(Info.photos[i].path)
+        val ref = FirebaseStorage.getInstance().getReference("users/${i+1}.jpg")
         ref.delete().addOnCompleteListener {
             _photoState.postValue(Result.success(i))
         }

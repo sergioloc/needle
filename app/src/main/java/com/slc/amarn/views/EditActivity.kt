@@ -4,14 +4,13 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
@@ -25,16 +24,12 @@ import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.slc.amarn.R
-import com.slc.amarn.models.Photo
 import com.slc.amarn.models.User
 import com.slc.amarn.utils.Info
 import com.slc.amarn.viewmodels.EditViewModel
 import kotlinx.android.synthetic.main.activity_edit.*
-import kotlinx.android.synthetic.main.photo.*
-import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
 import java.io.InputStream
-import java.lang.ClassCastException
 
 class EditActivity: AppCompatActivity() {
 
@@ -70,6 +65,7 @@ class EditActivity: AppCompatActivity() {
             editViewModel.getPhotosURL()
         else
             setPhotoInImageView()
+
         //Description
         et_description.text.insert(0, user?.description)
 
@@ -166,20 +162,18 @@ class EditActivity: AppCompatActivity() {
                     when (result){
                         0 -> {
                             iv_one.setImageDrawable(grayDrawable)
-                            Info.photos.removeAt(0)
                             isImageOneEmpty = true
                         }
                         1 -> {
                             iv_two.setImageDrawable(grayDrawable)
-                            Info.photos.removeAt(1)
                             isImageTwoEmpty = true
                         }
                         2 -> {
                             iv_three.setImageDrawable(grayDrawable)
-                            Info.photos.removeAt(2)
                             isImageThreeEmpty = true
                         }
                     }
+                    editViewModel.getPhotosURL()
                 }
             }
         )
@@ -190,35 +184,44 @@ class EditActivity: AppCompatActivity() {
                 }
             }
         )
+        editViewModel.uploadPhoto.observe(this,
+            Observer<Result<Boolean>> {
+                loader.visibility = View.GONE
+                it.onFailure {
+                    Toast.makeText(applicationContext, "No se ha podido guardar la foto en nuestros servidores", Toast.LENGTH_SHORT).show()
+                    editViewModel.getPhotosURL()
+                }
+            }
+        )
     }
 
     private fun setPhotoInImageView() {
         for (i in 0 until Info.photos.size){
-            var imageView = getImageView(Info.photos[i].path)
-            Glide.with(applicationContext).load(Info.photos[i].url).into(object : SimpleTarget<Drawable?>() {
+            val imageView = getImageView(Info.photos[i])
+            Glide.with(applicationContext).load(Info.photos[i]).into(object : SimpleTarget<Drawable?>() {
                 override fun onResourceReady(resource: Drawable,transition: Transition<in Drawable?>?) {
                     imageView.setImageDrawable(resource)
                 }
             })
         }
+        loader.visibility = View.GONE
     }
 
-    private fun getImageView(path: String): ImageView{
-        when (path.substring(path.length-5,path.length)){
-            "1.jpg" -> {
+    private fun getImageView(url: String): ImageView{
+        return when {
+            "1.jpg" in url -> {
                 isImageOneEmpty = false
-                return iv_one
+                iv_one
             }
-            "2.jpg" -> {
+            "2.jpg" in url -> {
                 isImageTwoEmpty = false
-                return iv_two
+                iv_two
             }
-            "3.jpg" -> {
+            else -> {
                 isImageThreeEmpty = false
-                return iv_three
+                iv_three
             }
         }
-        return iv_one
     }
 
 
@@ -296,10 +299,11 @@ class EditActivity: AppCompatActivity() {
         val alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle("Alert")
         alertDialog.setMessage("Do you want to delete this picture?")
-        alertDialog.setNegativeButton("No"
-        ) { dialog, _ -> dialog.dismiss() }
-        alertDialog.setPositiveButton("Yes"
-        ) { _, _ -> editViewModel.deletePhoto(i) }
+        alertDialog.setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
+        alertDialog.setPositiveButton("Yes"){ _, _ ->
+            loader.visibility = View.VISIBLE
+            editViewModel.deletePhoto(i)
+        }
         alertDialog.show()
     }
 
@@ -310,14 +314,24 @@ class EditActivity: AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             try {
+                loader.visibility = View.VISIBLE
                 val imageUri: Uri? = data?.data
                 val imageStream: InputStream? = contentResolver.openInputStream(imageUri!!)
                 val selectedImage = BitmapFactory.decodeStream(imageStream)
                 var imageView: ImageView? = null
                 when(newPhotoPosition){
-                    0 -> imageView = iv_one
-                    1 -> imageView = iv_two
-                    2 -> imageView = iv_three
+                    0 -> {
+                        imageView = iv_one
+                        isImageOneEmpty = false
+                    }
+                    1 -> {
+                        imageView = iv_two
+                        isImageTwoEmpty = false
+                    }
+                    2 -> {
+                        imageView = iv_three
+                        isImageThreeEmpty = false
+                    }
                 }
                 imageView?.setImageBitmap(selectedImage)
                 editViewModel.uploadPhoto(selectedImage, newPhotoPosition+1)
