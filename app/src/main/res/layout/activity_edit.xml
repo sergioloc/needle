@@ -30,9 +30,8 @@
             app:layout_constraintEnd_toStartOf="@id/iv_two"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
-            android:padding="50dp"
             android:scaleType="centerCrop"
-            android:background="@color/gray" />
+            android:src="@color/gray" />
 
         <ImageView
             android:id="@+id/iv_two"
@@ -43,9 +42,8 @@
             app:layout_constraintEnd_toStartOf="@id/iv_three"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:padding="50dp"
             android:scaleType="centerCrop"
-            android:background="@color/gray"/>
+            android:src="@color/gray"/>
 
         <ImageView
             android:id="@+id/iv_three"
@@ -55,9 +53,8 @@
             app:layout_constraintStart_toEndOf="@id/iv_two"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginRight="10dp"
-            android:padding="50dp"
             android:scaleType="centerCrop"
-            android:background="@color/gray"/>
+            android:src="@color/gray"/>
 
         <TextView
             android:id="@+id/tv_about"

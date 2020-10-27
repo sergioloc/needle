@@ -4,9 +4,12 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.Window
@@ -17,28 +20,36 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.slc.amarn.R
+import com.slc.amarn.models.Photo
 import com.slc.amarn.models.User
 import com.slc.amarn.utils.Info
 import com.slc.amarn.viewmodels.EditViewModel
 import kotlinx.android.synthetic.main.activity_edit.*
-import kotlinx.android.synthetic.main.activity_edit.toolbar
+import kotlinx.android.synthetic.main.photo.*
+import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
 import java.io.InputStream
+import java.lang.ClassCastException
 
 class EditActivity: AppCompatActivity() {
 
     private var chipMen = false
     private var chipWomen = false
     private val RESULT_LOAD_IMG = 1
-    private var NUM_PHOTOS = 0
     private var GENDER = 0
     private var ORIENTATION = 0
     private var user: User? = null
-    lateinit var imgView: ArrayList<ImageView>
     lateinit var editViewModel: EditViewModel
+    lateinit var grayDrawable: Drawable
+    private var newPhotoPosition = 0
+    private var isImageOneEmpty = true
+    private var isImageTwoEmpty = true
+    private var isImageThreeEmpty = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,18 +65,11 @@ class EditActivity: AppCompatActivity() {
         user = intent.getSerializableExtra("user") as User
 
         //Photos
-        imgView = arrayListOf(iv_one, iv_two, iv_three)
+        grayDrawable = ContextCompat.getDrawable(applicationContext, R.color.gray)!!
         if (Info.photos.isEmpty())
-            editViewModel.getPhotosURL(imgView)
+            editViewModel.getPhotosURL()
         else
-            editViewModel.setPhotoInImageView(imgView)
-
-        //NUM_PHOTOS = user?.photos!!.size
-        for (i in 0 until NUM_PHOTOS) {
-            //imgView[i].setImageResource(user!!.photos[i])
-            imgView[i].setPadding(0,0,0,0)
-        }
-
+            setPhotoInImageView()
         //Description
         et_description.text.insert(0, user?.description)
 
@@ -135,29 +139,88 @@ class EditActivity: AppCompatActivity() {
             chipWomen = !chipWomen
         }
 
-        //Images
-        for (i in imgView.indices) {
-            imgView[i].setOnClickListener {
-                if (i < NUM_PHOTOS)
-                    deletePhotoDialog(i)
-                else
-                    deletePhotoDialog(i)
-            }
+        iv_one.setOnClickListener {
+            if (isImageOneEmpty)
+                addPhoto(0)
+            else
+                deletePhotoDialog(0)
+        }
+        iv_two.setOnClickListener {
+            if (isImageTwoEmpty)
+                addPhoto(1)
+            else
+                deletePhotoDialog(1)
+        }
+        iv_three.setOnClickListener {
+            if (isImageThreeEmpty)
+                addPhoto(2)
+            else
+                deletePhotoDialog(2)
         }
     }
 
     private fun initObservers(){
         editViewModel.photoState.observe(this,
+            Observer<Result<Int>> {
+                it.onSuccess {result ->
+                    when (result){
+                        0 -> {
+                            iv_one.setImageDrawable(grayDrawable)
+                            Info.photos.removeAt(0)
+                            isImageOneEmpty = true
+                        }
+                        1 -> {
+                            iv_two.setImageDrawable(grayDrawable)
+                            Info.photos.removeAt(1)
+                            isImageTwoEmpty = true
+                        }
+                        2 -> {
+                            iv_three.setImageDrawable(grayDrawable)
+                            Info.photos.removeAt(2)
+                            isImageThreeEmpty = true
+                        }
+                    }
+                }
+            }
+        )
+        editViewModel.drawables.observe(this,
             Observer<Result<Boolean>> {
                 it.onSuccess {
-                    iv_one.setBackgroundColor(resources.getColor(R.color.gray))
-                    iv_two.setBackgroundColor(resources.getColor(R.color.gray))
-                    iv_three.setBackgroundColor(resources.getColor(R.color.gray))
-                    editViewModel.getPhotosURL(imgView)
+                    setPhotoInImageView()
                 }
             }
         )
     }
+
+    private fun setPhotoInImageView() {
+        for (i in 0 until Info.photos.size){
+            var imageView = getImageView(Info.photos[i].path)
+            Glide.with(applicationContext).load(Info.photos[i].url).into(object : SimpleTarget<Drawable?>() {
+                override fun onResourceReady(resource: Drawable,transition: Transition<in Drawable?>?) {
+                    imageView.setImageDrawable(resource)
+                }
+            })
+        }
+    }
+
+    private fun getImageView(path: String): ImageView{
+        when (path.substring(path.length-5,path.length)){
+            "1.jpg" -> {
+                isImageOneEmpty = false
+                return iv_one
+            }
+            "2.jpg" -> {
+                isImageTwoEmpty = false
+                return iv_two
+            }
+            "3.jpg" -> {
+                isImageThreeEmpty = false
+                return iv_three
+            }
+        }
+        return iv_one
+    }
+
 
     private fun saveData(){
         user?.description = et_description.text.toString()
@@ -200,7 +263,8 @@ class EditActivity: AppCompatActivity() {
         btn_other.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
     }
 
-    private fun addPhoto(){
+    private fun addPhoto(i: Int){
+        newPhotoPosition = i
         val photoPickerIntent = Intent(Intent.ACTION_PICK)
         photoPickerIntent.type = "image/*"
         startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG)
@@ -250,13 +314,13 @@ class EditActivity: AppCompatActivity() {
                 val imageStream: InputStream? = contentResolver.openInputStream(imageUri!!)
                 val selectedImage = BitmapFactory.decodeStream(imageStream)
                 var imageView: ImageView? = null
-                when(NUM_PHOTOS){
+                when(newPhotoPosition){
                     0 -> imageView = iv_one
                     1 -> imageView = iv_two
                     2 -> imageView = iv_three
                 }
                 imageView?.setImageBitmap(selectedImage)
-                imageView?.setPadding(0,0,0,0)
+                editViewModel.uploadPhoto(selectedImage, newPhotoPosition+1)
             } catch (e: FileNotFoundException) {
                 e.printStackTrace()
                 Toast.makeText(applicationContext, "Something went wrong", Toast.LENGTH_LONG).show()
