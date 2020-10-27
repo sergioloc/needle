@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.slc.amarn.models.User
+import com.slc.amarn.utils.Info
 
 class EditViewModel: ViewModel() {
 
@@ -18,7 +19,9 @@ class EditViewModel: ViewModel() {
 
     fun saveChanges(user: User){
         FirebaseAuth.getInstance().currentUser?.email?.let { it ->
-            db.collection("users").document(it).set(user)
+            db.collection("users").document(it).set(user).addOnSuccessListener {
+                Info.callUserService = true
+            }
         }
     }
 

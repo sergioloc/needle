@@ -97,6 +97,9 @@ class EditActivity: AppCompatActivity() {
         toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
+        btn_save.setOnClickListener {
+            saveData()
+        }
 
         //Gender
         btn_man.setOnClickListener {
@@ -218,11 +221,6 @@ class EditActivity: AppCompatActivity() {
 
 
     // Overrides -----------------------------------------------------------------------------------
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        saveData()
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

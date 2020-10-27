@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import com.slc.amarn.R
 import com.slc.amarn.models.User
 import com.slc.amarn.utils.Age
+import com.slc.amarn.utils.Info
 import com.slc.amarn.viewmodels.ProfileViewModel
 import kotlinx.android.synthetic.main.fragment_profile.*
 
@@ -33,7 +34,9 @@ class ProfileFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        profileViewModel.getUserInfo()
+        if (Info.callUserService) {
+            profileViewModel.getUserInfo()
+        }
     }
 
     private fun initButtons(){
@@ -62,6 +65,7 @@ class ProfileFragment : Fragment() {
                     tv_info.text = "${user.name}, ${Age().getAge(user.dateOfBirth)}"
                     tv_city.text = user.city
                     this.user = user
+                    Info.callUserService = false
                 }
                 it.onFailure { result ->
                     Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
