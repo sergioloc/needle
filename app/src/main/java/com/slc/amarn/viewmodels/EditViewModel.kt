@@ -34,7 +34,7 @@ class EditViewModel: ViewModel() {
     }
 
     fun getPhotosURL(){
-        val storage = FirebaseStorage.getInstance().getReference("users")
+        val storage = FirebaseStorage.getInstance().getReference("users/${FirebaseAuth.getInstance().currentUser?.email}")
         storage.list(MAX_PHOTOS).addOnSuccessListener {
             Info.photos = ArrayList()
             if (it.items.size == 0)
@@ -51,7 +51,7 @@ class EditViewModel: ViewModel() {
 
 
     fun uploadPhoto(bitmap: Bitmap, position: Int){
-        val storage = FirebaseStorage.getInstance().getReference("users/$position.jpg")
+        val storage = FirebaseStorage.getInstance().getReference("users/${FirebaseAuth.getInstance().currentUser?.email}/$position.jpg")
         val baos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         val data = baos.toByteArray()

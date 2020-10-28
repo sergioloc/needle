@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.slc.amarn.R
 import com.slc.amarn.adapters.PhotoAdapter
 import com.slc.amarn.models.User
+import com.slc.amarn.utils.Age
 import kotlinx.android.synthetic.main.activity_user.*
 
 class UserActivity : AppCompatActivity() {
@@ -20,7 +21,7 @@ class UserActivity : AppCompatActivity() {
     private fun initVariables(){
         user = intent.getSerializableExtra("user") as User
         tv_name.text = user?.name
-        //tv_age.text = "${user?.age} years"
+        tv_age.text = "${user?.dateOfBirth?.let { Age().getAge(it) }} years"
         tv_city.text = user?.city
         tv_desciption.text = user?.description
         tv_instagram.text = user?.instagram

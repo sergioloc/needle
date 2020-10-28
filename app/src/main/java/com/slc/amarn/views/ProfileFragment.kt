@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import com.google.firebase.auth.FirebaseAuth
 import com.slc.amarn.R
 import com.slc.amarn.models.User
 import com.slc.amarn.utils.Age
@@ -18,7 +19,6 @@ import kotlinx.android.synthetic.main.fragment_profile.*
 class ProfileFragment : Fragment() {
 
     lateinit var profileViewModel: ProfileViewModel
-    private var user = User()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_profile, container, false)
@@ -35,7 +35,6 @@ class ProfileFragment : Fragment() {
     private fun initButtons(){
         fab_edit.setOnClickListener {
             val intent = Intent(context, EditActivity::class.java)
-            intent.putExtra("user", user)
             startActivity(intent)
         }
 
@@ -46,7 +45,8 @@ class ProfileFragment : Fragment() {
 
         iv_icon.setOnClickListener {
             val intent = Intent(context, UserActivity::class.java)
-            intent.putExtra("user", user)
+            intent.putExtra("user", Info.user)
+            intent.putExtra("email", FirebaseAuth.getInstance().currentUser?.email)
             startActivity(intent)
         }
     }
