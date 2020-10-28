@@ -28,7 +28,7 @@ class EditViewModel: ViewModel() {
     fun saveChanges(user: User){
         FirebaseAuth.getInstance().currentUser?.email?.let { it ->
             db.collection("users").document(it).set(user).addOnSuccessListener {
-                Info.callUserService = true
+                Info.user = user
             }
         }
     }

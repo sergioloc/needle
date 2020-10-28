@@ -10,6 +10,8 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -33,13 +35,14 @@ import java.io.InputStream
 
 class EditActivity: AppCompatActivity() {
 
+    lateinit var editViewModel: EditViewModel
+    //Data
     private var chipMen = false
     private var chipWomen = false
     private val RESULT_LOAD_IMG = 1
-    private var GENDER = 0
-    private var ORIENTATION = 0
     private var user: User? = null
-    lateinit var editViewModel: EditViewModel
+    private var initUser: User? = null
+    //Photos
     lateinit var grayDrawable: Drawable
     private var newPhotoPosition = 0
     private var isImageOneEmpty = true
@@ -57,7 +60,8 @@ class EditActivity: AppCompatActivity() {
     }
 
     private fun initVariables(){
-        user = intent.getSerializableExtra("user") as User
+        user = Info.user
+        initUser = user?.copy()
 
         //Photos
         grayDrawable = ContextCompat.getDrawable(applicationContext, R.color.gray)!!
@@ -104,9 +108,6 @@ class EditActivity: AppCompatActivity() {
         toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
-        btn_save.setOnClickListener {
-            saveData()
-        }
 
         //Gender
         btn_man.setOnClickListener {
@@ -121,20 +122,52 @@ class EditActivity: AppCompatActivity() {
 
         //Orientation
         btn_men.setOnClickListener {
-            if (chipMen)
+            if (chipMen){
                 btn_men.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
-            else
+                if (chipWomen)
+                    user?.orientation = 3   //men yes, women yes
+                else
+                    user?.orientation = 1   //men yes, women no
+            }
+            else{
                 btn_men.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
+                if (chipWomen)
+                    user?.orientation = 2   //men no, women yes
+                else
+                    user?.orientation = 0   //men no, women no
+            }
             chipMen = !chipMen
         }
         btn_women.setOnClickListener {
-            if (chipWomen)
+            if (chipWomen){
                 btn_women.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
-            else
+                if (chipMen)
+                    user?.orientation = 3   //women yes, man yes
+                else
+                    user?.orientation = 2   //women yes, man no
+            }
+            else{
                 btn_women.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
+                if (chipMen)
+                    user?.orientation = 1   //women no, man yes
+                else
+                    user?.orientation = 0   //women no, man no
+            }
             chipWomen = !chipWomen
         }
 
+        //Fields
+        et_description.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                user?.description = et_description.text.toString()
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
+        })
+
+        //Photos
         iv_one.setOnClickListener {
             if (isImageOneEmpty)
                 addPhoto(0)
@@ -227,16 +260,6 @@ class EditActivity: AppCompatActivity() {
 
     private fun saveData(){
         user?.description = et_description.text.toString()
-        user?.gender = GENDER
-        ORIENTATION = if (chipMen && chipWomen)
-            3
-        else if (chipWomen)
-            2
-        else if (chipMen)
-            1
-        else
-            0
-        user?.orientation = ORIENTATION
         user?.instagram = et_instagram.text.toString()
         user?.facebook = et_facebook.text.toString()
         user?.phone = et_phone.text.toString()
@@ -246,21 +269,21 @@ class EditActivity: AppCompatActivity() {
     // Buttons -------------------------------------------------------------------------------------
 
     private fun setGenderMan(){
-        GENDER = 1
+        user?.gender = 1
         btn_man.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
         btn_woman.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
         btn_other.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
     }
 
     private fun setGenderWoman(){
-        GENDER = 2
+        user?.gender = 2
         btn_man.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
         btn_woman.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
         btn_other.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
     }
 
     private fun setGenderOther(gender: Int){
-        GENDER = gender
+        user?.gender = gender
         btn_man.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
         btn_woman.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
         btn_other.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
@@ -342,5 +365,11 @@ class EditActivity: AppCompatActivity() {
         } else {
             Toast.makeText(applicationContext, "You haven't picked Image", Toast.LENGTH_LONG).show()
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (initUser != user)
+            saveData()
     }
 }

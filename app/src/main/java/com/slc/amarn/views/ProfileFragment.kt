@@ -32,13 +32,6 @@ class ProfileFragment : Fragment() {
         initObservers()
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (Info.callUserService) {
-            profileViewModel.getUserInfo()
-        }
-    }
-
     private fun initButtons(){
         fab_edit.setOnClickListener {
             val intent = Intent(context, EditActivity::class.java)
@@ -64,8 +57,7 @@ class ProfileFragment : Fragment() {
                 it.onSuccess { user ->
                     tv_info.text = "${user.name}, ${Age().getAge(user.dateOfBirth)}"
                     tv_city.text = user.city
-                    this.user = user
-                    Info.callUserService = false
+                    Info.user = user
                 }
                 it.onFailure { result ->
                     Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
