@@ -19,7 +19,7 @@ class MatchAdapter(private val matches: ArrayList<User>, private val onMatchClic
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val user = matches[position]
-        holder.icon?.setImageResource(R.drawable.bear)
+        holder.icon?.setImageResource(R.color.black)
         holder.name?.text = user.name
         holder.root?.setOnClickListener {
             onMatchClickListener.onMatchClick(user)
