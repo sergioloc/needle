@@ -57,15 +57,40 @@
             android:src="@color/gray"/>
 
         <ProgressBar
-            android:id="@+id/loader"
+            android:id="@+id/loader1"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintTop_toTopOf="@id/iv_one"
             app:layout_constraintBottom_toBottomOf="@id/iv_one"
             app:layout_constraintStart_toStartOf="@id/iv_one"
+            app:layout_constraintEnd_toEndOf="@id/iv_one"
+            android:padding="30dp"
+            android:background="@color/white50"
+            android:visibility="gone"/>
+
+        <ProgressBar
+            android:id="@+id/loader2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="@id/iv_two"
+            app:layout_constraintBottom_toBottomOf="@id/iv_two"
+            app:layout_constraintStart_toStartOf="@id/iv_two"
+            app:layout_constraintEnd_toEndOf="@id/iv_two"
+            android:padding="30dp"
+            android:background="@color/white50"
+            android:visibility="gone"/>
+
+        <ProgressBar
+            android:id="@+id/loader3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="@id/iv_three"
+            app:layout_constraintBottom_toBottomOf="@id/iv_three"
+            app:layout_constraintStart_toStartOf="@id/iv_three"
             app:layout_constraintEnd_toEndOf="@id/iv_three"
-            android:padding="50dp"
-            android:background="@color/white50"/>
+            android:padding="30dp"
+            android:background="@color/white50"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_about"

@@ -16,6 +16,7 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -48,6 +49,7 @@ class EditActivity: AppCompatActivity() {
     private var isImageOneEmpty = true
     private var isImageTwoEmpty = true
     private var isImageThreeEmpty = true
+    private var loaders: ArrayList<ProgressBar>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +66,7 @@ class EditActivity: AppCompatActivity() {
         initUser = user?.copy()
 
         //Photos
+        loaders = arrayListOf(loader1, loader2, loader3)
         grayDrawable = ContextCompat.getDrawable(applicationContext, R.color.gray)!!
         if (Info.photos.isEmpty())
             editViewModel.getPhotosURL()
@@ -215,14 +218,17 @@ class EditActivity: AppCompatActivity() {
                         0 -> {
                             iv_one.setImageDrawable(grayDrawable)
                             isImageOneEmpty = true
+                            loaders?.get(0)?.visibility = View.GONE
                         }
                         1 -> {
                             iv_two.setImageDrawable(grayDrawable)
                             isImageTwoEmpty = true
+                            loaders?.get(1)?.visibility = View.GONE
                         }
                         2 -> {
                             iv_three.setImageDrawable(grayDrawable)
                             isImageThreeEmpty = true
+                            loaders?.get(2)?.visibility = View.GONE
                         }
                     }
                     editViewModel.getPhotosURL()
@@ -238,7 +244,7 @@ class EditActivity: AppCompatActivity() {
         )
         editViewModel.uploadPhoto.observe(this,
             Observer<Result<Boolean>> {
-                loader.visibility = View.GONE
+                loaders?.get(newPhotoPosition)?.visibility = View.GONE
                 it.onFailure {
                     Toast.makeText(applicationContext, "No se ha podido guardar la foto en nuestros servidores", Toast.LENGTH_SHORT).show()
                     editViewModel.getPhotosURL()
@@ -253,23 +259,30 @@ class EditActivity: AppCompatActivity() {
             Glide.with(applicationContext).load(Info.photos[i]).into(object : SimpleTarget<Drawable?>() {
                 override fun onResourceReady(resource: Drawable,transition: Transition<in Drawable?>?) {
                     imageView.setImageDrawable(resource)
+                    when (imageView) {
+                        iv_one -> loaders?.get(0)?.visibility = View.GONE
+                        iv_two -> loaders?.get(1)?.visibility = View.GONE
+                        iv_three -> loaders?.get(2)?.visibility = View.GONE
+                    }
                 }
             })
         }
-        loader.visibility = View.GONE
     }
 
     private fun getImageView(url: String): ImageView{
         return when {
             "1.jpg" in url -> {
+                loaders?.get(0)?.visibility = View.VISIBLE
                 isImageOneEmpty = false
                 iv_one
             }
             "2.jpg" in url -> {
+                loaders?.get(1)?.visibility = View.VISIBLE
                 isImageTwoEmpty = false
                 iv_two
             }
             else -> {
+                loaders?.get(2)?.visibility = View.VISIBLE
                 isImageThreeEmpty = false
                 iv_three
             }
@@ -343,7 +356,7 @@ class EditActivity: AppCompatActivity() {
         alertDialog.setMessage("Do you want to delete this picture?")
         alertDialog.setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
         alertDialog.setPositiveButton("Yes"){ _, _ ->
-            loader.visibility = View.VISIBLE
+            loaders?.get(i)?.visibility = View.VISIBLE
             editViewModel.deletePhoto(i)
         }
         alertDialog.show()
@@ -356,7 +369,7 @@ class EditActivity: AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             try {
-                loader.visibility = View.VISIBLE
+                loaders?.get(newPhotoPosition)?.visibility = View.VISIBLE
                 val imageUri: Uri? = data?.data
                 val imageStream: InputStream? = contentResolver.openInputStream(imageUri!!)
                 val selectedImage = BitmapFactory.decodeStream(imageStream)
