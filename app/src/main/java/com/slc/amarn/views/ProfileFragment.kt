@@ -35,7 +35,7 @@ class ProfileFragment : Fragment() {
         if (Info.user.name == "")
             profileViewModel.getUserInfo()
         if (Info.photos.isEmpty())
-            profileViewModel.getPhotosURL()
+            profileViewModel.getMyPhotosURL()
         else
             setIconPhoto()
         initButtons()
@@ -45,7 +45,7 @@ class ProfileFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         if (Info.reloadPhotos){
-            profileViewModel.getPhotosURL()
+            profileViewModel.getMyPhotosURL()
             Info.reloadPhotos = false
         }
     }
@@ -94,10 +94,12 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setIconPhoto(){
-        Glide.with(context!!).load(Info.photos[Info.photos.size-1]).into(object : SimpleTarget<Drawable?>() {
-            override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable?>?) {
-                iv_icon.setImageDrawable(resource)
-            }
-        })
+        if (Info.photos[0].isNotBlank()){
+            Glide.with(context!!).load(Info.photos[0]).into(object : SimpleTarget<Drawable?>() {
+                override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable?>?) {
+                    iv_icon.setImageDrawable(resource)
+                }
+            })
+        }
     }
 }

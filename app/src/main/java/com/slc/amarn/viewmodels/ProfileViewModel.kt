@@ -29,14 +29,14 @@ class ProfileViewModel: ViewModel() {
         }
     }
 
-    fun getPhotosURL(){
+    fun getMyPhotosURL(){
         val storage = FirebaseStorage.getInstance().getReference("users/${FirebaseAuth.getInstance().currentUser?.email}")
         storage.list(MAX_PHOTOS).addOnSuccessListener {
             Info.photos = ArrayList()
             if (it.items.size == 0)
                 _drawables.postValue(Result.success(false))
             else {
-                for (i in 0 until it.items.size)
+                for (i in it.items.size-1 downTo 0)
                     it.items[i].downloadUrl.addOnSuccessListener {uri ->
                         Info.photos.add(uri.toString())
                         _drawables.postValue(Result.success(true))
