@@ -161,9 +161,28 @@ class EditActivity: AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 user?.description = et_description.text.toString()
             }
-
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
-
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
+        })
+        et_instagram.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                user?.instagram = et_instagram.text.toString()
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
+        })
+        et_facebook.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                user?.facebook = et_facebook.text.toString()
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
+        })
+        et_phone.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                user?.phone = et_phone.text.toString()
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
         })
 
