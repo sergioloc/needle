@@ -68,10 +68,7 @@ class EditActivity: AppCompatActivity() {
         //Photos
         loaders = arrayListOf(loader1, loader2, loader3)
         grayDrawable = ContextCompat.getDrawable(applicationContext, R.color.gray)!!
-        if (Info.photos.isEmpty())
-            editViewModel.getPhotosURL()
-        else
-            setPhotoInImageView()
+        setPhotoInImageView()
 
         //Description
         et_description.text.insert(0, user?.description)
@@ -211,46 +208,45 @@ class EditActivity: AppCompatActivity() {
     }
 
     private fun initObservers(){
-        editViewModel.photoState.observe(this,
-            Observer<Result<Int>> {
-                it.onSuccess {result ->
-                    when (result){
-                        0 -> {
-                            iv_one.setImageDrawable(grayDrawable)
-                            isImageOneEmpty = true
-                            loaders?.get(0)?.visibility = View.GONE
-                        }
-                        1 -> {
-                            iv_two.setImageDrawable(grayDrawable)
-                            isImageTwoEmpty = true
-                            loaders?.get(1)?.visibility = View.GONE
-                        }
-                        2 -> {
-                            iv_three.setImageDrawable(grayDrawable)
-                            isImageThreeEmpty = true
-                            loaders?.get(2)?.visibility = View.GONE
-                        }
-                    }
-                    editViewModel.getPhotosURL()
-                }
-            }
-        )
-        editViewModel.drawables.observe(this,
-            Observer<Result<Boolean>> {
-                it.onSuccess {
-                    setPhotoInImageView()
-                }
-            }
-        )
         editViewModel.uploadPhoto.observe(this,
             Observer<Result<Boolean>> {
                 loaders?.get(newPhotoPosition)?.visibility = View.GONE
+                it.onSuccess {
+                    Info.reloadPhotos = true
+                }
                 it.onFailure {
                     Toast.makeText(applicationContext, "No se ha podido guardar la foto en nuestros servidores", Toast.LENGTH_SHORT).show()
-                    editViewModel.getPhotosURL()
+                    clearImageView(newPhotoPosition)
                 }
             }
         )
+        editViewModel.deletePhoto.observe(this,
+            Observer<Result<Int>> {
+                it.onSuccess {result ->
+                    loaders?.get(result)?.visibility = View.GONE
+                    Info.reloadPhotos = true
+                    clearImageView(result)
+                }
+            }
+        )
+    }
+
+    private fun clearImageView(position: Int){
+        when (position){
+            0 -> {
+                iv_one.setImageDrawable(grayDrawable)
+                isImageOneEmpty = true
+
+            }
+            1 -> {
+                iv_two.setImageDrawable(grayDrawable)
+                isImageTwoEmpty = true
+            }
+            2 -> {
+                iv_three.setImageDrawable(grayDrawable)
+                isImageThreeEmpty = true
+            }
+        }
     }
 
     private fun setPhotoInImageView() {

@@ -1,6 +1,7 @@
 package com.slc.amarn.views
 
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,12 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
 import com.google.firebase.auth.FirebaseAuth
 import com.slc.amarn.R
 import com.slc.amarn.models.User
 import com.slc.amarn.utils.Age
 import com.slc.amarn.utils.Info
 import com.slc.amarn.viewmodels.ProfileViewModel
+import kotlinx.android.synthetic.main.activity_edit.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : Fragment() {
@@ -28,8 +33,17 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         profileViewModel = ProfileViewModel()
         profileViewModel.getUserInfo()
+        profileViewModel.getPhotosURL()
         initButtons()
         initObservers()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (Info.reloadPhotos){
+            profileViewModel.getPhotosURL()
+            Info.reloadPhotos = false
+        }
     }
 
     private fun initButtons(){
@@ -61,6 +75,17 @@ class ProfileFragment : Fragment() {
                 }
                 it.onFailure { result ->
                     Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        )
+        profileViewModel.drawables.observe(this,
+            Observer<Result<Boolean>> {
+                it.onSuccess {
+                    Glide.with(context!!).load(Info.photos[Info.photos.size-1]).into(object : SimpleTarget<Drawable?>() {
+                        override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable?>?) {
+                            iv_icon.setImageDrawable(resource)
+                        }
+                    })
                 }
             }
         )

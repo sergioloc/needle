@@ -14,13 +14,10 @@ import java.io.ByteArrayOutputStream
 class EditViewModel: ViewModel() {
 
     private val db = FirebaseFirestore.getInstance()
-    private val MAX_PHOTOS = 3
+    private val QUALITY = 50
 
-    private val _drawables: MutableLiveData<Result<Boolean>> = MutableLiveData()
-    val drawables: LiveData<Result<Boolean>> get() = _drawables
-
-    private val _photoState: MutableLiveData<Result<Int>> = MutableLiveData()
-    val photoState: LiveData<Result<Int>> get() = _photoState
+    private val _deletePhoto: MutableLiveData<Result<Int>> = MutableLiveData()
+    val deletePhoto: LiveData<Result<Int>> get() = _deletePhoto
 
     private val _uploadPhoto: MutableLiveData<Result<Boolean>> = MutableLiveData()
     val uploadPhoto: LiveData<Result<Boolean>> get() = _uploadPhoto
@@ -33,27 +30,10 @@ class EditViewModel: ViewModel() {
         }
     }
 
-    fun getPhotosURL(){
-        val storage = FirebaseStorage.getInstance().getReference("users/${FirebaseAuth.getInstance().currentUser?.email}")
-        storage.list(MAX_PHOTOS).addOnSuccessListener {
-            Info.photos = ArrayList()
-            if (it.items.size == 0)
-                _drawables.postValue(Result.success(true))
-            else {
-                for (i in 0 until it.items.size)
-                    it.items[i].downloadUrl.addOnSuccessListener {uri ->
-                        Info.photos.add(uri.toString())
-                        _drawables.postValue(Result.success(true))
-                    }
-            }
-        }
-    }
-
-
     fun uploadPhoto(bitmap: Bitmap, position: Int){
         val storage = FirebaseStorage.getInstance().getReference("users/${FirebaseAuth.getInstance().currentUser?.email}/$position.jpg")
         val baos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, QUALITY, baos)
         val data = baos.toByteArray()
 
         var uploadTask = storage.putBytes(data)
@@ -65,9 +45,9 @@ class EditViewModel: ViewModel() {
     }
 
     fun deletePhoto(i: Int){
-        val ref = FirebaseStorage.getInstance().getReference("users/${i+1}.jpg")
+        val ref = FirebaseStorage.getInstance().getReference("users/${FirebaseAuth.getInstance().currentUser?.email}/${i+1}.jpg")
         ref.delete().addOnCompleteListener {
-            _photoState.postValue(Result.success(i))
+            _deletePhoto.postValue(Result.success(i))
         }
     }
 }

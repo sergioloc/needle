@@ -65,6 +65,8 @@
             app:layout_constraintStart_toStartOf="@id/iv_one"
             app:layout_constraintEnd_toEndOf="@id/iv_one"
             android:padding="30dp"
+            android:clickable="true"
+            android:focusable="true"
             android:background="@color/white50"
             android:visibility="gone"/>
 
@@ -77,8 +79,10 @@
             app:layout_constraintStart_toStartOf="@id/iv_two"
             app:layout_constraintEnd_toEndOf="@id/iv_two"
             android:padding="30dp"
+            android:clickable="true"
+            android:focusable="true"
             android:background="@color/white50"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <ProgressBar
             android:id="@+id/loader3"
@@ -89,6 +93,8 @@
             app:layout_constraintStart_toStartOf="@id/iv_three"
             app:layout_constraintEnd_toEndOf="@id/iv_three"
             android:padding="30dp"
+            android:clickable="true"
+            android:focusable="true"
             android:background="@color/white50"
             android:visibility="gone"/>
 
