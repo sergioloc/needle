@@ -32,8 +32,12 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         profileViewModel = ProfileViewModel()
-        profileViewModel.getUserInfo()
-        profileViewModel.getPhotosURL()
+        if (Info.user.name == "")
+            profileViewModel.getUserInfo()
+        if (Info.photos.isEmpty())
+            profileViewModel.getPhotosURL()
+        else
+            setIconPhoto()
         initButtons()
         initObservers()
     }
@@ -80,14 +84,20 @@ class ProfileFragment : Fragment() {
         )
         profileViewModel.drawables.observe(this,
             Observer<Result<Boolean>> {
-                it.onSuccess {
-                    Glide.with(context!!).load(Info.photos[Info.photos.size-1]).into(object : SimpleTarget<Drawable?>() {
-                        override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable?>?) {
-                            iv_icon.setImageDrawable(resource)
-                        }
-                    })
+                it.onSuccess {result ->
+                    if (result){
+                        setIconPhoto()
+                    }
                 }
             }
         )
+    }
+
+    private fun setIconPhoto(){
+        Glide.with(context!!).load(Info.photos[Info.photos.size-1]).into(object : SimpleTarget<Drawable?>() {
+            override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable?>?) {
+                iv_icon.setImageDrawable(resource)
+            }
+        })
     }
 }

@@ -34,7 +34,7 @@ class ProfileViewModel: ViewModel() {
         storage.list(MAX_PHOTOS).addOnSuccessListener {
             Info.photos = ArrayList()
             if (it.items.size == 0)
-                _drawables.postValue(Result.success(true))
+                _drawables.postValue(Result.success(false))
             else {
                 for (i in 0 until it.items.size)
                     it.items[i].downloadUrl.addOnSuccessListener {uri ->
