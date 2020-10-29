@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Card Group -->
+    <declare-styleable name="CardGroup">
+        <attr name="iconCardGroup" format="integer" />
+        <attr name="titleCardGroup" format="string" />
+    </declare-styleable>
+</resources>
