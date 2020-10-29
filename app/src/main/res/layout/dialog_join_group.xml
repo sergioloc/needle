@@ -27,10 +27,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="20dp"
         android:gravity="center"
-        android:textSize="25sp"
+        android:textSize="15sp"
         android:textColor="@color/black"
         android:hint="Code"/>
 
+    <ProgressBar
+        android:id="@+id/loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/et_code"
+        app:layout_constraintBottom_toBottomOf="@id/et_code"
+        app:layout_constraintStart_toStartOf="@id/et_code"
+        app:layout_constraintEnd_toEndOf="@id/et_code"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/btn_join"

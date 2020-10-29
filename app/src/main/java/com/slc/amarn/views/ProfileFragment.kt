@@ -13,9 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -24,15 +22,19 @@ import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.google.firebase.auth.FirebaseAuth
 import com.slc.amarn.R
+import com.slc.amarn.models.Group
 import com.slc.amarn.models.User
 import com.slc.amarn.utils.Age
 import com.slc.amarn.utils.Info
 import com.slc.amarn.viewmodels.ProfileViewModel
+import kotlinx.android.synthetic.main.dialog_join_group.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : Fragment() {
 
     lateinit var profileViewModel: ProfileViewModel
+    private var createGroupDialog: Dialog? = null
+    private var joinGroupDialog: Dialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_profile, container, false)
@@ -90,7 +92,6 @@ class ProfileFragment : Fragment() {
                 it.onSuccess { user ->
                     tv_info.text = "${user.name}, ${Age().getAge(user.dateOfBirth)}"
                     tv_city.text = user.city
-                    Info.user = user
                 }
                 it.onFailure { result ->
                     Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
@@ -103,6 +104,19 @@ class ProfileFragment : Fragment() {
                     if (result){
                         setIconPhoto()
                     }
+                }
+            }
+        )
+        profileViewModel.groupId.observe(this,
+            Observer<Result<String>> {result ->
+                result.onSuccess {code ->
+                    createGroupDialog?.let { it.dismiss() }
+                    joinGroupDialog?.let { it.dismiss() }
+                    if (code.isNotBlank())
+                        showCodeDialog(code)
+                }
+                result.onFailure {
+                    showErrorDialog("Error message")
                 }
             }
         )
@@ -121,17 +135,22 @@ class ProfileFragment : Fragment() {
     //Dialogs --------------------------------------------------------------------------------------
 
     private fun showCreateDialog() {
-        val dialog = Dialog(context!!)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.dialog_create_group)
-        dialog.window?.setLayout(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val btnCreate = dialog.findViewById(R.id.btn_create) as Button
-        btnCreate.setOnClickListener {
-            showCodeDialog("ADBSOE")
-            dialog.dismiss()
+        createGroupDialog = Dialog(context!!)
+        createGroupDialog?.let {
+            it.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            it.setContentView(R.layout.dialog_create_group)
+            it.window?.setLayout(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT)
+            it.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            val btnCreate = it.findViewById(R.id.btn_create) as Button
+            val etName = it.findViewById(R.id.et_name) as EditText
+            val loader = it.findViewById(R.id.loader) as ProgressBar
+            btnCreate.setOnClickListener {
+                loader.visibility = View.VISIBLE
+                etName.visibility = View.INVISIBLE
+                profileViewModel.createGroup(Group(etName.text.toString(), 0, ""))
+            }
+            it.show()
         }
-        dialog.show()
     }
 
     private fun showCodeDialog(code: String) {
@@ -148,7 +167,7 @@ class ProfileFragment : Fragment() {
             val clipboard = context!!.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clip: ClipData = ClipData.newPlainText("text", code)
             clipboard.setPrimaryClip(clip)
-            Toast.makeText(context!!, "Text copied to clipboard", Toast.LENGTH_LONG).show()
+            Toast.makeText(context!!, "Text copied to clipboard", Toast.LENGTH_SHORT).show()
         }
         btnClose.setOnClickListener {
             dialog.dismiss()
@@ -157,16 +176,26 @@ class ProfileFragment : Fragment() {
     }
 
     private fun showJoinDialog() {
-        val dialog = Dialog(context!!)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.dialog_join_group)
-        dialog.window?.setLayout(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val btnJoin = dialog.findViewById(R.id.btn_join) as Button
-        btnJoin.setOnClickListener {
-            dialog.dismiss()
+        joinGroupDialog = Dialog(context!!)
+        joinGroupDialog?.let {
+            it.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            it.setContentView(R.layout.dialog_join_group)
+            it.window?.setLayout(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT)
+            it.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            val btnJoin = it.findViewById(R.id.btn_join) as Button
+            val etCode = it.findViewById(R.id.et_code) as EditText
+            val loader = it.findViewById(R.id.loader) as ProgressBar
+            btnJoin.setOnClickListener {
+                if (etCode.text.isNotBlank()){
+                    loader.visibility = View.VISIBLE
+                    etCode.visibility = View.INVISIBLE
+                    profileViewModel.joinGroup(etCode.text.toString(), false)
+                }
+                else
+                    Toast.makeText(context!!, "Write a code", Toast.LENGTH_SHORT).show()
+            }
+            it.show()
         }
-        dialog.show()
     }
 
     private fun showErrorDialog(message: String) {
