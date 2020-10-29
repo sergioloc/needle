@@ -1,9 +1,8 @@
 package com.slc.amarn.models
 
-import java.io.Serializable
-
-data class Group(
+data class GroupId(
+    val id: String = "",
     val name: String = "",
     val numMax: Int = 0,
     val owner: String = ""
-): Serializable
+)

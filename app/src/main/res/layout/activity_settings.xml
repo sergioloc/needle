@@ -45,7 +45,8 @@
             android:id="@+id/rv_groups"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp"/>
+            android:padding="20dp"
+            tools:listitem="@layout/cell_group"/>
 
         <TextView
             android:id="@+id/tv_signout"

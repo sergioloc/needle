@@ -3,7 +3,9 @@ package com.slc.amarn.views
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.slc.amarn.R
+import com.slc.amarn.models.GroupId
 import com.slc.amarn.utils.Info
 import com.slc.amarn.viewmodels.SettingsViewModel
 import kotlinx.android.synthetic.main.activity_settings.*
@@ -19,6 +21,8 @@ class SettingsActivity : AppCompatActivity() {
         settingsViewModel = SettingsViewModel()
         initVariables()
         initButtons()
+        initObservers()
+        settingsViewModel.getGroupList(Info.user.groups)
     }
 
     private fun initVariables(){
@@ -35,6 +39,16 @@ class SettingsActivity : AppCompatActivity() {
             settingsViewModel.signOut()
             startActivity(Intent(this, LoginActivity::class.java))
         }
+    }
+
+    private fun initObservers(){
+        settingsViewModel.groupList.observe(this,
+            Observer<Result<ArrayList<GroupId>>> {
+                it.onSuccess {list ->
+
+                }
+            }
+        )
     }
 
     override fun onBackPressed() {
