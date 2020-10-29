@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.slc.amarn.R
+import com.slc.amarn.adapters.GroupAdapter
 import com.slc.amarn.models.GroupId
 import com.slc.amarn.utils.Info
 import com.slc.amarn.viewmodels.SettingsViewModel
@@ -28,6 +30,7 @@ class SettingsActivity : AppCompatActivity() {
     private fun initVariables(){
         initSwitch = Info.user.visible
         swt_visible.isChecked = initSwitch
+        rv_groups.layoutManager = LinearLayoutManager(applicationContext)
     }
 
     private fun initButtons(){
@@ -45,7 +48,7 @@ class SettingsActivity : AppCompatActivity() {
         settingsViewModel.groupList.observe(this,
             Observer<Result<ArrayList<GroupId>>> {
                 it.onSuccess {list ->
-
+                    rv_groups.adapter = GroupAdapter(list)
                 }
             }
         )
