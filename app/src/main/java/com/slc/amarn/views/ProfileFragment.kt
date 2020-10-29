@@ -1,32 +1,33 @@
 package com.slc.amarn.views
 
 import android.app.Dialog
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Intent
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
-import android.widget.RadioButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.slc.amarn.R
 import com.slc.amarn.models.User
 import com.slc.amarn.utils.Age
 import com.slc.amarn.utils.Info
 import com.slc.amarn.viewmodels.ProfileViewModel
-import kotlinx.android.synthetic.main.activity_edit.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : Fragment() {
@@ -124,6 +125,29 @@ class ProfileFragment : Fragment() {
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val btnCreate = dialog.findViewById(R.id.btn_create) as Button
         btnCreate.setOnClickListener {
+            showCodeDialog("ADBSOE")
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    private fun showCodeDialog(code: String) {
+        val dialog = Dialog(context!!)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_code_group)
+        dialog.window?.setLayout(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val btnCopy = dialog.findViewById(R.id.btn_copy) as Button
+        val btnClose = dialog.findViewById(R.id.btn_close) as Button
+        val tvCode = dialog.findViewById(R.id.tv_code) as TextView
+        tvCode.text = code
+        btnCopy.setOnClickListener {
+            val clipboard = context!!.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip: ClipData = ClipData.newPlainText("text", code)
+            clipboard.setPrimaryClip(clip)
+            Toast.makeText(context!!, "Text copied to clipboard", Toast.LENGTH_LONG).show()
+        }
+        btnClose.setOnClickListener {
             dialog.dismiss()
         }
         dialog.show()

@@ -12,47 +12,59 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="20dp"
+        android:gravity="center"
         android:textSize="25sp"
         android:textStyle="bold"
         android:textColor="@color/colorAccent"
-        android:text="Create group"/>
+        android:text="Group"/>
 
-    <EditText
-        android:id="@+id/et_name"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/tv_code"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tv_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="20dp"
         android:gravity="center"
-        android:textSize="15sp"
-        android:hint="Name"/>
+        android:textSize="25sp"
+        android:textColor="@color/black"
+        android:textStyle=""
+        android:text="XDTYHG"/>
 
-    <EditText
-        android:id="@+id/et_max"
+    <TextView
+        android:id="@+id/tv_share"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/et_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_code"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="20dp"
-        android:inputType="number"
         android:gravity="center"
         android:textSize="15sp"
-        android:hint="Max participants (optional)" />
+        android:text="Share this code"/>
 
     <Button
-        android:id="@+id/btn_create"
+        android:id="@+id/btn_copy"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/et_max"
+        app:layout_constraintTop_toBottomOf="@id/tv_share"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="20dp"
+        app:layout_constraintEnd_toStartOf="@id/btn_close"
+        android:layout_marginTop="20dp"
         android:background="@drawable/chip_accent"
         android:textColor="@color/white"
-        android:text="Create"/>
+        android:text="Copy"/>
+
+    <Button
+        android:id="@+id/btn_close"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/btn_copy"
+        app:layout_constraintStart_toEndOf="@id/btn_copy"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/chip_accent"
+        android:textColor="@color/white"
+        android:text="Close"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
