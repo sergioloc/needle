@@ -12,5 +12,6 @@ data class User(
     var instagram: String = "",
     var facebook: String = "",
     var phone: String = "",
-    var visible: Boolean = true
+    var visible: Boolean = true,
+    var groups: ArrayList<String> = ArrayList()
 ): Serializable
