@@ -70,6 +70,30 @@
         app:backgroundTint="@color/white"
         android:src="@drawable/ic_edit"/>
 
+    <com.slc.amarn.components.CardGroup
+        android:id="@+id/cg_create"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/fab_settings"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:titleCardGroup="Crear grupo"
+        app:iconCardGroup="@drawable/ic_add"/>
+
+    <com.slc.amarn.components.CardGroup
+        android:id="@+id/cg_join"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/cg_create"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:titleCardGroup="Unirse a un grupo"
+        app:iconCardGroup="@drawable/ic_search"/>
+
     <TextView
         android:id="@+id/tv_credits"
         android:layout_width="wrap_content"

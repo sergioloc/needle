@@ -6,8 +6,10 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.slc.amarn.models.Group
 import com.slc.amarn.models.User
 import com.slc.amarn.utils.Info
+
 
 class ProfileViewModel: ViewModel() {
 
@@ -20,11 +22,17 @@ class ProfileViewModel: ViewModel() {
     private val _drawables: MutableLiveData<Result<Boolean>> = MutableLiveData()
     val drawables: LiveData<Result<Boolean>> get() = _drawables
 
+    private val _groupId: MutableLiveData<Result<String>> = MutableLiveData()
+    val groupId: LiveData<Result<String>> get() = _groupId
+
     fun getUserInfo(){
         FirebaseAuth.getInstance().currentUser?.email?.let {
             db.collection("users").document(it).get().addOnSuccessListener { documentSnapshot ->
                 val u = documentSnapshot.toObject(User::class.java)
-                u?.let { _user.postValue(Result.success(u)) }
+                u?.let {
+                    Info.user = u
+                    _user.postValue(Result.success(u))
+                }
             }
         }
     }
@@ -42,6 +50,23 @@ class ProfileViewModel: ViewModel() {
                         _drawables.postValue(Result.success(true))
                     }
             }
+        }
+    }
+
+    fun createGroup(group: Group){
+        db.collection("groups").add(group).addOnSuccessListener {
+            joinGroup(it.path.replace("groups/",""), true)
+        }
+    }
+
+    fun joinGroup(id: String, owner: Boolean){
+        db.collection("groups").document(id).collection("members").document(FirebaseAuth.getInstance().currentUser?.email!!).set(Info.user).addOnCompleteListener {
+            if (owner)
+                _groupId.postValue(Result.success(id))
+            else
+                _groupId.postValue(Result.success(""))
+        }.addOnFailureListener {
+            db.collection("groups").document(id).delete()
         }
     }
 }
