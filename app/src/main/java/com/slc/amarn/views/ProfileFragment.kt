@@ -79,6 +79,9 @@ class ProfileFragment : Fragment() {
         cg_create.setOnClickListener {
             showCreateDialog()
         }
+        cg_join.setOnClickListener {
+            showJoinDialog()
+        }
     }
 
     private fun initObservers(){
@@ -148,6 +151,19 @@ class ProfileFragment : Fragment() {
             Toast.makeText(context!!, "Text copied to clipboard", Toast.LENGTH_LONG).show()
         }
         btnClose.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    private fun showJoinDialog() {
+        val dialog = Dialog(context!!)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_join_group)
+        dialog.window?.setLayout(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val btnCreate = dialog.findViewById(R.id.btn_join) as Button
+        btnCreate.setOnClickListener {
             dialog.dismiss()
         }
         dialog.show()
