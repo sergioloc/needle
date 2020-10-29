@@ -162,10 +162,21 @@ class ProfileFragment : Fragment() {
         dialog.setContentView(R.layout.dialog_join_group)
         dialog.window?.setLayout(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val btnCreate = dialog.findViewById(R.id.btn_join) as Button
-        btnCreate.setOnClickListener {
+        val btnJoin = dialog.findViewById(R.id.btn_join) as Button
+        btnJoin.setOnClickListener {
             dialog.dismiss()
         }
+        dialog.show()
+    }
+
+    private fun showErrorDialog(message: String) {
+        val dialog = Dialog(context!!)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_error_group)
+        dialog.window?.setLayout(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val tvMessage = dialog.findViewById(R.id.tv_message) as TextView
+        tvMessage.text = message
         dialog.show()
     }
 }
