@@ -28,6 +28,8 @@ class SettingsViewModel: ViewModel() {
     val leave: LiveData<Result<Boolean>> get() = _leave
 
     fun signOut(){
+        Info.user = User()
+        Info.photos = ArrayList()
         FirebaseAuth.getInstance().signOut()
     }
 
