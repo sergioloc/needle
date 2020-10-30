@@ -43,12 +43,11 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         profileViewModel = ProfileViewModel()
-        if (Info.user.name == "")
-            profileViewModel.getUserInfo()
         if (Info.photos.isEmpty())
             profileViewModel.getMyPhotosURL()
         else
             setIconPhoto()
+        initVariables()
         initButtons()
         initObservers()
     }
@@ -59,6 +58,11 @@ class ProfileFragment : Fragment() {
             profileViewModel.getMyPhotosURL()
             Info.reloadPhotos = false
         }
+    }
+
+    private fun initVariables(){
+        //tv_info.text = "${Info.user.name}, ${Age().getAge(Info.user.dateOfBirth)}"
+        //tv_city.text = Info.user.city
     }
 
     private fun initButtons(){
@@ -87,17 +91,6 @@ class ProfileFragment : Fragment() {
     }
 
     private fun initObservers(){
-        profileViewModel.user.observe(this,
-            Observer<Result<User>> {
-                it.onSuccess { user ->
-                    tv_info.text = "${user.name}, ${Age().getAge(user.dateOfBirth)}"
-                    tv_city.text = user.city
-                }
-                it.onFailure { result ->
-                    Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
-                }
-            }
-        )
         profileViewModel.drawables.observe(this,
             Observer<Result<Boolean>> {
                 it.onSuccess {result ->

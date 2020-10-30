@@ -16,26 +16,11 @@ class ProfileViewModel: ViewModel() {
     private val db = FirebaseFirestore.getInstance()
     private val MAX_PHOTOS = 3
 
-    private val _user: MutableLiveData<Result<User>> = MutableLiveData()
-    val user: LiveData<Result<User>> get() = _user
-
     private val _drawables: MutableLiveData<Result<Boolean>> = MutableLiveData()
     val drawables: LiveData<Result<Boolean>> get() = _drawables
 
     private val _groupId: MutableLiveData<Result<String>> = MutableLiveData()
     val groupId: LiveData<Result<String>> get() = _groupId
-
-    fun getUserInfo(){
-        FirebaseAuth.getInstance().currentUser?.email?.let {
-            db.collection("users").document(it).get().addOnSuccessListener { documentSnapshot ->
-                val u = documentSnapshot.toObject(User::class.java)
-                u?.let {
-                    Info.user = u
-                    _user.postValue(Result.success(u))
-                }
-            }
-        }
-    }
 
     fun getMyPhotosURL(){
         val storage = FirebaseStorage.getInstance().getReference("users/${FirebaseAuth.getInstance().currentUser?.email}")
