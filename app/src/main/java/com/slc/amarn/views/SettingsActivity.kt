@@ -27,7 +27,7 @@ class SettingsActivity : AppCompatActivity(), GroupAdapter.OnGroupClickListener 
         initVariables()
         initButtons()
         initObservers()
-        settingsViewModel.getGroupList(Info.user.groups)
+        setAdapter()
     }
 
     private fun initVariables(){
@@ -52,6 +52,7 @@ class SettingsActivity : AppCompatActivity(), GroupAdapter.OnGroupClickListener 
             Observer<Result<ArrayList<GroupId>>> {
                 it.onSuccess {list ->
                     rv_groups.adapter = GroupAdapter(list, this)
+                    loader.visibility = View.GONE
                 }
             }
         )
@@ -62,6 +63,27 @@ class SettingsActivity : AppCompatActivity(), GroupAdapter.OnGroupClickListener 
                 }
             }
         )
+        settingsViewModel.leave.observe(this,
+            Observer<Result<Boolean>> {
+                it.onSuccess {
+                    Toast.makeText(applicationContext, "Leave group", Toast.LENGTH_SHORT).show()
+                    setAdapter()
+                }
+            }
+        )
+    }
+
+    private fun setAdapter(){
+        if (Info.user.groups.isEmpty()){
+            loader.visibility = View.GONE
+            tv_empty.visibility = View.VISIBLE
+            rv_groups.visibility = View.GONE
+        }
+        else{
+            loader.visibility = View.VISIBLE
+            rv_groups.visibility = View.VISIBLE
+            settingsViewModel.getGroupInfo(Info.user.groups)
+        }
     }
 
     override fun onBackPressed() {

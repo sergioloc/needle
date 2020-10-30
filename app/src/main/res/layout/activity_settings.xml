@@ -44,8 +44,14 @@
                 android:paddingTop="20dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:background="?attr/selectableItemBackground"
                 android:text="Grupos:"/>
+
+            <ProgressBar
+                android:id="@+id/loader"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="5dp"
+                android:visibility="visible"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_groups"
@@ -53,6 +59,16 @@
                 android:layout_height="wrap_content"
                 android:padding="20dp"
                 tools:listitem="@layout/cell_group"/>
+
+            <TextView
+                android:id="@+id/tv_empty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:gravity="center"
+                android:textStyle="italic"
+                android:text="No estás en ningún grupo"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tv_signout"

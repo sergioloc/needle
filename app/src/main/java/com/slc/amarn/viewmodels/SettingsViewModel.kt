@@ -24,6 +24,9 @@ class SettingsViewModel: ViewModel() {
     private val _textCopied: MutableLiveData<Result<Boolean>> = MutableLiveData()
     val textCopied: LiveData<Result<Boolean>> get() = _textCopied
 
+    private val _leave: MutableLiveData<Result<Boolean>> = MutableLiveData()
+    val leave: LiveData<Result<Boolean>> get() = _leave
+
     fun signOut(){
         FirebaseAuth.getInstance().signOut()
     }
@@ -37,8 +40,8 @@ class SettingsViewModel: ViewModel() {
         }
     }
 
-    fun getGroupList(idList: ArrayList<String>){
-        var list = ArrayList<GroupId>()
+    fun getGroupInfo(idList: ArrayList<String>){
+        val list = ArrayList<GroupId>()
         for (id in idList){
             db.collection("groups").document(id).get().addOnSuccessListener { documentSnapshot ->
                 val group = documentSnapshot.toObject(Group::class.java)
@@ -53,7 +56,9 @@ class SettingsViewModel: ViewModel() {
     fun leaveGroup(id: String){
         db.collection("groups").document(id).collection("members").document(FirebaseAuth.getInstance().currentUser?.email!!).delete().addOnSuccessListener {
             Info.user.groups.remove(id)
-            db.collection("users").document(FirebaseAuth.getInstance().currentUser?.email!!).set(Info.user)
+            db.collection("users").document(FirebaseAuth.getInstance().currentUser?.email!!).set(Info.user).addOnSuccessListener {
+                _leave.postValue(Result.success(true))
+            }
         }
     }
 
