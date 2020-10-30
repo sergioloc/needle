@@ -60,13 +60,24 @@ class ProfileViewModel: ViewModel() {
     }
 
     fun joinGroup(id: String, owner: Boolean){
-        db.collection("groups").document(id).collection("members").document(FirebaseAuth.getInstance().currentUser?.email!!).set(Info.user).addOnCompleteListener {
+        db.collection("groups").document(id).collection("members").document(FirebaseAuth.getInstance().currentUser?.email!!).set(Info.user).addOnSuccessListener {
             if (owner)
                 _groupId.postValue(Result.success(id))
             else
                 _groupId.postValue(Result.success(""))
-        }.addOnFailureListener {
-            db.collection("groups").document(id).delete()
+            addGroupToUserList(id)
+        }
+    }
+
+    private fun addGroupToUserList(id: String){
+        if (Info.user.groups.contains(id)){
+            _groupId.postValue(Result.failure(Throwable("You are already in this group")))
+        }
+        else{
+            Info.user.groups.add(id)
+            FirebaseAuth.getInstance().currentUser?.email?.let { it ->
+                db.collection("users").document(it).set(Info.user)
+            }
         }
     }
 }

@@ -109,14 +109,14 @@ class ProfileFragment : Fragment() {
         )
         profileViewModel.groupId.observe(this,
             Observer<Result<String>> {result ->
+                createGroupDialog?.let { it.dismiss() }
+                joinGroupDialog?.let { it.dismiss() }
                 result.onSuccess {code ->
-                    createGroupDialog?.let { it.dismiss() }
-                    joinGroupDialog?.let { it.dismiss() }
                     if (code.isNotBlank())
                         showCodeDialog(code)
                 }
                 result.onFailure {
-                    showErrorDialog("Error message")
+                    showErrorDialog(it.message.toString())
                 }
             }
         )
