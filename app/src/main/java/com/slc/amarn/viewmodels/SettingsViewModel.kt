@@ -1,5 +1,9 @@
 package com.slc.amarn.viewmodels
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,6 +20,9 @@ class SettingsViewModel: ViewModel() {
 
     private val _groupList: MutableLiveData<Result<ArrayList<GroupId>>> = MutableLiveData()
     val groupList: LiveData<Result<ArrayList<GroupId>>> get() = _groupList
+
+    private val _textCopied: MutableLiveData<Result<Boolean>> = MutableLiveData()
+    val textCopied: LiveData<Result<Boolean>> get() = _textCopied
 
     fun signOut(){
         FirebaseAuth.getInstance().signOut()
@@ -41,6 +48,20 @@ class SettingsViewModel: ViewModel() {
                 _groupList.postValue(Result.success(list))
             }
         }
+    }
+
+    fun leaveGroup(id: String){
+        db.collection("groups").document(id).collection("members").document(FirebaseAuth.getInstance().currentUser?.email!!).delete().addOnSuccessListener {
+            Info.user.groups.remove(id)
+            db.collection("users").document(FirebaseAuth.getInstance().currentUser?.email!!).set(Info.user)
+        }
+    }
+
+    fun copyId(context: Context, id: String){
+        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip: ClipData = ClipData.newPlainText("text", id)
+        clipboard.setPrimaryClip(clip)
+        _textCopied.postValue(Result.success(true))
     }
 
 }
