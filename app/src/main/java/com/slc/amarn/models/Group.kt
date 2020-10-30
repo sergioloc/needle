@@ -4,6 +4,5 @@ import java.io.Serializable
 
 data class Group(
     val name: String = "",
-    val numMax: Int = 0,
     val owner: String = ""
 ): Serializable

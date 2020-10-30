@@ -138,7 +138,7 @@ class ProfileFragment : Fragment() {
             btnCreate.setOnClickListener {
                 loader.visibility = View.VISIBLE
                 etName.visibility = View.INVISIBLE
-                profileViewModel.createGroup(Group(etName.text.toString(), 0, ""))
+                profileViewModel.createGroup(Group(etName.text.toString(), FirebaseAuth.getInstance().currentUser?.email!!))
             }
             it.show()
         }

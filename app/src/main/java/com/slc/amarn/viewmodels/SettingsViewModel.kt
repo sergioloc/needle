@@ -48,7 +48,7 @@ class SettingsViewModel: ViewModel() {
             db.collection("groups").document(id).get().addOnSuccessListener { documentSnapshot ->
                 val group = documentSnapshot.toObject(Group::class.java)
                 group?.let {
-                    list.add(GroupId(id, it.name, it.numMax, it.owner))
+                    list.add(GroupId(id, it.name, it.owner))
                 }
                 _groupList.postValue(Result.success(list))
             }
