@@ -81,6 +81,7 @@ class SwipeFragment : Fragment(), CardStackListener {
                 it.onSuccess {list ->
                     adapter = CardStackAdapter(list)
                     cardStackView.adapter = adapter
+                    loader.visibility = View.GONE
                 }
                 it.onFailure { result ->
                     Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
