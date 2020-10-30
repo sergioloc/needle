@@ -62,7 +62,7 @@
             tools:text="Name"/>
 
         <TextView
-            android:id="@+id/item_lbg"
+            android:id="@+id/item_city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"

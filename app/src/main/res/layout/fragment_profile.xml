@@ -33,7 +33,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="10dp"
-        android:text="Sergio, 24"
+        android:text="Name, 00"
         android:textColor="@color/black"
         android:textSize="20sp"/>
 
@@ -45,7 +45,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="10dp"
-        android:text="Madrid"
+        android:text="City"
         android:textColor="@color/black"
         android:textSize="15sp"/>
 

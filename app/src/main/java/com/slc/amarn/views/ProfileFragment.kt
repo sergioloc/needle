@@ -47,22 +47,20 @@ class ProfileFragment : Fragment() {
             profileViewModel.getMyPhotosURL()
         else
             setIconPhoto()
-        initVariables()
         initButtons()
         initObservers()
     }
 
     override fun onResume() {
         super.onResume()
+        if (Info.user.name.isNotBlank()){
+            tv_info.text = "${Info.user.name}, ${Age().getAge(Info.user.dateOfBirth)}"
+            tv_city.text = Info.user.city
+        }
         if (Info.reloadPhotos){
             profileViewModel.getMyPhotosURL()
             Info.reloadPhotos = false
         }
-    }
-
-    private fun initVariables(){
-        //tv_info.text = "${Info.user.name}, ${Age().getAge(Info.user.dateOfBirth)}"
-        //tv_city.text = Info.user.city
     }
 
     private fun initButtons(){

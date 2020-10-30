@@ -13,7 +13,6 @@ import com.slc.amarn.utils.Info
 class SwipeViewModel: ViewModel() {
 
     private val db = FirebaseFirestore.getInstance()
-    private var emails = ArrayList<String>()
     private var users = ArrayList<UserPreview>()
     private val MAX_PHOTOS = 3
 
@@ -26,7 +25,6 @@ class SwipeViewModel: ViewModel() {
     private var myEmail = ""
 
     fun getUsers(list: ArrayList<String>){
-        emails = ArrayList()
         users = ArrayList()
         for (id in list){
             getEmailsFromGroup(id)
@@ -37,7 +35,6 @@ class SwipeViewModel: ViewModel() {
         db.collection("groups").document(id).collection("members").get().addOnSuccessListener {query ->
             for (i in 0 until query.documents.size)
                 if (myEmail != query.documents[i].id) //Ignore myself
-                    //emails.add(query.documents[i].id)
                     getUserInfo(query.documents[i].id)
         }
     }

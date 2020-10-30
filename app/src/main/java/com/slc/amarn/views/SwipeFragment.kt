@@ -18,10 +18,8 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.slc.amarn.models.User
 import com.slc.amarn.models.UserPreview
-import com.slc.amarn.utils.Age
 import com.slc.amarn.utils.Info
 import com.slc.amarn.viewmodels.SwipeViewModel
-import kotlinx.android.synthetic.main.fragment_profile.*
 
 class SwipeFragment : Fragment(), CardStackListener {
 
@@ -39,9 +37,10 @@ class SwipeFragment : Fragment(), CardStackListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         swipeViewModel = SwipeViewModel()
-        //initVariables()
+        initVariables()
         initButtons()
         initObservers()
+        swipeViewModel.getMyUserInfo()
     }
 
     private fun initButtons() {
@@ -56,7 +55,6 @@ class SwipeFragment : Fragment(), CardStackListener {
         }
 
         fab_like.setOnClickListener {
-            /*
             val setting = SwipeAnimationSetting.Builder()
                 .setDirection(Direction.Right)
                 .setDuration(Duration.Slow.duration)
@@ -64,8 +62,6 @@ class SwipeFragment : Fragment(), CardStackListener {
                 .build()
             manager.setSwipeAnimationSetting(setting)
             cardStackView.swipe()
-             */
-            swipeViewModel.getMyUserInfo()
         }
     }
 
@@ -83,7 +79,8 @@ class SwipeFragment : Fragment(), CardStackListener {
         swipeViewModel.userList.observe(this,
             Observer<Result<ArrayList<UserPreview>>> {
                 it.onSuccess {list ->
-                    Log.i("MATCHES", list.toString())
+                    adapter = CardStackAdapter(list)
+                    cardStackView.adapter = adapter
                 }
                 it.onFailure { result ->
                     Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
@@ -94,7 +91,6 @@ class SwipeFragment : Fragment(), CardStackListener {
 
     private fun initVariables() {
         manager = CardStackLayoutManager(context, this)
-        //adapter = CardStackAdapter(createSpots())
         manager.setStackFrom(StackFrom.None)
         manager.setVisibleCount(3)
         manager.setTranslationInterval(8.0f)
@@ -107,7 +103,6 @@ class SwipeFragment : Fragment(), CardStackListener {
         manager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
         manager.setOverlayInterpolator(LinearInterpolator())
         cardStackView.layoutManager = manager
-        cardStackView.adapter = adapter
     }
 
     private fun paginate() {
@@ -119,13 +114,7 @@ class SwipeFragment : Fragment(), CardStackListener {
         //result.dispatchUpdatesTo(adapter)
     }
 
-    override fun onCardDisappeared(view: View?, position: Int) {
-
-    }
-
-    override fun onCardDragging(direction: Direction?, ratio: Float) {
-
-    }
+    //Overrrides -----------------------------------------------------------------------------------
 
     override fun onCardSwiped(direction: Direction) {
         Log.d("CardStackView", "onCardSwiped: p = ${manager.topPosition}, d = $direction")
@@ -134,16 +123,14 @@ class SwipeFragment : Fragment(), CardStackListener {
         }
     }
 
-    override fun onCardCanceled() {
+    override fun onCardDisappeared(view: View?, position: Int) { }
 
-    }
+    override fun onCardDragging(direction: Direction?, ratio: Float) { }
 
-    override fun onCardAppeared(view: View?, position: Int) {
+    override fun onCardCanceled() { }
 
-    }
+    override fun onCardAppeared(view: View?, position: Int) { }
 
-    override fun onCardRewound() {
-
-    }
+    override fun onCardRewound() { }
 
 }
