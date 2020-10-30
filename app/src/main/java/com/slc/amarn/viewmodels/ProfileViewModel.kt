@@ -45,7 +45,7 @@ class ProfileViewModel: ViewModel() {
     }
 
     fun joinGroup(id: String, owner: Boolean){
-        db.collection("groups").document(id).collection("members").document(FirebaseAuth.getInstance().currentUser?.email!!).set(Info.user).addOnSuccessListener {
+        db.collection("groups").document(id).collection("members").document(FirebaseAuth.getInstance().currentUser?.email!!).set(hashMapOf("a" to true)).addOnSuccessListener {
             if (owner)
                 _groupId.postValue(Result.success(id))
             else
