@@ -1,6 +1,8 @@
 package com.slc.amarn.views
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
@@ -25,7 +27,7 @@ class SwipeFragment : Fragment(), CardStackListener {
     lateinit var adapter: CardStackAdapter
     lateinit var cardStackView: CardStackView
     lateinit var swipeViewModel: SwipeViewModel
-    lateinit var emailList: ArrayList<String>
+    private var emailList: ArrayList<String> = ArrayList()
     private var position = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -72,7 +74,10 @@ class SwipeFragment : Fragment(), CardStackListener {
         swipeViewModel.user.observe(this,
             Observer<Result<User>> {
                 it.onSuccess {
-                    swipeViewModel.getUsers(Info.user.groups)
+                    if (Info.user.groups.isEmpty())
+                        tv_error_group.visibility = View.VISIBLE
+                    else
+                        swipeViewModel.getUsers(Info.user.groups)
                 }
                 it.onFailure { result ->
                     Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
@@ -82,10 +87,14 @@ class SwipeFragment : Fragment(), CardStackListener {
         swipeViewModel.userList.observe(this,
             Observer<Result<ArrayList<UserPreview>>> {
                 it.onSuccess {list ->
-                    adapter = CardStackAdapter(list)
-                    position = 0
-                    emailList = adapter.getEmailList()
-                    cardStackView.adapter = adapter
+                    if (list.isEmpty()) //no users
+                        tv_no_users.visibility = View.VISIBLE
+                    else {
+                        adapter = CardStackAdapter(list)
+                        position = 0
+                        emailList = adapter.getEmailList()
+                        cardStackView.adapter = adapter
+                    }
                     loader.visibility = View.GONE
                 }
                 it.onFailure { result ->
@@ -109,6 +118,15 @@ class SwipeFragment : Fragment(), CardStackListener {
         manager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
         manager.setOverlayInterpolator(LinearInterpolator())
         cardStackView.layoutManager = manager
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            run {
+                if (emailList.isEmpty()){
+                    loader.visibility = View.GONE
+                    tv_no_users.visibility = View.VISIBLE
+                }
+            }
+        }, 3000)
     }
 
     //Overrides -----------------------------------------------------------------------------------
@@ -119,6 +137,8 @@ class SwipeFragment : Fragment(), CardStackListener {
         else
             swipeViewModel.swipeUser(emailList[position], false)
         position++
+        if (emailList.size == position) //no more users
+            tv_no_users.visibility = View.VISIBLE
     }
 
     override fun onCardDisappeared(view: View?, position: Int) { }

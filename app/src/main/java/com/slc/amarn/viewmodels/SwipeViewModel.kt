@@ -23,6 +23,19 @@ class SwipeViewModel: ViewModel() {
     private val _userList: MutableLiveData<Result<ArrayList<UserPreview>>> = MutableLiveData()
     val userList: LiveData<Result<ArrayList<UserPreview>>> get() = _userList
 
+    fun getMyUserInfo(){
+        Info.email = FirebaseAuth.getInstance().currentUser?.email!!
+        Info.email.let {
+            db.collection("users").document(it).get().addOnSuccessListener { documentSnapshot ->
+                val u = documentSnapshot.toObject(User::class.java)
+                u?.let {
+                    Info.user = u
+                    _user.postValue(Result.success(u))
+                }
+            }
+        }
+    }
+
     fun getUsers(groups: ArrayList<String>){
         users = ArrayList()
         ignore = ArrayList()
@@ -32,10 +45,10 @@ class SwipeViewModel: ViewModel() {
             for (i in 0 until query.documents.size)
                 if (Info.email != query.documents[i].id) //Ignore myself
                     ignore.add(query.documents[i].id)
-        }
 
-        for (id in groups){
-            getEmailsFromGroup(id, ignore)
+            for (id in groups){
+                getEmailsFromGroup(id, ignore)
+            }
         }
     }
 
@@ -74,19 +87,6 @@ class SwipeViewModel: ViewModel() {
                     if (users[position].photos.size == it.items.size)
                         _userList.postValue(Result.success(users))
                 }
-        }
-    }
-
-    fun getMyUserInfo(){
-        Info.email = FirebaseAuth.getInstance().currentUser?.email!!
-        Info.email.let {
-            db.collection("users").document(it).get().addOnSuccessListener { documentSnapshot ->
-                val u = documentSnapshot.toObject(User::class.java)
-                u?.let {
-                    Info.user = u
-                    _user.postValue(Result.success(u))
-                }
-            }
         }
     }
 
