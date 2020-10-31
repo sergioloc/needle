@@ -14,6 +14,7 @@ class SwipeViewModel: ViewModel() {
 
     private val db = FirebaseFirestore.getInstance()
     private var users = ArrayList<UserPreview>()
+    private var ignore = ArrayList<String>()
     private val MAX_PHOTOS = 3
 
     private val _user: MutableLiveData<Result<User>> = MutableLiveData()
@@ -24,12 +25,21 @@ class SwipeViewModel: ViewModel() {
 
     fun getUsers(groups: ArrayList<String>){
         users = ArrayList()
+        ignore = ArrayList()
+
+        //Get ignore emails
+        db.collection("users").document(Info.email).collection("swiped").get().addOnSuccessListener {query ->
+            for (i in 0 until query.documents.size)
+                if (Info.email != query.documents[i].id) //Ignore myself
+                    ignore.add(query.documents[i].id)
+        }
+
         for (id in groups){
-            getEmailsFromGroup(id)
+            getEmailsFromGroup(id, ignore)
         }
     }
 
-    private fun getEmailsFromGroup(id: String){
+    private fun getEmailsFromGroup(id: String, ignore: ArrayList<String>){
         db.collection("groups").document(id).collection("members").get().addOnSuccessListener {query ->
             if (query.documents.size == 0){ //Group leaved or deleted
                 Info.user.groups.remove(id)
@@ -38,7 +48,8 @@ class SwipeViewModel: ViewModel() {
             else
                 for (i in 0 until query.documents.size)
                     if (Info.email != query.documents[i].id) //Ignore myself
-                        getUserInfo(query.documents[i].id)
+                        if (!ignore.contains(query.documents[i].id)) //Not swipe yet
+                            getUserInfo(query.documents[i].id)
         }
     }
 
@@ -81,24 +92,24 @@ class SwipeViewModel: ViewModel() {
 
     fun swipeUser(email: String, like: Boolean){
         if (like){
-            db.collection("users").document(email).collection("swipeList").document(Info.email).get().addOnSuccessListener {
+            db.collection("users").document(email).collection("swiped").document(Info.email).get().addOnSuccessListener {
                 if (it.data == null) { //User didn't swipe me
-                    db.collection("users").document(Info.email).collection("swipeList").document(email).set(hashMapOf("like" to like))
+                    db.collection("users").document(Info.email).collection("swiped").document(email).set(hashMapOf("like" to like))
                 }
                 else{
                     if (it.data!!["like"] as Boolean){ //User gave me like
-                        db.collection("users").document(Info.email).collection("matchList").document(email).set(hashMapOf("like" to like))
-                        db.collection("users").document(email).collection("swipeList").document(Info.email).delete()
-                        db.collection("users").document(email).collection("matchList").document(Info.email).set(hashMapOf("like" to like))
+                        db.collection("users").document(Info.email).collection("matched").document(email).set(hashMapOf("like" to like))
+                        db.collection("users").document(Info.email).collection("swiped").document(email).set(hashMapOf("like" to like))
+                        db.collection("users").document(email).collection("matched").document(Info.email).set(hashMapOf("like" to like))
                     }
                     else { //User gave me dislike
-                        db.collection("users").document(Info.email).collection("swipeList").document(email).set(hashMapOf("like" to like))
+                        db.collection("users").document(Info.email).collection("swiped").document(email).set(hashMapOf("like" to like))
                     }
                 }
             }
         }
         else {
-            db.collection("users").document(Info.email).collection("swipeList").document(email).set(hashMapOf("like" to like))
+            db.collection("users").document(Info.email).collection("swiped").document(email).set(hashMapOf("like" to like))
         }
     }
 
