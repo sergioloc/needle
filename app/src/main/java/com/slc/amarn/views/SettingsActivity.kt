@@ -99,6 +99,11 @@ class SettingsActivity : AppCompatActivity(), GroupAdapter.OnGroupClickListener 
     override fun onLeaveClick(id: String) {
        leaveGroupDialog(id)
     }
+
+    override fun onDeleteClick(id: String) {
+        deleteGroupDialog(id)
+    }
+
     private fun leaveGroupDialog(id: String){
         val alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle("Alert")
@@ -106,6 +111,17 @@ class SettingsActivity : AppCompatActivity(), GroupAdapter.OnGroupClickListener 
         alertDialog.setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
         alertDialog.setPositiveButton("Yes"){ _, _ ->
             settingsViewModel.leaveGroup(id)
+        }
+        alertDialog.show()
+    }
+
+    private fun deleteGroupDialog(id: String){
+        val alertDialog = AlertDialog.Builder(this)
+        alertDialog.setTitle("Alert")
+        alertDialog.setMessage("Do you want to remove this group?")
+        alertDialog.setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
+        alertDialog.setPositiveButton("Yes"){ _, _ ->
+            settingsViewModel.removeGroup(id)
         }
         alertDialog.show()
     }

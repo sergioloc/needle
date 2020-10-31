@@ -71,4 +71,10 @@ class SettingsViewModel: ViewModel() {
         _textCopied.postValue(Result.success(true))
     }
 
+    fun removeGroup(id: String){
+        db.collection("groups").document(id).delete().addOnSuccessListener {
+            _leave.postValue(Result.success(true))
+        }
+    }
+
 }

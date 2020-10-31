@@ -22,8 +22,6 @@ class SwipeViewModel: ViewModel() {
     private val _userList: MutableLiveData<Result<ArrayList<UserPreview>>> = MutableLiveData()
     val userList: LiveData<Result<ArrayList<UserPreview>>> get() = _userList
 
-    private var myEmail = ""
-
     fun getUsers(list: ArrayList<String>){
         users = ArrayList()
         for (id in list){
@@ -34,7 +32,7 @@ class SwipeViewModel: ViewModel() {
     private fun getEmailsFromGroup(id: String){
         db.collection("groups").document(id).collection("members").get().addOnSuccessListener {query ->
             for (i in 0 until query.documents.size)
-                if (myEmail != query.documents[i].id) //Ignore myself
+                if (Info.email != query.documents[i].id) //Ignore myself
                     getUserInfo(query.documents[i].id)
         }
     }
@@ -64,8 +62,8 @@ class SwipeViewModel: ViewModel() {
     }
 
     fun getMyUserInfo(){
-        myEmail = FirebaseAuth.getInstance().currentUser?.email!!
-        myEmail.let {
+        Info.email = FirebaseAuth.getInstance().currentUser?.email!!
+        Info.email.let {
             db.collection("users").document(it).get().addOnSuccessListener { documentSnapshot ->
                 val u = documentSnapshot.toObject(User::class.java)
                 u?.let {
