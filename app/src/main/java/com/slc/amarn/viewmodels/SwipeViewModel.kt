@@ -1,5 +1,6 @@
 package com.slc.amarn.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,18 +23,23 @@ class SwipeViewModel: ViewModel() {
     private val _userList: MutableLiveData<Result<ArrayList<UserPreview>>> = MutableLiveData()
     val userList: LiveData<Result<ArrayList<UserPreview>>> get() = _userList
 
-    fun getUsers(list: ArrayList<String>){
+    fun getUsers(groups: ArrayList<String>){
         users = ArrayList()
-        for (id in list){
+        for (id in groups){
             getEmailsFromGroup(id)
         }
     }
 
     private fun getEmailsFromGroup(id: String){
         db.collection("groups").document(id).collection("members").get().addOnSuccessListener {query ->
-            for (i in 0 until query.documents.size)
-                if (Info.email != query.documents[i].id) //Ignore myself
-                    getUserInfo(query.documents[i].id)
+            if (query.documents.size == 0){ //Group leaved or deleted
+                Info.user.groups.remove(id)
+                db.collection("users").document(Info.email).set(Info.user)
+            }
+            else
+                for (i in 0 until query.documents.size)
+                    if (Info.email != query.documents[i].id) //Ignore myself
+                        getUserInfo(query.documents[i].id)
         }
     }
 
