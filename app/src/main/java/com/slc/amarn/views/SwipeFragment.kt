@@ -7,9 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
-import androidx.recyclerview.widget.DiffUtil
 import com.slc.amarn.R
-import com.slc.amarn.models.UserCallback
 import com.slc.amarn.adapters.CardStackAdapter
 import com.yuyakaido.android.cardstackview.*
 import kotlinx.android.synthetic.main.fragment_swipe.*
@@ -27,9 +25,11 @@ class SwipeFragment : Fragment(), CardStackListener {
     lateinit var adapter: CardStackAdapter
     lateinit var cardStackView: CardStackView
     lateinit var swipeViewModel: SwipeViewModel
+    lateinit var emailList: ArrayList<String>
+    private var position = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view = inflater.inflate(R.layout.fragment_swipe, container, false)
+        val view = inflater.inflate(R.layout.fragment_swipe, container, false)
         cardStackView = view.findViewById(R.id.card_stack_view)
         return view
     }
@@ -52,6 +52,8 @@ class SwipeFragment : Fragment(), CardStackListener {
                 .build()
             manager.setSwipeAnimationSetting(setting)
             cardStackView.swipe()
+            adapter
+            swipeViewModel.swipeUser(emailList[position], true)
         }
 
         fab_like.setOnClickListener {
@@ -62,6 +64,7 @@ class SwipeFragment : Fragment(), CardStackListener {
                 .build()
             manager.setSwipeAnimationSetting(setting)
             cardStackView.swipe()
+            swipeViewModel.swipeUser(emailList[position], true)
         }
     }
 
@@ -80,6 +83,8 @@ class SwipeFragment : Fragment(), CardStackListener {
             Observer<Result<ArrayList<UserPreview>>> {
                 it.onSuccess {list ->
                     adapter = CardStackAdapter(list)
+                    position = 0
+                    emailList = adapter.getEmailList()
                     cardStackView.adapter = adapter
                     loader.visibility = View.GONE
                 }
@@ -106,22 +111,14 @@ class SwipeFragment : Fragment(), CardStackListener {
         cardStackView.layoutManager = manager
     }
 
-    private fun paginate() {
-        //val old = adapter.getUsers()
-        //val new = old.plus(createSpots())
-        //val callback = UserCallback(old, new)
-        //val result = DiffUtil.calculateDiff(callback)
-        //adapter.setUsers(new)
-        //result.dispatchUpdatesTo(adapter)
-    }
-
-    //Overrrides -----------------------------------------------------------------------------------
+    //Overrides -----------------------------------------------------------------------------------
 
     override fun onCardSwiped(direction: Direction) {
-        Log.d("CardStackView", "onCardSwiped: p = ${manager.topPosition}, d = $direction")
-        if (manager.topPosition == adapter.itemCount - 5) {
-            paginate()
-        }
+        if (direction == Direction.Right)
+            swipeViewModel.swipeUser(emailList[position], true)
+        else
+            swipeViewModel.swipeUser(emailList[position], false)
+        position++
     }
 
     override fun onCardDisappeared(view: View?, position: Int) { }

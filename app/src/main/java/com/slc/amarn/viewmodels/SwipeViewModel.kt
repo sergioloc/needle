@@ -1,6 +1,5 @@
 package com.slc.amarn.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -48,7 +47,7 @@ class SwipeViewModel: ViewModel() {
             val u = documentSnapshot.toObject(User::class.java)
             u?.let {
                 if (isCompatible(u)){
-                    users.add(UserPreview(u.name, u.dateOfBirth, u.city))
+                    users.add(UserPreview(email, u.name, u.dateOfBirth, u.city))
                     getUserPhotos(users.size-1, email)
                 }
             }
@@ -77,6 +76,29 @@ class SwipeViewModel: ViewModel() {
                     _user.postValue(Result.success(u))
                 }
             }
+        }
+    }
+
+    fun swipeUser(email: String, like: Boolean){
+        if (like){
+            db.collection("users").document(email).collection("swipeList").document(Info.email).get().addOnSuccessListener {
+                if (it.data == null) { //User didn't swipe me
+                    db.collection("users").document(Info.email).collection("swipeList").document(email).set(hashMapOf("like" to like))
+                }
+                else{
+                    if (it.data!!["like"] as Boolean){ //User gave me like
+                        db.collection("users").document(Info.email).collection("matchList").document(email).set(hashMapOf("like" to like))
+                        db.collection("users").document(email).collection("swipeList").document(Info.email).delete()
+                        db.collection("users").document(email).collection("matchList").document(Info.email).set(hashMapOf("like" to like))
+                    }
+                    else { //User gave me dislike
+                        db.collection("users").document(Info.email).collection("swipeList").document(email).set(hashMapOf("like" to like))
+                    }
+                }
+            }
+        }
+        else {
+            db.collection("users").document(Info.email).collection("swipeList").document(email).set(hashMapOf("like" to like))
         }
     }
 

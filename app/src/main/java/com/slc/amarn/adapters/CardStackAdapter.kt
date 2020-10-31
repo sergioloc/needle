@@ -44,6 +44,13 @@ class CardStackAdapter(
         return users.size
     }
 
+    fun getEmailList(): ArrayList<String>{
+        var result = ArrayList<String>()
+        for (u in users)
+            result.add(u.email)
+        return result
+    }
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val viewPager: ViewPager = view.findViewById(R.id.vp_photos)
         val indicator: TabLayout = view.findViewById(R.id.tab_indicator)
