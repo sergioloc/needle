@@ -9,6 +9,9 @@ import com.google.firebase.storage.FirebaseStorage
 import com.slc.amarn.models.User
 import com.slc.amarn.models.UserPreview
 import com.slc.amarn.utils.Info
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class SwipeViewModel: ViewModel() {
 
@@ -16,6 +19,7 @@ class SwipeViewModel: ViewModel() {
     private var users = ArrayList<UserPreview>()
     private var ignore = ArrayList<String>()
     private val MAX_PHOTOS = 3
+    val dateFormat = SimpleDateFormat("dd/M/yyyy hh:mm:ss", Locale.getDefault())
 
     private val _user: MutableLiveData<Result<User>> = MutableLiveData()
     val user: LiveData<Result<User>> get() = _user
@@ -98,9 +102,9 @@ class SwipeViewModel: ViewModel() {
                 }
                 else{
                     if (it.data!!["like"] as Boolean){ //User gave me like
-                        db.collection("users").document(Info.email).collection("matched").document(email).set(hashMapOf("like" to like))
+                        db.collection("users").document(Info.email).collection("matched").document(email).set(hashMapOf("date" to dateFormat.format(Date())))
                         db.collection("users").document(Info.email).collection("swiped").document(email).set(hashMapOf("like" to like))
-                        db.collection("users").document(email).collection("matched").document(Info.email).set(hashMapOf("like" to like))
+                        db.collection("users").document(email).collection("matched").document(Info.email).set(hashMapOf("date" to dateFormat.format(Date())))
                     }
                     else { //User gave me dislike
                         db.collection("users").document(Info.email).collection("swiped").document(email).set(hashMapOf("like" to like))
