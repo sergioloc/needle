@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.slc.amarn.R
+import com.slc.amarn.models.EmailGroup
 import com.slc.amarn.models.User
 import com.slc.amarn.models.UserPreview
 import com.slc.amarn.utils.Age
@@ -44,10 +45,10 @@ class CardStackAdapter(
         return users.size
     }
 
-    fun getEmailList(): ArrayList<String>{
-        var result = ArrayList<String>()
+    fun getEmailList(): ArrayList<EmailGroup>{
+        var result = ArrayList<EmailGroup>()
         for (u in users)
-            result.add(u.email)
+            result.add(EmailGroup(u.email, u.group))
         return result
     }
 

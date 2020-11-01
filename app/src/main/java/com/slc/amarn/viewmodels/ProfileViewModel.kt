@@ -14,29 +14,9 @@ import com.slc.amarn.utils.Info
 class ProfileViewModel: ViewModel() {
 
     private val db = FirebaseFirestore.getInstance()
-    private val MAX_PHOTOS = 3
-
-    private val _drawables: MutableLiveData<Result<Boolean>> = MutableLiveData()
-    val drawables: LiveData<Result<Boolean>> get() = _drawables
 
     private val _groupId: MutableLiveData<Result<String>> = MutableLiveData()
     val groupId: LiveData<Result<String>> get() = _groupId
-
-    fun getMyPhotosURL(){
-        val storage = FirebaseStorage.getInstance().getReference("users/${FirebaseAuth.getInstance().currentUser?.email}")
-        storage.list(MAX_PHOTOS).addOnSuccessListener {
-            Info.photos = ArrayList()
-            if (it.items.size == 0)
-                _drawables.postValue(Result.success(false))
-            else {
-                for (i in it.items.size-1 downTo 0)
-                    it.items[i].downloadUrl.addOnSuccessListener {uri ->
-                        Info.photos.add(uri.toString())
-                        _drawables.postValue(Result.success(true))
-                    }
-            }
-        }
-    }
 
     fun createGroup(group: Group){
         db.collection("groups").add(group).addOnSuccessListener {

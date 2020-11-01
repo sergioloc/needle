@@ -9,6 +9,8 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,10 +45,6 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         profileViewModel = ProfileViewModel()
-        if (Info.photos.isEmpty())
-            profileViewModel.getMyPhotosURL()
-        else
-            setIconPhoto()
         initButtons()
         initObservers()
     }
@@ -56,10 +54,7 @@ class ProfileFragment : Fragment() {
         if (Info.user.name.isNotBlank()){
             tv_info.text = "${Info.user.name}, ${Age().getAge(Info.user.dateOfBirth)}"
             tv_city.text = Info.user.city
-        }
-        if (Info.reloadPhotos){
-            profileViewModel.getMyPhotosURL()
-            Info.reloadPhotos = false
+            setIconImage()
         }
     }
 
@@ -68,16 +63,13 @@ class ProfileFragment : Fragment() {
             val intent = Intent(context, EditActivity::class.java)
             startActivity(intent)
         }
-
         fab_settings.setOnClickListener {
             val intent = Intent(context, SettingsActivity::class.java)
             startActivity(intent)
         }
-
         iv_icon.setOnClickListener {
             val intent = Intent(context, UserActivity::class.java)
             intent.putExtra("user", Info.user)
-            intent.putExtra("email", FirebaseAuth.getInstance().currentUser?.email)
             startActivity(intent)
         }
         cg_create.setOnClickListener {
@@ -89,19 +81,10 @@ class ProfileFragment : Fragment() {
     }
 
     private fun initObservers(){
-        profileViewModel.drawables.observe(this,
-            Observer<Result<Boolean>> {
-                it.onSuccess {result ->
-                    if (result){
-                        setIconPhoto()
-                    }
-                }
-            }
-        )
         profileViewModel.groupId.observe(this,
             Observer<Result<String>> {result ->
-                createGroupDialog?.let { it.dismiss() }
-                joinGroupDialog?.let { it.dismiss() }
+                createGroupDialog?.dismiss()
+                joinGroupDialog?.dismiss()
                 result.onSuccess {code ->
                     if (code.isNotBlank())
                         showCodeDialog(code)
@@ -113,9 +96,9 @@ class ProfileFragment : Fragment() {
         )
     }
 
-    private fun setIconPhoto(){
-        if (Info.photos[0].isNotBlank()){
-            Glide.with(context!!).load(Info.photos[0]).into(object : SimpleTarget<Drawable?>() {
+    private fun setIconImage(){
+        if (Info.user.images.isNotEmpty()){
+            Glide.with(context!!).load(Info.user.images[0]).into(object : SimpleTarget<Drawable?>() {
                 override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable?>?) {
                     iv_icon.setImageDrawable(resource)
                 }

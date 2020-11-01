@@ -22,7 +22,7 @@ class MatchViewModel: ViewModel() {
         db.collection("users").document(Info.email).collection("matched").get().addOnSuccessListener {query ->
             emailList = ArrayList()
             for (i in 0 until query.documents.size)
-                emailList.add(Match(query.documents[i].id, query.documents[i].get("date") as String))
+                emailList.add(Match(query.documents[i].id, query.documents[i].get("group") as String, query.documents[i].get("date") as String))
             getMatchesInfo()
         }
     }
@@ -40,6 +40,7 @@ class MatchViewModel: ViewModel() {
                         instagram = u.instagram,
                         facebook = u.facebook,
                         phone = u.phone,
+                        group = match.group,
                         date = match.date
                     ))
                 }

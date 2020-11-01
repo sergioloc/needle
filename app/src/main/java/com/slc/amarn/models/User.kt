@@ -13,5 +13,6 @@ data class User(
     var facebook: String = "",
     var phone: String = "",
     var visible: Boolean = true,
+    var images: ArrayList<String> = ArrayList(),
     var groups: ArrayList<String> = ArrayList()
 ): Serializable

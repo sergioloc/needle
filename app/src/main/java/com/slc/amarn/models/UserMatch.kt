@@ -10,5 +10,6 @@ data class UserMatch(
     var instagram: String = "",
     var facebook: String = "",
     var phone: String = "",
+    var group: String = "",
     var date: String = ""
 ): Serializable
