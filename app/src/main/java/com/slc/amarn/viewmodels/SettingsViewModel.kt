@@ -28,6 +28,8 @@ class SettingsViewModel: ViewModel() {
     val leave: LiveData<Result<Boolean>> get() = _leave
 
     fun signOut(){
+        Info.user = User()
+        Info.photos = ArrayList()
         FirebaseAuth.getInstance().signOut()
     }
 
@@ -46,7 +48,7 @@ class SettingsViewModel: ViewModel() {
             db.collection("groups").document(id).get().addOnSuccessListener { documentSnapshot ->
                 val group = documentSnapshot.toObject(Group::class.java)
                 group?.let {
-                    list.add(GroupId(id, it.name, it.numMax, it.owner))
+                    list.add(GroupId(id, it.name, it.owner))
                 }
                 _groupList.postValue(Result.success(list))
             }
@@ -67,6 +69,12 @@ class SettingsViewModel: ViewModel() {
         val clip: ClipData = ClipData.newPlainText("text", id)
         clipboard.setPrimaryClip(clip)
         _textCopied.postValue(Result.success(true))
+    }
+
+    fun removeGroup(id: String){
+        db.collection("groups").document(id).delete().addOnSuccessListener {
+            _leave.postValue(Result.success(true))
+        }
     }
 
 }

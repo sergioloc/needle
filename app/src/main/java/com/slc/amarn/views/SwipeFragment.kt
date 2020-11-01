@@ -1,76 +1,51 @@
 package com.slc.amarn.views
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
-import android.widget.TextView
-import androidx.recyclerview.widget.DiffUtil
 import com.slc.amarn.R
-import com.slc.amarn.models.UserCallback
 import com.slc.amarn.adapters.CardStackAdapter
-import com.slc.amarn.models.User
 import com.yuyakaido.android.cardstackview.*
 import kotlinx.android.synthetic.main.fragment_swipe.*
 import android.view.animation.AccelerateInterpolator
+import android.widget.Toast
+import androidx.lifecycle.Observer
+import com.slc.amarn.models.User
+import com.slc.amarn.models.UserPreview
+import com.slc.amarn.utils.Info
+import com.slc.amarn.viewmodels.SwipeViewModel
 
 class SwipeFragment : Fragment(), CardStackListener {
 
     lateinit var manager: CardStackLayoutManager
     lateinit var adapter: CardStackAdapter
     lateinit var cardStackView: CardStackView
+    lateinit var swipeViewModel: SwipeViewModel
+    private var emailList: ArrayList<String> = ArrayList()
+    private var position = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view = inflater.inflate(R.layout.fragment_swipe, container, false)
+        val view = inflater.inflate(R.layout.fragment_swipe, container, false)
         cardStackView = view.findViewById(R.id.card_stack_view)
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        manager = CardStackLayoutManager(context, this)
-        adapter = CardStackAdapter(createSpots())
-        setupCardStackView()
-        setupButton()
+        swipeViewModel = SwipeViewModel()
+        initVariables()
+        initButtons()
+        initObservers()
+        swipeViewModel.getMyUserInfo()
     }
 
-    override fun onCardDragging(direction: Direction, ratio: Float) {
-        Log.d("CardStackView", "onCardDragging: d = ${direction.name}, r = $ratio")
-    }
-
-    override fun onCardSwiped(direction: Direction) {
-        Log.d("CardStackView", "onCardSwiped: p = ${manager.topPosition}, d = $direction")
-        if (manager.topPosition == adapter.itemCount - 5) {
-            paginate()
-        }
-    }
-
-    override fun onCardRewound() {
-        Log.d("CardStackView", "onCardRewound: ${manager.topPosition}")
-    }
-
-    override fun onCardCanceled() {
-        Log.d("CardStackView", "onCardCanceled: ${manager.topPosition}")
-    }
-
-    override fun onCardAppeared(view: View, position: Int) {
-        val textView = view.findViewById<TextView>(R.id.item_name)
-        Log.d("CardStackView", "onCardAppeared: ($position) ${textView.text}")
-    }
-
-    override fun onCardDisappeared(view: View, position: Int) {
-        val textView = view.findViewById<TextView>(R.id.item_name)
-        Log.d("CardStackView", "onCardDisappeared: ($position) ${textView.text}")
-    }
-
-    private fun setupCardStackView() {
-        initialize()
-    }
-
-    private fun setupButton() {
+    private fun initButtons() {
         fab_dislike.setOnClickListener {
             val setting = SwipeAnimationSetting.Builder()
                 .setDirection(Direction.Left)
@@ -79,6 +54,8 @@ class SwipeFragment : Fragment(), CardStackListener {
                 .build()
             manager.setSwipeAnimationSetting(setting)
             cardStackView.swipe()
+            adapter
+            swipeViewModel.swipeUser(emailList[position], true)
         }
 
         fab_like.setOnClickListener {
@@ -89,10 +66,46 @@ class SwipeFragment : Fragment(), CardStackListener {
                 .build()
             manager.setSwipeAnimationSetting(setting)
             cardStackView.swipe()
+            swipeViewModel.swipeUser(emailList[position], true)
         }
     }
 
-    private fun initialize() {
+    private fun initObservers(){
+        swipeViewModel.user.observe(this,
+            Observer<Result<User>> {
+                it.onSuccess {
+                    if (Info.user.groups.isEmpty())
+                        tv_error_group.visibility = View.VISIBLE
+                    else
+                        swipeViewModel.getUsers(Info.user.groups)
+                }
+                it.onFailure { result ->
+                    Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        )
+        swipeViewModel.userList.observe(this,
+            Observer<Result<ArrayList<UserPreview>>> {
+                it.onSuccess {list ->
+                    if (list.isEmpty()) //no users
+                        tv_no_users.visibility = View.VISIBLE
+                    else {
+                        adapter = CardStackAdapter(list)
+                        position = 0
+                        emailList = adapter.getEmailList()
+                        cardStackView.adapter = adapter
+                    }
+                    loader.visibility = View.GONE
+                }
+                it.onFailure { result ->
+                    Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        )
+    }
+
+    private fun initVariables() {
+        manager = CardStackLayoutManager(context, this)
         manager.setStackFrom(StackFrom.None)
         manager.setVisibleCount(3)
         manager.setTranslationInterval(8.0f)
@@ -105,125 +118,37 @@ class SwipeFragment : Fragment(), CardStackListener {
         manager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
         manager.setOverlayInterpolator(LinearInterpolator())
         cardStackView.layoutManager = manager
-        cardStackView.adapter = adapter
 
-    }
-
-    private fun paginate() {
-        val old = adapter.getUsers()
-        val new = old.plus(createSpots())
-        val callback = UserCallback(old, new)
-        val result = DiffUtil.calculateDiff(callback)
-        adapter.setUsers(new)
-        result.dispatchUpdatesTo(adapter)
-    }
-
-    private fun reload() {
-        val old = adapter.getUsers()
-        val new = createSpots()
-        val callback = UserCallback(old, new)
-        val result = DiffUtil.calculateDiff(callback)
-        adapter.setUsers(new)
-        result.dispatchUpdatesTo(adapter)
-    }
-
-    private fun addFirst(size: Int) {
-        val old = adapter.getUsers()
-        val new = mutableListOf<User>().apply {
-            addAll(old)
-            for (i in 0 until size) {
-                add(manager.topPosition, createSpot())
+        Handler(Looper.getMainLooper()).postDelayed({
+            run {
+                if (emailList.isEmpty()){
+                    loader.visibility = View.GONE
+                    tv_no_users.visibility = View.VISIBLE
+                }
             }
-        }
-        val callback = UserCallback(old, new)
-        val result = DiffUtil.calculateDiff(callback)
-        adapter.setUsers(new)
-        result.dispatchUpdatesTo(adapter)
+        }, 3000)
     }
 
-    private fun addLast(size: Int) {
-        val old = adapter.getUsers()
-        val new = mutableListOf<User>().apply {
-            addAll(old)
-            addAll(List(size) { createSpot() })
-        }
-        val callback = UserCallback(old, new)
-        val result = DiffUtil.calculateDiff(callback)
-        adapter.setUsers(new)
-        result.dispatchUpdatesTo(adapter)
+    //Overrides -----------------------------------------------------------------------------------
+
+    override fun onCardSwiped(direction: Direction) {
+        if (direction == Direction.Right)
+            swipeViewModel.swipeUser(emailList[position], true)
+        else
+            swipeViewModel.swipeUser(emailList[position], false)
+        position++
+        if (emailList.size == position) //no more users
+            tv_no_users.visibility = View.VISIBLE
     }
 
-    private fun removeFirst(size: Int) {
-        if (adapter.getUsers().isEmpty()) {
-            return
-        }
+    override fun onCardDisappeared(view: View?, position: Int) { }
 
-        val old = adapter.getUsers()
-        val new = mutableListOf<User>().apply {
-            addAll(old)
-            for (i in 0 until size) {
-                removeAt(manager.topPosition)
-            }
-        }
-        val callback = UserCallback(old, new)
-        val result = DiffUtil.calculateDiff(callback)
-        adapter.setUsers(new)
-        result.dispatchUpdatesTo(adapter)
-    }
+    override fun onCardDragging(direction: Direction?, ratio: Float) { }
 
-    private fun removeLast(size: Int) {
-        if (adapter.getUsers().isEmpty()) {
-            return
-        }
+    override fun onCardCanceled() { }
 
-        val old = adapter.getUsers()
-        val new = mutableListOf<User>().apply {
-            addAll(old)
-            for (i in 0 until size) {
-                removeAt(this.size - 1)
-            }
-        }
-        val callback = UserCallback(old, new)
-        val result = DiffUtil.calculateDiff(callback)
-        adapter.setUsers(new)
-        result.dispatchUpdatesTo(adapter)
-    }
+    override fun onCardAppeared(view: View?, position: Int) { }
 
-    private fun replace() {
-        val old = adapter.getUsers()
-        val new = mutableListOf<User>().apply {
-            addAll(old)
-            removeAt(manager.topPosition)
-            add(manager.topPosition, createSpot())
-        }
-        adapter.setUsers(new)
-        adapter.notifyItemChanged(manager.topPosition)
-    }
-
-    private fun swap() {
-        val old = adapter.getUsers()
-        val new = mutableListOf<User>().apply {
-            addAll(old)
-            val first = removeAt(manager.topPosition)
-            val last = removeAt(this.size - 1)
-            add(manager.topPosition, last)
-            add(first)
-        }
-        val callback = UserCallback(old, new)
-        val result = DiffUtil.calculateDiff(callback)
-        adapter.setUsers(new)
-        result.dispatchUpdatesTo(adapter)
-    }
-
-    private fun createSpot(): User {
-        return User("name","","Madrid", 1, 2, "ey", "sergioloc", "Sergio López", "696752807")
-    }
-
-    private fun createSpots(): List<User> {
-        val spots = ArrayList<User>()
-        //spots.add(User(1,"Sergio",24,"Madrid", 1, 2, "Hola", arrayListOf(R.drawable.bear, R.drawable.clouds), "sergioloc", "Sergio López", "696752807"))
-        //spots.add(User(1,"Sergio",24,"Madrid", 1, 2, "Hola", arrayListOf(R.drawable.bear, R.drawable.clouds), "sergioloc", "Sergio López", "696752807"))
-        return spots
-    }
+    override fun onCardRewound() { }
 
 }

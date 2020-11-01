@@ -1,6 +1,7 @@
 package com.slc.amarn.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.slc.amarn.R
 import com.slc.amarn.models.GroupId
 import com.slc.amarn.models.User
+import com.slc.amarn.utils.Info
 
 class GroupAdapter(private val groups: ArrayList<GroupId>, private val onGroupClickListener: OnGroupClickListener): RecyclerView.Adapter<GroupAdapter.UserViewHolder>() {
 
@@ -20,9 +22,12 @@ class GroupAdapter(private val groups: ArrayList<GroupId>, private val onGroupCl
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val group = groups[position]
         holder.name?.text = group.name
-        holder.id?.text = group.id
+        holder.id?.text = "ID: " + group.id
+        if (group.owner == Info.email)
+            holder?.delete?.visibility = View.VISIBLE
         holder.copy?.setOnClickListener { onGroupClickListener.onCopyClick(group.id) }
         holder.leave?.setOnClickListener { onGroupClickListener.onLeaveClick(group.id) }
+        holder.delete?.setOnClickListener { onGroupClickListener.onDeleteClick(group.id) }
     }
 
     class UserViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
@@ -32,17 +37,20 @@ class GroupAdapter(private val groups: ArrayList<GroupId>, private val onGroupCl
         var id: TextView? = null
         var copy: ImageView? = null
         var leave: ImageView? = null
+        var delete: ImageView? = null
 
         init {
             name = itemView.findViewById(R.id.tv_name)
             id = itemView.findViewById(R.id.tv_id)
             copy = itemView.findViewById(R.id.iv_copy)
             leave = itemView.findViewById(R.id.iv_leave)
+            delete = itemView.findViewById(R.id.iv_delete)
         }
     }
 
     interface OnGroupClickListener {
         fun onCopyClick(id: String)
         fun onLeaveClick(id: String)
+        fun onDeleteClick(id: String)
     }
 }

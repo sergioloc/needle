@@ -43,8 +43,6 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         profileViewModel = ProfileViewModel()
-        if (Info.user.name == "")
-            profileViewModel.getUserInfo()
         if (Info.photos.isEmpty())
             profileViewModel.getMyPhotosURL()
         else
@@ -55,6 +53,10 @@ class ProfileFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        if (Info.user.name.isNotBlank()){
+            tv_info.text = "${Info.user.name}, ${Age().getAge(Info.user.dateOfBirth)}"
+            tv_city.text = Info.user.city
+        }
         if (Info.reloadPhotos){
             profileViewModel.getMyPhotosURL()
             Info.reloadPhotos = false
@@ -87,17 +89,6 @@ class ProfileFragment : Fragment() {
     }
 
     private fun initObservers(){
-        profileViewModel.user.observe(this,
-            Observer<Result<User>> {
-                it.onSuccess { user ->
-                    tv_info.text = "${user.name}, ${Age().getAge(user.dateOfBirth)}"
-                    tv_city.text = user.city
-                }
-                it.onFailure { result ->
-                    Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
-                }
-            }
-        )
         profileViewModel.drawables.observe(this,
             Observer<Result<Boolean>> {
                 it.onSuccess {result ->
@@ -147,7 +138,7 @@ class ProfileFragment : Fragment() {
             btnCreate.setOnClickListener {
                 loader.visibility = View.VISIBLE
                 etName.visibility = View.INVISIBLE
-                profileViewModel.createGroup(Group(etName.text.toString(), 0, ""))
+                profileViewModel.createGroup(Group(etName.text.toString(), FirebaseAuth.getInstance().currentUser?.email!!))
             }
             it.show()
         }
