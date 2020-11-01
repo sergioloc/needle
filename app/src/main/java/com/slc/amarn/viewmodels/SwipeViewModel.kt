@@ -23,11 +23,11 @@ class SwipeViewModel: ViewModel() {
     private val MAX_PHOTOS = 3
     val dateFormat = SimpleDateFormat("dd/M/yyyy hh:mm:ss", Locale.getDefault())
 
-    private val _user: MutableLiveData<Result<User>> = MutableLiveData()
-    val user: LiveData<Result<User>> get() = _user
+    private val _getUser: MutableLiveData<Result<Boolean>> = MutableLiveData()
+    val getUser: LiveData<Result<Boolean>> get() = _getUser
 
-    private val _userList: MutableLiveData<Result<ArrayList<UserPreview>>> = MutableLiveData()
-    val userList: LiveData<Result<ArrayList<UserPreview>>> get() = _userList
+    private val _swipeList: MutableLiveData<Result<ArrayList<UserPreview>>> = MutableLiveData()
+    val swipeList: LiveData<Result<ArrayList<UserPreview>>> get() = _swipeList
 
     fun getMyUserInfo(){
         Info.email = FirebaseAuth.getInstance().currentUser?.email!!
@@ -36,8 +36,10 @@ class SwipeViewModel: ViewModel() {
                 val u = documentSnapshot.toObject(User::class.java)
                 u?.let {
                     Info.user = u
-                    _user.postValue(Result.success(u))
+                    _getUser.postValue(Result.success(true))
                 }
+            }.addOnFailureListener {
+                _getUser.postValue(Result.failure(Throwable("")))
             }
         }
     }
@@ -61,6 +63,7 @@ class SwipeViewModel: ViewModel() {
     private fun getEmailsFromGroup(id: String, ignore: ArrayList<String>){
         db.collection("groups").document(id).get().addOnSuccessListener { documentSnapshot ->
             val group = documentSnapshot.toObject(Group::class.java)
+
             db.collection("groups").document(id).collection("members").get().addOnSuccessListener {query ->
                 if (query.documents.size == 0){ //Group leaved or deleted
                     Info.user.groups.remove(id)
@@ -81,22 +84,10 @@ class SwipeViewModel: ViewModel() {
             val u = documentSnapshot.toObject(User::class.java)
             u?.let {
                 if (isCompatible(u)){
-                    users.add(UserPreview(email, u.name, group, u.dateOfBirth, u.city))
-                    getUserPhotos(users.size-1, email)
+                    users.add(UserPreview(email, u.name, group, u.dateOfBirth, u.city, u.images))
+                    _swipeList.postValue(Result.success(users))
                 }
             }
-        }
-    }
-
-    private fun getUserPhotos(position: Int, email: String){
-        val storage = FirebaseStorage.getInstance().getReference("users/$email")
-        storage.list(MAX_PHOTOS).addOnSuccessListener {
-            for (i in it.items.size-1 downTo 0)
-                it.items[i].downloadUrl.addOnSuccessListener {uri ->
-                    users[position].photos.add(uri.toString())
-                    if (users[position].photos.size == it.items.size)
-                        _userList.postValue(Result.success(users))
-                }
         }
     }
 

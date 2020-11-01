@@ -6,5 +6,5 @@ data class UserPreview(
     val group: String,
     val dateOfBirth: String = "",
     val city: String = "",
-    var photos: ArrayList<String> = ArrayList()
+    var images: ArrayList<String> = ArrayList()
 )

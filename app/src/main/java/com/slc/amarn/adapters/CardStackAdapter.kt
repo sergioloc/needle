@@ -27,7 +27,7 @@ class CardStackAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val user = users[position]
-        val adapter = PhotoAdapter(holder.name.context, user.photos)
+        val adapter = PhotoAdapter(holder.name.context, user.images)
         holder.viewPager.adapter = adapter
         holder.indicator.setupWithViewPager(holder.viewPager)
         holder.name.text = "${user.name}, ${Age().getAge(user.dateOfBirth)}"
@@ -37,7 +37,7 @@ class CardStackAdapter(
         }
 
         holder.front.setOnClickListener {
-            if (holder.viewPager.currentItem != users[position].photos.size) holder.viewPager.currentItem = holder.viewPager.currentItem + 1
+            if (holder.viewPager.currentItem != users[position].images.size) holder.viewPager.currentItem = holder.viewPager.currentItem + 1
         }
     }
 

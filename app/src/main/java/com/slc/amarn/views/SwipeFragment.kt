@@ -72,8 +72,8 @@ class SwipeFragment : Fragment(), CardStackListener {
     }
 
     private fun initObservers(){
-        swipeViewModel.user.observe(this,
-            Observer<Result<User>> {
+        swipeViewModel.getUser.observe(this,
+            Observer<Result<Boolean>> {
                 it.onSuccess {
                     if (Info.user.groups.isEmpty())
                         tv_error_group.visibility = View.VISIBLE
@@ -85,7 +85,7 @@ class SwipeFragment : Fragment(), CardStackListener {
                 }
             }
         )
-        swipeViewModel.userList.observe(this,
+        swipeViewModel.swipeList.observe(this,
             Observer<Result<ArrayList<UserPreview>>> {
                 it.onSuccess {list ->
                     if (list.isEmpty()) //no users
