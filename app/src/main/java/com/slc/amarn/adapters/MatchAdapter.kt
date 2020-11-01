@@ -9,10 +9,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.slc.amarn.R
 import com.slc.amarn.models.Match
-import com.slc.amarn.models.User
-import com.slc.amarn.models.UserMatch
 
-class MatchAdapter(private val matches: ArrayList<UserMatch>, private val onMatchClickListener: OnMatchClickListener): RecyclerView.Adapter<MatchAdapter.UserViewHolder>() {
+class MatchAdapter(private val matches: ArrayList<Match>, private val onMatchClickListener: OnMatchClickListener): RecyclerView.Adapter<MatchAdapter.UserViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         return UserViewHolder(LayoutInflater.from(parent.context), parent)
@@ -47,6 +45,6 @@ class MatchAdapter(private val matches: ArrayList<UserMatch>, private val onMatc
     }
 
     interface OnMatchClickListener {
-        fun onMatchClick(user: UserMatch)
+        fun onMatchClick(user: Match)
     }
 }

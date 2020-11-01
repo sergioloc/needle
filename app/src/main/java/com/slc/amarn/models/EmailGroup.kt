@@ -1,6 +1,6 @@
 package com.slc.amarn.models
 
-data class EmailGroup (
+class EmailGroup (
     val email: String = "",
     val group: String = ""
 )
