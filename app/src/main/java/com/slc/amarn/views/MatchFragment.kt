@@ -6,13 +6,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.slc.amarn.R
 import com.slc.amarn.adapters.MatchAdapter
+import com.slc.amarn.models.Match
 import com.slc.amarn.models.User
+import com.slc.amarn.models.UserMatch
+import com.slc.amarn.viewmodels.MatchViewModel
 import kotlinx.android.synthetic.main.fragment_match.*
 
 class MatchFragment : Fragment(), MatchAdapter.OnMatchClickListener {
+
+    private val matchViewModel = MatchViewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_match, container, false)
@@ -20,11 +26,27 @@ class MatchFragment : Fragment(), MatchAdapter.OnMatchClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        rv_matches.layoutManager = LinearLayoutManager(context)
-        //rv_matches.adapter = MatchAdapter(matches, this)
+        initVariables()
+        initObservers()
+        matchViewModel.getMatches()
     }
 
-    override fun onMatchClick(user: User) {
+    private fun initVariables(){
+        rv_matches.layoutManager = LinearLayoutManager(context)
+    }
+
+    private fun initObservers(){
+        matchViewModel.matchList.observe(this,
+            Observer<Result<ArrayList<UserMatch>>> {
+                it.onSuccess {list ->
+                    list.sortBy { match ->  match.date }
+                    rv_matches.adapter = MatchAdapter(list, this)
+                }
+            }
+        )
+    }
+
+    override fun onMatchClick(user: UserMatch) {
         val i = Intent(context, UserActivity::class.java)
         i.putExtra("user", user)
         startActivity(i)
