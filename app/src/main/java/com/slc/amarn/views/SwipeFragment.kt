@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.fragment_swipe.*
 import android.view.animation.AccelerateInterpolator
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import com.slc.amarn.models.EmailGroup
 import com.slc.amarn.models.User
 import com.slc.amarn.models.UserPreview
 import com.slc.amarn.utils.Info
@@ -27,7 +28,7 @@ class SwipeFragment : Fragment(), CardStackListener {
     lateinit var adapter: CardStackAdapter
     lateinit var cardStackView: CardStackView
     lateinit var swipeViewModel: SwipeViewModel
-    private var emailList: ArrayList<String> = ArrayList()
+    private var emailList: ArrayList<EmailGroup> = ArrayList()
     private var position = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -55,7 +56,7 @@ class SwipeFragment : Fragment(), CardStackListener {
             manager.setSwipeAnimationSetting(setting)
             cardStackView.swipe()
             adapter
-            swipeViewModel.swipeUser(emailList[position], true)
+            swipeViewModel.swipeUser(emailList[position].email, emailList[position].group, true)
         }
 
         fab_like.setOnClickListener {
@@ -66,13 +67,13 @@ class SwipeFragment : Fragment(), CardStackListener {
                 .build()
             manager.setSwipeAnimationSetting(setting)
             cardStackView.swipe()
-            swipeViewModel.swipeUser(emailList[position], true)
+            swipeViewModel.swipeUser(emailList[position].email, emailList[position].group, true)
         }
     }
 
     private fun initObservers(){
-        swipeViewModel.user.observe(this,
-            Observer<Result<User>> {
+        swipeViewModel.getUser.observe(this,
+            Observer<Result<Boolean>> {
                 it.onSuccess {
                     if (Info.user.groups.isEmpty())
                         tv_error_group.visibility = View.VISIBLE
@@ -84,7 +85,7 @@ class SwipeFragment : Fragment(), CardStackListener {
                 }
             }
         )
-        swipeViewModel.userList.observe(this,
+        swipeViewModel.swipeList.observe(this,
             Observer<Result<ArrayList<UserPreview>>> {
                 it.onSuccess {list ->
                     if (list.isEmpty()) //no users
@@ -133,9 +134,9 @@ class SwipeFragment : Fragment(), CardStackListener {
 
     override fun onCardSwiped(direction: Direction) {
         if (direction == Direction.Right)
-            swipeViewModel.swipeUser(emailList[position], true)
+            swipeViewModel.swipeUser(emailList[position].email, emailList[position].group, true)
         else
-            swipeViewModel.swipeUser(emailList[position], false)
+            swipeViewModel.swipeUser(emailList[position].email, emailList[position].group, false)
         position++
         if (emailList.size == position) //no more users
             tv_no_users.visibility = View.VISIBLE

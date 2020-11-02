@@ -6,9 +6,14 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.slc.amarn.models.Group
+import com.slc.amarn.models.GroupId
 import com.slc.amarn.models.User
 import com.slc.amarn.models.UserPreview
 import com.slc.amarn.utils.Info
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class SwipeViewModel: ViewModel() {
 
@@ -16,12 +21,13 @@ class SwipeViewModel: ViewModel() {
     private var users = ArrayList<UserPreview>()
     private var ignore = ArrayList<String>()
     private val MAX_PHOTOS = 3
+    val dateFormat = SimpleDateFormat("dd/M/yyyy hh:mm:ss", Locale.getDefault())
 
-    private val _user: MutableLiveData<Result<User>> = MutableLiveData()
-    val user: LiveData<Result<User>> get() = _user
+    private val _getUser: MutableLiveData<Result<Boolean>> = MutableLiveData()
+    val getUser: LiveData<Result<Boolean>> get() = _getUser
 
-    private val _userList: MutableLiveData<Result<ArrayList<UserPreview>>> = MutableLiveData()
-    val userList: LiveData<Result<ArrayList<UserPreview>>> get() = _userList
+    private val _swipeList: MutableLiveData<Result<ArrayList<UserPreview>>> = MutableLiveData()
+    val swipeList: LiveData<Result<ArrayList<UserPreview>>> get() = _swipeList
 
     fun getMyUserInfo(){
         Info.email = FirebaseAuth.getInstance().currentUser?.email!!
@@ -30,8 +36,10 @@ class SwipeViewModel: ViewModel() {
                 val u = documentSnapshot.toObject(User::class.java)
                 u?.let {
                     Info.user = u
-                    _user.postValue(Result.success(u))
+                    _getUser.postValue(Result.success(true))
                 }
+            }.addOnFailureListener {
+                _getUser.postValue(Result.failure(Throwable("")))
             }
         }
     }
@@ -53,44 +61,37 @@ class SwipeViewModel: ViewModel() {
     }
 
     private fun getEmailsFromGroup(id: String, ignore: ArrayList<String>){
-        db.collection("groups").document(id).collection("members").get().addOnSuccessListener {query ->
-            if (query.documents.size == 0){ //Group leaved or deleted
-                Info.user.groups.remove(id)
-                db.collection("users").document(Info.email).set(Info.user)
+        db.collection("groups").document(id).get().addOnSuccessListener { documentSnapshot ->
+            val group = documentSnapshot.toObject(Group::class.java)
+
+            db.collection("groups").document(id).collection("members").get().addOnSuccessListener {query ->
+                if (query.documents.size == 0){ //Group leaved or deleted
+                    Info.user.groups.remove(id)
+                    db.collection("users").document(Info.email).set(Info.user)
+                }
+                else
+                    for (i in 0 until query.documents.size)
+                        if (Info.email != query.documents[i].id) //Ignore myself
+                            if (!ignore.contains(query.documents[i].id))//If not swiped yet
+                                getUserInfo(query.documents[i].id, group?.name ?: "")
+
             }
-            else
-                for (i in 0 until query.documents.size)
-                    if (Info.email != query.documents[i].id) //Ignore myself
-                        if (!ignore.contains(query.documents[i].id)) //Not swipe yet
-                            getUserInfo(query.documents[i].id)
         }
     }
 
-    private fun getUserInfo(email: String){
+    private fun getUserInfo(email: String, group: String){
         db.collection("users").document(email).get().addOnSuccessListener { documentSnapshot ->
             val u = documentSnapshot.toObject(User::class.java)
             u?.let {
                 if (isCompatible(u)){
-                    users.add(UserPreview(email, u.name, u.dateOfBirth, u.city))
-                    getUserPhotos(users.size-1, email)
+                    users.add(UserPreview(email, u.name, group, u.dateOfBirth, u.city, u.images))
+                    _swipeList.postValue(Result.success(users))
                 }
             }
         }
     }
 
-    private fun getUserPhotos(position: Int, email: String){
-        val storage = FirebaseStorage.getInstance().getReference("users/$email")
-        storage.list(MAX_PHOTOS).addOnSuccessListener {
-            for (i in it.items.size-1 downTo 0)
-                it.items[i].downloadUrl.addOnSuccessListener {uri ->
-                    users[position].photos.add(uri.toString())
-                    if (users[position].photos.size == it.items.size)
-                        _userList.postValue(Result.success(users))
-                }
-        }
-    }
-
-    fun swipeUser(email: String, like: Boolean){
+    fun swipeUser(email: String, group: String, like: Boolean){
         if (like){
             db.collection("users").document(email).collection("swiped").document(Info.email).get().addOnSuccessListener {
                 if (it.data == null) { //User didn't swipe me
@@ -98,9 +99,9 @@ class SwipeViewModel: ViewModel() {
                 }
                 else{
                     if (it.data!!["like"] as Boolean){ //User gave me like
-                        db.collection("users").document(Info.email).collection("matched").document(email).set(hashMapOf("like" to like))
+                        db.collection("users").document(Info.email).collection("matched").document(email).set(hashMapOf("date" to dateFormat.format(Date()), "group" to group))
                         db.collection("users").document(Info.email).collection("swiped").document(email).set(hashMapOf("like" to like))
-                        db.collection("users").document(email).collection("matched").document(Info.email).set(hashMapOf("like" to like))
+                        db.collection("users").document(email).collection("matched").document(Info.email).set(hashMapOf("date" to dateFormat.format(Date()), "group" to group))
                     }
                     else { //User gave me dislike
                         db.collection("users").document(Info.email).collection("swiped").document(email).set(hashMapOf("like" to like))

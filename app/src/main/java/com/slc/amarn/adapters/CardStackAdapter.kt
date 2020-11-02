@@ -3,17 +3,14 @@ package com.slc.amarn.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TableLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.slc.amarn.R
-import com.slc.amarn.models.User
+import com.slc.amarn.models.EmailGroup
 import com.slc.amarn.models.UserPreview
 import com.slc.amarn.utils.Age
-import kotlinx.android.synthetic.main.activity_user.*
 
 class CardStackAdapter(
     private var users: List<UserPreview> = emptyList()
@@ -26,7 +23,7 @@ class CardStackAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val user = users[position]
-        val adapter = PhotoAdapter(holder.name.context, user.photos)
+        val adapter = PhotoAdapter(holder.name.context, user.images)
         holder.viewPager.adapter = adapter
         holder.indicator.setupWithViewPager(holder.viewPager)
         holder.name.text = "${user.name}, ${Age().getAge(user.dateOfBirth)}"
@@ -36,7 +33,7 @@ class CardStackAdapter(
         }
 
         holder.front.setOnClickListener {
-            if (holder.viewPager.currentItem != users[position].photos.size) holder.viewPager.currentItem = holder.viewPager.currentItem + 1
+            if (holder.viewPager.currentItem != users[position].images.size) holder.viewPager.currentItem = holder.viewPager.currentItem + 1
         }
     }
 
@@ -44,10 +41,10 @@ class CardStackAdapter(
         return users.size
     }
 
-    fun getEmailList(): ArrayList<String>{
-        var result = ArrayList<String>()
+    fun getEmailList(): ArrayList<EmailGroup>{
+        var result = ArrayList<EmailGroup>()
         for (u in users)
-            result.add(u.email)
+            result.add(EmailGroup(u.email, u.group))
         return result
     }
 

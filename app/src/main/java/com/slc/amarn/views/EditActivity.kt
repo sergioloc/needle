@@ -212,7 +212,7 @@ class EditActivity: AppCompatActivity() {
             Observer<Result<Boolean>> {
                 loaders?.get(newPhotoPosition)?.visibility = View.GONE
                 it.onSuccess {
-                    Info.reloadPhotos = true
+                    //Info.reloadPhotos = true
                 }
                 it.onFailure {
                     Toast.makeText(applicationContext, "No se ha podido guardar la foto en nuestros servidores", Toast.LENGTH_SHORT).show()
@@ -224,7 +224,7 @@ class EditActivity: AppCompatActivity() {
             Observer<Result<Int>> {
                 it.onSuccess {result ->
                     loaders?.get(result)?.visibility = View.GONE
-                    Info.reloadPhotos = true
+                    //Info.reloadPhotos = true
                     clearImageView(result)
                 }
             }
@@ -250,9 +250,9 @@ class EditActivity: AppCompatActivity() {
     }
 
     private fun setPhotoInImageView() {
-        for (i in 0 until Info.photos.size){
-            val imageView = getImageView(Info.photos[i])
-            Glide.with(applicationContext).load(Info.photos[i]).into(object : SimpleTarget<Drawable?>() {
+        for (i in 0 until Info.user.images.size){
+            val imageView = getImageView(Info.user.images[i])
+            Glide.with(applicationContext).load(Info.user.images[i]).into(object : SimpleTarget<Drawable?>() {
                 override fun onResourceReady(resource: Drawable,transition: Transition<in Drawable?>?) {
                     imageView.setImageDrawable(resource)
                     when (imageView) {

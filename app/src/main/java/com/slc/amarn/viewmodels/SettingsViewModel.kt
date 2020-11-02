@@ -29,7 +29,6 @@ class SettingsViewModel: ViewModel() {
 
     fun signOut(){
         Info.user = User()
-        Info.photos = ArrayList()
         FirebaseAuth.getInstance().signOut()
     }
 

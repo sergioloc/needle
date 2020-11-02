@@ -1,6 +1,9 @@
 package com.slc.amarn.viewmodels
 
 import android.graphics.Bitmap
+import android.os.Handler
+import android.os.Looper
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -38,7 +41,7 @@ class EditViewModel: ViewModel() {
 
         var uploadTask = storage.putBytes(data)
         uploadTask.addOnSuccessListener {
-            _uploadPhoto.postValue(Result.success(true))
+           savePhotoInUser()
         }.addOnFailureListener {
             _uploadPhoto.postValue(Result.failure(Throwable()))
         }
@@ -48,6 +51,22 @@ class EditViewModel: ViewModel() {
         val ref = FirebaseStorage.getInstance().getReference("users/${FirebaseAuth.getInstance().currentUser?.email}/${i+1}.jpg")
         ref.delete().addOnCompleteListener {
             _deletePhoto.postValue(Result.success(i))
+        }
+    }
+
+    private fun savePhotoInUser(){
+        val storage = FirebaseStorage.getInstance().getReference("users/${Info.email}")
+        storage.list(3).addOnSuccessListener {
+            for (i in it.items.size-1 downTo 0)
+                    it.items[i].downloadUrl.addOnSuccessListener {uri ->
+                        Info.user.images.add(uri.toString())
+                    }
+            Handler(Looper.getMainLooper()).postDelayed({
+                run {
+                    saveChanges(Info.user)
+                    _uploadPhoto.postValue(Result.success(true))
+                }
+            }, 3000)
         }
     }
 }
