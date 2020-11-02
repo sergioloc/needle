@@ -56,7 +56,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_city"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/fab_edit"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         app:backgroundTint="@color/white"
         android:src="@drawable/ic_settings"/>
 
@@ -76,7 +76,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/fab_settings"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         app:titleCardGroup="Crear grupo"
@@ -102,6 +102,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="10dp"
+        android:textStyle="italic"
         android:text="Developed by SLC Studios"
         android:textSize="12sp"/>
 
