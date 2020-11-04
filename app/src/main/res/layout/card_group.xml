@@ -3,31 +3,30 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/card_white"
+    android:background="@drawable/card_accent"
     android:padding="10dp">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <ImageView
         android:id="@+id/fab_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:backgroundTint="@color/colorAccent"
-        app:elevation="0dp"
-        android:tint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/white"
         android:src="@drawable/ic_add"/>
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fab_icon"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/fab_icon"
-        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"
         android:textSize="15sp"
-        android:textColor="@color/colorAccent"
-        android:text="Create group"/>
+        android:textColor="@color/white"
+        android:text="Title"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
