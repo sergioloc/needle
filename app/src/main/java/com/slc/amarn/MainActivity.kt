@@ -36,13 +36,15 @@ class MainActivity : AppCompatActivity() {
         tabs.setupWithViewPager(viewPager)
 
         tabs.getTabAt(0)?.setIcon(R.drawable.ic_profile)
-        tabs.getTabAt(1)?.setIcon(R.drawable.ic_hot)
-        tabs.getTabAt(2)?.setIcon(R.drawable.ic_message)
+        tabs.getTabAt(1)?.setIcon(R.drawable.ic_logo)
+        tabs.getTabAt(2)?.setIcon(R.drawable.ic_list)
 
         viewPager.currentItem = 1
         accentFilter = PorterDuffColorFilter(resources.getColor(R.color.colorAccent), PorterDuff.Mode.SRC_IN)
         grayFilter = PorterDuffColorFilter(resources.getColor(R.color.gray), PorterDuff.Mode.SRC_IN)
+        tabs.getTabAt(0)?.icon?.colorFilter = grayFilter
         tabs.getTabAt(1)?.icon?.colorFilter = accentFilter
+        tabs.getTabAt(2)?.icon?.colorFilter = grayFilter
 
     }
 

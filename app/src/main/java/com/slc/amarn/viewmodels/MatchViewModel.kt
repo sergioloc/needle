@@ -27,6 +27,7 @@ class MatchViewModel: ViewModel() {
     }
 
     private fun getMatchesInfo(list: ArrayList<MatchPreview>){
+        infolist = ArrayList()
         for (match in list){
             db.collection("users").document(match.email).get().addOnSuccessListener {documentSnapshot ->
                 val u = documentSnapshot.toObject(User::class.java)
