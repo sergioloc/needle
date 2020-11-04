@@ -118,28 +118,26 @@ class SwipeViewModel: ViewModel() {
         if (user.visible){
             //MAN
             if ((Info.user.gender == 1 || Info.user.gender == 4) && Info.user.orientation == 1){ // I am a man looking for a man
-                if ((user.gender == 1 || user.gender == 4) && user.orientation == 1) // Is a man looking for a man
+                if (user.gender == 1 || user.gender == 4) // Is a man
                     return true
             }
             else if ((Info.user.gender == 1 || Info.user.gender == 4) && Info.user.orientation == 2){ // I am a man looking for a woman
-                if ((user.gender == 2 || user.gender == 3) && user.orientation == 1) // Is a woman looking for a man
+                if (user.gender == 2 || user.gender == 31) // Is a woman
                     return true
             }
-            else if ((Info.user.gender == 1 || Info.user.gender == 4) && Info.user.orientation == 3){ // I am a man looking for a woman
-                if (user.orientation == 1) // Is a man/woman looking for a man
+            else if ((Info.user.gender == 1 || Info.user.gender == 4) && Info.user.orientation == 3){ // I am a man looking for a someone
                     return true
             }
             //WOMAN
             else if ((Info.user.gender == 2 || Info.user.gender == 3) && Info.user.orientation == 1){ // I am a woman looking for a man
-                if ((user.gender == 1 || user.gender == 4) && user.orientation == 2) // Is a man looking for a woman
+                if (user.gender == 1 || user.gender == 4) // Is a man
                     return true
             }
             else if ((Info.user.gender == 2 || Info.user.gender == 3) && Info.user.orientation == 2){ // I am a woman looking for a woman
-                if ((user.gender == 2 || user.gender == 3) && user.orientation == 2) // Is a woman looking for a woman
+                if (user.gender == 2 || user.gender == 3) // Is a woman
                     return true
             }
-            else if ((Info.user.gender == 2 || Info.user.gender == 3) && Info.user.orientation == 3){ // I am a woman looking for a man
-                if (user.orientation == 2) // Is a man/woman looking for a woman
+            else if ((Info.user.gender == 2 || Info.user.gender == 3) && Info.user.orientation == 3){ // I am a woman looking for a someone
                     return true
             }
         }
