@@ -48,26 +48,30 @@ class SwipeFragment : Fragment(), CardStackListener {
 
     private fun initButtons() {
         fab_dislike.setOnClickListener {
-            val setting = SwipeAnimationSetting.Builder()
-                .setDirection(Direction.Left)
-                .setDuration(Duration.Slow.duration)
-                .setInterpolator(AccelerateInterpolator())
-                .build()
-            manager.setSwipeAnimationSetting(setting)
-            cardStackView.swipe()
-            adapter
-            swipeViewModel.swipeUser(emailList[position].email, emailList[position].group, true)
+            if (emailList.isNotEmpty()){
+                val setting = SwipeAnimationSetting.Builder()
+                    .setDirection(Direction.Left)
+                    .setDuration(Duration.Slow.duration)
+                    .setInterpolator(AccelerateInterpolator())
+                    .build()
+                manager.setSwipeAnimationSetting(setting)
+                cardStackView.swipe()
+                adapter
+                swipeViewModel.swipeUser(emailList[position].email, emailList[position].group, true)
+            }
         }
 
         fab_like.setOnClickListener {
-            val setting = SwipeAnimationSetting.Builder()
-                .setDirection(Direction.Right)
-                .setDuration(Duration.Slow.duration)
-                .setInterpolator(AccelerateInterpolator())
-                .build()
-            manager.setSwipeAnimationSetting(setting)
-            cardStackView.swipe()
-            swipeViewModel.swipeUser(emailList[position].email, emailList[position].group, true)
+            if (emailList.isNotEmpty()){
+                val setting = SwipeAnimationSetting.Builder()
+                    .setDirection(Direction.Right)
+                    .setDuration(Duration.Slow.duration)
+                    .setInterpolator(AccelerateInterpolator())
+                    .build()
+                manager.setSwipeAnimationSetting(setting)
+                cardStackView.swipe()
+                swipeViewModel.swipeUser(emailList[position].email, emailList[position].group, true)
+            }
         }
     }
 
