@@ -50,6 +50,8 @@ class EditViewModel: ViewModel() {
     fun deletePhoto(i: Int){
         val ref = FirebaseStorage.getInstance().getReference("users/${FirebaseAuth.getInstance().currentUser?.email}/${i+1}.jpg")
         ref.delete().addOnCompleteListener {
+            Info.user.images.removeAt(i)
+            saveChanges(Info.user)
             _deletePhoto.postValue(Result.success(i))
         }
     }
@@ -57,7 +59,8 @@ class EditViewModel: ViewModel() {
     private fun savePhotoInUser(){
         val storage = FirebaseStorage.getInstance().getReference("users/${Info.email}")
         storage.list(3).addOnSuccessListener {
-            for (i in it.items.size-1 downTo 0)
+            Info.user.images = ArrayList()
+            for (i in 0 until it.items.size)
                     it.items[i].downloadUrl.addOnSuccessListener {uri ->
                         Info.user.images.add(uri.toString())
                     }
