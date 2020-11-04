@@ -13,8 +13,6 @@ import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.slc.amarn.R
 import com.slc.amarn.models.Match
-import com.slc.amarn.utils.Info
-import kotlinx.android.synthetic.main.fragment_profile.*
 
 class MatchAdapter(private val matches: ArrayList<Match>, private val onMatchClickListener: OnMatchClickListener): RecyclerView.Adapter<MatchAdapter.UserViewHolder>() {
 
@@ -41,7 +39,7 @@ class MatchAdapter(private val matches: ArrayList<Match>, private val onMatchCli
     }
 
     class UserViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
-        RecyclerView.ViewHolder(inflater.inflate(R.layout.item_match, parent, false)) {
+        RecyclerView.ViewHolder(inflater.inflate(R.layout.cell_match, parent, false)) {
 
         var root: ConstraintLayout? = null
         var icon: ImageView? = null
