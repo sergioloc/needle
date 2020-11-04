@@ -3,6 +3,7 @@ package com.slc.amarn.components
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -11,7 +12,7 @@ import com.slc.amarn.R
 class CardGroup @JvmOverloads constructor(
     context: Context, attributeSet: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attributeSet, defStyleAttr) {
-    private val ivIcon: FloatingActionButton
+    private val ivIcon: ImageView
     private val tvTitle: TextView
 
     init {

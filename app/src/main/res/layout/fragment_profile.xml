@@ -55,8 +55,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tv_city"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/cg_join"
         app:layout_constraintEnd_toStartOf="@id/fab_edit"
-        android:layout_marginTop="30dp"
         app:backgroundTint="@color/white"
         android:src="@drawable/ic_settings"/>
 
@@ -72,23 +72,24 @@
 
     <com.slc.amarn.components.CardGroup
         android:id="@+id/cg_create"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/fab_settings"
+        app:layout_constraintBottom_toTopOf="@id/tv_credits"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toStartOf="@id/cg_join"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         app:titleCardGroup="Crear grupo"
         app:iconCardGroup="@drawable/ic_add"/>
 
     <com.slc.amarn.components.CardGroup
         android:id="@+id/cg_join"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/cg_create"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toTopOf="@id/cg_create"
+        app:layout_constraintBottom_toBottomOf="@id/cg_create"
+        app:layout_constraintStart_toEndOf="@id/cg_create"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         app:titleCardGroup="Unirse a un grupo"
@@ -102,6 +103,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="10dp"
+        android:textStyle="italic"
         android:text="Developed by SLC Studios"
         android:textSize="12sp"/>
 
