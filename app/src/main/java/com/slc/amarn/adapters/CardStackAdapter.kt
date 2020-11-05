@@ -3,6 +3,7 @@ package com.slc.amarn.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
@@ -28,6 +29,7 @@ class CardStackAdapter(
         holder.indicator.setupWithViewPager(holder.viewPager)
         holder.name.text = "${user.name}, ${Age().getAge(user.dateOfBirth)}"
         holder.city.text = user.city
+        holder.group.text = user.group
         holder.back.setOnClickListener {
             if (holder.viewPager.currentItem != 0) holder.viewPager.currentItem = holder.viewPager.currentItem - 1
         }
@@ -53,6 +55,7 @@ class CardStackAdapter(
         val indicator: TabLayout = view.findViewById(R.id.tab_indicator)
         val name: TextView = view.findViewById(R.id.item_name)
         var city: TextView = view.findViewById(R.id.item_city)
+        var group: Button = view.findViewById(R.id.chip_group)
         var front: View = view.findViewById(R.id.btn_front)
         var back: View = view.findViewById(R.id.btn_back)
     }

@@ -79,10 +79,16 @@ class SwipeFragment : Fragment(), CardStackListener {
         swipeViewModel.getUser.observe(this,
             Observer<Result<Boolean>> {
                 it.onSuccess {
-                    if (Info.user.groups.isEmpty())
-                        tv_error_group.visibility = View.VISIBLE
+                    if (Info.user.orientation == 0 || Info.user.gender == 0){ //Incomplete profile
+                        loader.visibility = View.GONE
+                        profile.visibility = View.VISIBLE
+                    }
+                    else if (Info.user.groups.isEmpty()) { // No groups
+                        tv_message.text = "You are not in any group"
+                        tv_message.visibility = View.VISIBLE
+                    }
                     else
-                        swipeViewModel.getUsers(Info.user.groups)
+                        swipeViewModel.getMembers()
                 }
                 it.onFailure { result ->
                     Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
@@ -91,19 +97,15 @@ class SwipeFragment : Fragment(), CardStackListener {
         )
         swipeViewModel.swipeList.observe(this,
             Observer<Result<ArrayList<UserPreview>>> {
+                loader.visibility = View.GONE
                 it.onSuccess {list ->
-                    if (list.isEmpty()) //no users
-                        tv_no_users.visibility = View.VISIBLE
-                    else {
-                        adapter = CardStackAdapter(list)
-                        position = 0
-                        emailList = adapter.getEmailList()
-                        cardStackView.adapter = adapter
-                    }
-                    loader.visibility = View.GONE
+                    adapter = CardStackAdapter(list)
+                    position = 0
+                    emailList = adapter.getEmailList()
+                    cardStackView.adapter = adapter
                 }
-                it.onFailure { result ->
-                    Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
+                it.onFailure {
+                    upToDate()
                 }
             }
         )
@@ -111,7 +113,7 @@ class SwipeFragment : Fragment(), CardStackListener {
 
     private fun initVariables() {
         manager = CardStackLayoutManager(context, this)
-        manager.setStackFrom(StackFrom.None)
+        manager.setStackFrom(StackFrom.Top)
         manager.setVisibleCount(3)
         manager.setTranslationInterval(8.0f)
         manager.setScaleInterval(0.95f)
@@ -123,15 +125,12 @@ class SwipeFragment : Fragment(), CardStackListener {
         manager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
         manager.setOverlayInterpolator(LinearInterpolator())
         cardStackView.layoutManager = manager
+    }
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            run {
-                if (emailList.isEmpty()){
-                    loader.visibility = View.GONE
-                    tv_no_users.visibility = View.VISIBLE
-                }
-            }
-        }, 3000)
+    private fun upToDate(){
+        tv_message.text = "You are up to date"
+        tv_message.visibility = View.VISIBLE
+        done.visibility = View.VISIBLE
     }
 
     //Overrides -----------------------------------------------------------------------------------
@@ -143,7 +142,8 @@ class SwipeFragment : Fragment(), CardStackListener {
             swipeViewModel.swipeUser(emailList[position].email, emailList[position].group, false)
         position++
         if (emailList.size == position) //no more users
-            tv_no_users.visibility = View.VISIBLE
+            upToDate()
+
     }
 
     override fun onCardDisappeared(view: View?, position: Int) { }

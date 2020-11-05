@@ -38,7 +38,7 @@ class MatchFragment : Fragment(), MatchAdapter.OnMatchClickListener {
         matchViewModel.matchList.observe(this,
             Observer<Result<ArrayList<Match>>> {
                 it.onSuccess {list ->
-                    list.sortBy { match ->  match.date }
+                    list.sortByDescending { match ->  match.date }
                     rv_matches.adapter = MatchAdapter(list, this)
                 }
             }

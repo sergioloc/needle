@@ -44,7 +44,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -56,20 +56,42 @@
             android:id="@+id/item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/item_city"
+            app:layout_constraintStart_toStartOf="parent"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:textSize="26sp"
-            tools:text="Name"/>
+            tools:text="Name, 00"/>
 
         <TextView
             android:id="@+id/item_city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/item_name"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/item_name"
             android:textStyle="bold"
             android:textColor="@color/white"
-            android:textSize="18sp"/>
+            android:textSize="18sp"
+            tools:text="City"/>
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/chip_group"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:background="@drawable/chip_accent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:clickable="false"
+            android:stateListAnimator="@null"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            tools:text="Group"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
         android:id="@+id/left_overlay"
@@ -82,7 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="50dp"
             android:src="@drawable/ic_cross"
-            app:tint="@color/red50"
+            app:tint="@color/black25"
             android:layout_gravity="center"/>
 
     </FrameLayout>
@@ -98,23 +120,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="50dp"
             android:src="@drawable/ic_heart"
-            app:tint="@color/green50"
-            android:layout_gravity="center"/>
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/top_overlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white50">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="50dp"
-            android:src="@drawable/ic_star"
-            app:tint="@color/blue50"
+            app:tint="@color/colorAccent50"
             android:layout_gravity="center"/>
 
     </FrameLayout>
