@@ -88,7 +88,7 @@ class SwipeFragment : Fragment(), CardStackListener {
                         tv_message.visibility = View.VISIBLE
                     }
                     else
-                        swipeViewModel.getMembers(Info.user.groups)
+                        swipeViewModel.getMembers()
                 }
                 it.onFailure { result ->
                     Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
