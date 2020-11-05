@@ -48,8 +48,7 @@ class SwipeViewModel: ViewModel() {
         //Get ignore emails
         db.collection("users").document(Info.email).collection("swiped").get().addOnSuccessListener {query ->
             for (i in 0 until query.documents.size)
-                if (Info.email != query.documents[i].id) //Ignore myself
-                    ignore.add(query.documents[i].id)
+                ignore.add(query.documents[i].id)
 
             for (id in Info.user.groups){
                 getEmailsFromGroup(id, ignore)
