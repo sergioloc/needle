@@ -104,10 +104,8 @@ class SwipeFragment : Fragment(), CardStackListener {
                     emailList = adapter.getEmailList()
                     cardStackView.adapter = adapter
                 }
-                it.onFailure { result ->
-                    done.visibility = View.VISIBLE
-                    tv_message.text = result.message
-                    tv_message.visibility = View.VISIBLE
+                it.onFailure {
+                    upToDate()
                 }
             }
         )
@@ -127,15 +125,12 @@ class SwipeFragment : Fragment(), CardStackListener {
         manager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
         manager.setOverlayInterpolator(LinearInterpolator())
         cardStackView.layoutManager = manager
+    }
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            run {
-                if (emailList.isEmpty()){
-                    //loader.visibility = View.GONE
-                    //tv_no_users.visibility = View.VISIBLE
-                }
-            }
-        }, 3000)
+    private fun upToDate(){
+        tv_message.text = "You are up to date"
+        tv_message.visibility = View.VISIBLE
+        done.visibility = View.VISIBLE
     }
 
     //Overrides -----------------------------------------------------------------------------------
@@ -146,10 +141,9 @@ class SwipeFragment : Fragment(), CardStackListener {
         else
             swipeViewModel.swipeUser(emailList[position].email, emailList[position].group, false)
         position++
-        if (emailList.size == position) { //no more users
-            tv_message.text = "No more users"
-            tv_message.visibility = View.VISIBLE
-        }
+        if (emailList.size == position) //no more users
+            upToDate()
+
     }
 
     override fun onCardDisappeared(view: View?, position: Int) { }
