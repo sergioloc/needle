@@ -32,6 +32,21 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"/>
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/fab_dislike"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:scaleType="fitCenter"
+        app:lottie_rawRes="@raw/profile"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_repeatMode="reverse"
+        android:visibility="gone"/>
+
     <TextView
         android:id="@+id/tv_error_group"
         android:layout_width="wrap_content"

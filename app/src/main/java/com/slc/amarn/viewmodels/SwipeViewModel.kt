@@ -44,7 +44,7 @@ class SwipeViewModel: ViewModel() {
         }
     }
 
-    fun getUsers(groups: ArrayList<String>){
+    fun getMembers(groups: ArrayList<String>){
         users = ArrayList()
         ignore = ArrayList()
 

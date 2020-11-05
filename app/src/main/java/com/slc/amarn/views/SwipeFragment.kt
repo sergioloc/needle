@@ -79,10 +79,14 @@ class SwipeFragment : Fragment(), CardStackListener {
         swipeViewModel.getUser.observe(this,
             Observer<Result<Boolean>> {
                 it.onSuccess {
-                    if (Info.user.groups.isEmpty())
+                    if (Info.user.orientation == 0 || Info.user.gender == 0){
+                        loader.visibility = View.GONE
+                        profile.visibility = View.VISIBLE
+                    }
+                    else if (Info.user.groups.isEmpty())
                         tv_error_group.visibility = View.VISIBLE
                     else
-                        swipeViewModel.getUsers(Info.user.groups)
+                        swipeViewModel.getMembers(Info.user.groups)
                 }
                 it.onFailure { result ->
                     Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
@@ -127,8 +131,8 @@ class SwipeFragment : Fragment(), CardStackListener {
         Handler(Looper.getMainLooper()).postDelayed({
             run {
                 if (emailList.isEmpty()){
-                    loader.visibility = View.GONE
-                    tv_no_users.visibility = View.VISIBLE
+                    //loader.visibility = View.GONE
+                    //tv_no_users.visibility = View.VISIBLE
                 }
             }
         }, 3000)
