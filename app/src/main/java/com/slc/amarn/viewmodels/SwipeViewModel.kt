@@ -1,5 +1,6 @@
 package com.slc.amarn.viewmodels
 
+import android.app.Notification
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -102,6 +103,7 @@ class SwipeViewModel: ViewModel() {
                 }
                 else{
                     if (it.data!!["like"] as Boolean){ //User gave me like
+                        Info.notification = true
                         db.collection("users").document(Info.email).collection("matched").document(email).set(hashMapOf("date" to dateFormat.format(Date()), "group" to group))
                         db.collection("users").document(Info.email).collection("swiped").document(email).set(hashMapOf("like" to like))
                         db.collection("users").document(email).collection("matched").document(Info.email).set(hashMapOf("date" to dateFormat.format(Date()), "group" to group))

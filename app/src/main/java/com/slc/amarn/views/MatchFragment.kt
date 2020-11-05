@@ -12,6 +12,7 @@ import com.slc.amarn.R
 import com.slc.amarn.adapters.MatchAdapter
 import com.slc.amarn.models.Match
 import com.slc.amarn.models.User
+import com.slc.amarn.utils.Info
 import com.slc.amarn.viewmodels.MatchViewModel
 import kotlinx.android.synthetic.main.fragment_match.*
 
@@ -27,7 +28,12 @@ class MatchFragment : Fragment(), MatchAdapter.OnMatchClickListener {
         super.onViewCreated(view, savedInstanceState)
         initVariables()
         initObservers()
-        matchViewModel.getMatches()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (Info.notification)
+            matchViewModel.getMatches()
     }
 
     private fun initVariables(){
@@ -40,22 +46,23 @@ class MatchFragment : Fragment(), MatchAdapter.OnMatchClickListener {
                 it.onSuccess {list ->
                     list.sortByDescending { match ->  match.date }
                     rv_matches.adapter = MatchAdapter(list, this)
+                    Info.notification = false
                 }
             }
         )
     }
 
-    override fun onMatchClick(u: Match) {
+    override fun onMatchClick(match: Match) {
         val i = Intent(context, UserActivity::class.java)
         val user = User(
-            name = u.name,
-            dateOfBirth = u.dateOfBirth,
-            city = u.city,
-            description = u.description,
-            instagram = u.instagram,
-            facebook = u.facebook,
-            phone = u.phone,
-            images = u.images
+            name = match.name,
+            dateOfBirth = match.dateOfBirth,
+            city = match.city,
+            description = match.description,
+            instagram = match.instagram,
+            facebook = match.facebook,
+            phone = match.phone,
+            images = match.images
 
         )
         i.putExtra("user", user)
