@@ -79,12 +79,14 @@ class SwipeFragment : Fragment(), CardStackListener {
         swipeViewModel.getUser.observe(this,
             Observer<Result<Boolean>> {
                 it.onSuccess {
-                    if (Info.user.orientation == 0 || Info.user.gender == 0){
+                    if (Info.user.orientation == 0 || Info.user.gender == 0){ //Incomplete profile
                         loader.visibility = View.GONE
                         profile.visibility = View.VISIBLE
                     }
-                    else if (Info.user.groups.isEmpty())
-                        tv_error_group.visibility = View.VISIBLE
+                    else if (Info.user.groups.isEmpty()) { // No groups
+                        tv_message.text = "You are not in any group"
+                        tv_message.visibility = View.VISIBLE
+                    }
                     else
                         swipeViewModel.getMembers(Info.user.groups)
                 }
@@ -95,19 +97,17 @@ class SwipeFragment : Fragment(), CardStackListener {
         )
         swipeViewModel.swipeList.observe(this,
             Observer<Result<ArrayList<UserPreview>>> {
+                loader.visibility = View.GONE
                 it.onSuccess {list ->
-                    if (list.isEmpty()) //no users
-                        tv_no_users.visibility = View.VISIBLE
-                    else {
-                        adapter = CardStackAdapter(list)
-                        position = 0
-                        emailList = adapter.getEmailList()
-                        cardStackView.adapter = adapter
-                    }
-                    loader.visibility = View.GONE
+                    adapter = CardStackAdapter(list)
+                    position = 0
+                    emailList = adapter.getEmailList()
+                    cardStackView.adapter = adapter
                 }
                 it.onFailure { result ->
-                    Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
+                    done.visibility = View.VISIBLE
+                    tv_message.text = result.message
+                    tv_message.visibility = View.VISIBLE
                 }
             }
         )
@@ -146,8 +146,10 @@ class SwipeFragment : Fragment(), CardStackListener {
         else
             swipeViewModel.swipeUser(emailList[position].email, emailList[position].group, false)
         position++
-        if (emailList.size == position) //no more users
-            tv_no_users.visibility = View.VISIBLE
+        if (emailList.size == position) { //no more users
+            tv_message.text = "No more users"
+            tv_message.visibility = View.VISIBLE
+        }
     }
 
     override fun onCardDisappeared(view: View?, position: Int) { }

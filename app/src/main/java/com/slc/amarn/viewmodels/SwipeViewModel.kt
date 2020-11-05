@@ -69,12 +69,17 @@ class SwipeViewModel: ViewModel() {
                     Info.user.groups.remove(id)
                     db.collection("users").document(Info.email).set(Info.user)
                 }
-                else
+                else {
+                    var found = false
                     for (i in 0 until query.documents.size)
                         if (Info.email != query.documents[i].id) //Ignore myself
-                            if (!ignore.contains(query.documents[i].id))//If not swiped yet
+                            if (!ignore.contains(query.documents[i].id)) { //If not swiped yet
+                                found = true
                                 getUserInfo(query.documents[i].id, group?.name ?: "")
-
+                            }
+                    if (!found)
+                        _swipeList.postValue(Result.failure(Throwable("You are up to date")))
+                }
             }
         }
     }
