@@ -9,6 +9,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 class LoginViewModel: ViewModel() {
 
@@ -18,9 +19,14 @@ class LoginViewModel: ViewModel() {
     private val _googleSignInClient: MutableLiveData<Result<GoogleSignInClient>> = MutableLiveData()
     val googleSignInClient: LiveData<Result<GoogleSignInClient>> get() = _googleSignInClient
 
+    private var user: FirebaseUser? = null
+
     init {
-        if (FirebaseAuth.getInstance().currentUser != null)
-            _state.postValue(Result.success(true))
+        user = FirebaseAuth.getInstance().currentUser
+        user?.let {
+            if (it.isEmailVerified)
+                _state.postValue(Result.success(true))
+        }
     }
 
     fun signInWithMain(email: String, password: String){
@@ -30,7 +36,12 @@ class LoginViewModel: ViewModel() {
         else {
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener {
                 if (it.isSuccessful){
-                    _state.postValue(Result.success(true))
+                    user?.let {u ->
+                        if (u.isEmailVerified)
+                            _state.postValue(Result.success(true))
+                        else
+                            _state.postValue(Result.failure(Throwable("Email is not verify")))
+                    }
                 }
                 else {
                     _state.postValue(Result.failure(Throwable(it.exception)))

@@ -137,11 +137,11 @@
         app:layout_constraintTop_toBottomOf="@id/tv_alternative"
         app:layout_constraintStart_toStartOf="@id/btn_login"
         app:layout_constraintEnd_toStartOf="@id/btn_twitter"
-        android:layout_marginTop="20dp"
         app:backgroundTint="@color/gray"
         android:textColor="@color/white"
         android:tint="@color/white"
-        android:src="@drawable/ic_facebook"/>
+        android:src="@drawable/ic_facebook"
+        android:visibility="gone"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_twitter"
@@ -150,10 +150,10 @@
         app:layout_constraintTop_toTopOf="@id/btn_facebook"
         app:layout_constraintStart_toEndOf="@id/btn_facebook"
         app:layout_constraintEnd_toStartOf="@id/btn_google"
-        android:layout_marginStart="10dp"
         app:backgroundTint="@color/gray"
         android:tint="@color/white"
-        android:src="@drawable/ic_twitter"/>
+        android:src="@drawable/ic_twitter"
+        android:visibility="gone"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_google"
@@ -162,7 +162,7 @@
         app:layout_constraintTop_toTopOf="@id/btn_facebook"
         app:layout_constraintStart_toEndOf="@id/btn_twitter"
         app:layout_constraintEnd_toEndOf="@id/btn_login"
-        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
         app:backgroundTint="@color/google"
         android:tint="@color/white"
         android:src="@drawable/ic_google"/>

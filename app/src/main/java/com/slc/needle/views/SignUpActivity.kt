@@ -1,11 +1,17 @@
 package com.slc.needle.views
 
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.Window
+import android.widget.Button
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import com.slc.needle.MainActivity
 import com.slc.needle.R
@@ -45,7 +51,7 @@ class SignUpActivity : AppCompatActivity() {
         signUpViewModel.state.observe(this,
             Observer<Result<Boolean>> {
                 if (it.isSuccess){
-                    startActivity(Intent(this, MainActivity::class.java))
+                    showVerifyDialog()
                 }
                 else {
                     it.onFailure { result ->
@@ -61,6 +67,20 @@ class SignUpActivity : AppCompatActivity() {
             et_dateOfBirth.text.clear()
             et_dateOfBirth.text.insert(0, "$newDay-${newMonth+1}-$newYear")
         }, year, month, day).show()
+    }
+
+    private fun showVerifyDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_verify)
+        dialog.window?.setLayout(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val btnOk = dialog.findViewById(R.id.btn_ok) as Button
+        btnOk.setOnClickListener {
+            dialog.dismiss()
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
+        dialog.show()
     }
 
     override fun onBackPressed() {

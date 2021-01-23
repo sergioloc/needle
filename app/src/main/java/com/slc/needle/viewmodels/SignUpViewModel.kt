@@ -33,6 +33,8 @@ class SignUpViewModel: ViewModel() {
                             _state.postValue(Result.success(true))
                         }
                     }
+                    //Send email
+                    FirebaseAuth.getInstance().currentUser?.sendEmailVerification()
                 }
                 else {
                     _state.postValue(Result.failure(Throwable(it.exception)))
