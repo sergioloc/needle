@@ -70,7 +70,7 @@
         app:backgroundTint="@color/white"
         android:src="@drawable/ic_edit"/>
 
-    <com.slc.amarn.components.CardGroup
+    <com.slc.needle.components.CardGroup
         android:id="@+id/cg_create"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
         app:titleCardGroup="Crear grupo"
         app:iconCardGroup="@drawable/ic_add"/>
 
-    <com.slc.amarn.components.CardGroup
+    <com.slc.needle.components.CardGroup
         android:id="@+id/cg_join"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

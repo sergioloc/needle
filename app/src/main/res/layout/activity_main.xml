@@ -22,7 +22,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.slc.amarn.components.CustomViewPager
+    <com.slc.needle.components.CustomViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
