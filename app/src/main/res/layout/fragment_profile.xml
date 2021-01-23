@@ -21,7 +21,8 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/bear"/>
+            tools:ignore="ContentDescription"
+            android:src="@color/black"/>
 
     </androidx.cardview.widget.CardView>
 
@@ -33,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="10dp"
-        android:text="Sergio, 24"
+        tools:text="Name, 00"
         android:textColor="@color/black"
         android:textSize="20sp"/>
 
@@ -45,7 +46,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="10dp"
-        android:text="Madrid"
+        tools:text="City"
         android:textColor="@color/black"
         android:textSize="15sp"/>
 
@@ -55,8 +56,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tv_city"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/cg_join"
         app:layout_constraintEnd_toStartOf="@id/fab_edit"
-        android:layout_marginTop="30dp"
         app:backgroundTint="@color/white"
         android:src="@drawable/ic_settings"/>
 
@@ -70,6 +71,31 @@
         app:backgroundTint="@color/white"
         android:src="@drawable/ic_edit"/>
 
+    <com.slc.needle.components.CardGroup
+        android:id="@+id/cg_create"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/fab_settings"
+        app:layout_constraintBottom_toTopOf="@id/tv_credits"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/cg_join"
+        android:layout_marginStart="20dp"
+        app:titleCardGroup="Create group"
+        app:iconCardGroup="@drawable/ic_add"/>
+
+    <com.slc.needle.components.CardGroup
+        android:id="@+id/cg_join"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/cg_create"
+        app:layout_constraintBottom_toBottomOf="@id/cg_create"
+        app:layout_constraintStart_toEndOf="@id/cg_create"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:titleCardGroup="Join group"
+        app:iconCardGroup="@drawable/ic_search"/>
+
     <TextView
         android:id="@+id/tv_credits"
         android:layout_width="wrap_content"
@@ -78,7 +104,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="10dp"
-        android:text="Developed by SLC Studios"
+        android:textStyle="italic"
+        android:text="@string/developed"
         android:textSize="12sp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/root_NavBar">
+
+    <View
+        android:id="@+id/background_NavBar"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/profile_NavBar"
+        app:layout_constraintEnd_toEndOf="@id/match_NavBar"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:elevation="5dp"
+        android:background="@drawable/background_navbar"/>
+
+    <View
+        android:id="@+id/circle_move_NavBar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="@id/swipe_NavBar"
+        app:layout_constraintBottom_toBottomOf="@id/swipe_NavBar"
+        app:layout_constraintStart_toStartOf="@id/swipe_NavBar"
+        app:layout_constraintEnd_toEndOf="@id/swipe_NavBar"
+        android:elevation="5dp"
+        android:background="@drawable/circle_navbar"/>
+
+    <ImageView
+        android:id="@+id/profile_NavBar"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        app:layout_constraintTop_toTopOf="@id/background_NavBar"
+        app:layout_constraintBottom_toBottomOf="@id/background_NavBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/swipe_NavBar"
+        android:elevation="5dp"
+        android:scaleType="fitCenter"
+        android:contentDescription="@null"
+        app:srcCompat="@drawable/ic_person"
+        android:padding="16dp"
+        app:tint="@color/gray" />
+
+    <ImageView
+        android:id="@+id/swipe_NavBar"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:scaleType="fitCenter"
+        android:contentDescription="@null"
+        app:layout_constraintTop_toTopOf="@id/background_NavBar"
+        app:layout_constraintBottom_toBottomOf="@id/background_NavBar"
+        app:layout_constraintStart_toEndOf="@id/profile_NavBar"
+        app:layout_constraintEnd_toStartOf="@id/match_NavBar"
+        android:padding="16dp"
+        android:elevation="5dp"
+        app:srcCompat="@drawable/ic_logo" />
+
+    <ImageView
+        android:id="@+id/match_NavBar"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:scaleType="fitCenter"
+        android:contentDescription="@null"
+        app:layout_constraintTop_toTopOf="@id/background_NavBar"
+        app:layout_constraintBottom_toBottomOf="@id/background_NavBar"
+        app:layout_constraintStart_toEndOf="@id/swipe_NavBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="16dp"
+        android:elevation="5dp"
+        app:srcCompat="@drawable/ic_list"
+        app:tint="@color/gray"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

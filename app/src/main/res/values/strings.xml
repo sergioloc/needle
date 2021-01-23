@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">AmarN</string>
+    <string name="app_name">Needle</string>
+    <string name="developed">Developed by SLC Studios</string>
+
+    <string name="settings">Settings</string>
+    <string name="groups">Groups:</string>
+    <string name="no_group">You don\'t have any group yet</string>
+    <string name="visible">Visible in Needle</string>
+    <string name="sign_out">Sign out</string>
+
 </resources>

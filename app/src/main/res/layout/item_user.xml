@@ -8,7 +8,7 @@
     android:foreground="?attr/selectableItemBackground"
     app:cardUseCompatPadding="true"
     app:cardPreventCornerOverlap="false"
-    app:cardCornerRadius="8dp"
+    app:cardCornerRadius="30dp"
     app:cardBackgroundColor="@android:color/white">
 
     <androidx.viewpager.widget.ViewPager
@@ -44,7 +44,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -56,67 +56,99 @@
             android:id="@+id/item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/item_city"
+            app:layout_constraintStart_toStartOf="parent"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:textSize="26sp"
-            tools:text="Name"/>
+            tools:text="Name, 00"/>
 
         <TextView
-            android:id="@+id/item_lbg"
+            android:id="@+id/item_city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/item_name"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/item_name"
             android:textStyle="bold"
             android:textColor="@color/white"
-            android:textSize="18sp"/>
+            android:textSize="18sp"
+            tools:text="City"/>
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/chip_group"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:background="@drawable/chip_accent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:clickable="false"
+            android:stateListAnimator="@null"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            tools:text="Group"/>
 
-    <FrameLayout
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/left_overlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white50">
+        android:background="@color/white75">
 
-        <ImageView
+        <Space
+            android:id="@+id/centerCross"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="50dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/centerCross"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="20dp"
+            tools:ignore="ContentDescription"
             android:src="@drawable/ic_cross"
-            app:tint="@color/red50"
-            android:layout_gravity="center"/>
+            app:tint="@color/black25" />
 
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/right_overlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white50">
+        android:background="@color/white75">
 
-        <ImageView
+        <Space
+            android:id="@+id/centerHeart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="50dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/centerHeart"
+            android:layout_margin="20dp"
+            tools:ignore="ContentDescription"
             android:src="@drawable/ic_heart"
-            app:tint="@color/green50"
-            android:layout_gravity="center"/>
+            app:tint="@color/colorAccent50" />
 
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/top_overlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white50">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="50dp"
-            android:src="@drawable/ic_star"
-            app:tint="@color/blue50"
-            android:layout_gravity="center"/>
-
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>
