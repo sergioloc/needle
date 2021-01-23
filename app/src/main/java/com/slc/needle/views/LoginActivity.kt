@@ -78,7 +78,7 @@ class LoginActivity : AppCompatActivity() {
             val task =  GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)
-                loginViewModel.signInWithCredential(GoogleAuthProvider.getCredential(account?.idToken, null))
+                account?.let { loginViewModel.signInWithCredential(it) }
             }catch (e: ApiException){
                 Toast.makeText(applicationContext, e.message, Toast.LENGTH_SHORT).show()
             }
