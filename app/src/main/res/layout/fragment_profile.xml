@@ -21,6 +21,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:scaleType="centerCrop"
+            tools:ignore="ContentDescription"
             android:src="@color/black"/>
 
     </androidx.cardview.widget.CardView>
@@ -33,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="10dp"
-        android:text="Name, 00"
+        tools:text="Name, 00"
         android:textColor="@color/black"
         android:textSize="20sp"/>
 
@@ -45,7 +46,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="10dp"
-        android:text="City"
+        tools:text="City"
         android:textColor="@color/black"
         android:textSize="15sp"/>
 
@@ -79,7 +80,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/cg_join"
         android:layout_marginStart="20dp"
-        app:titleCardGroup="Crear grupo"
+        app:titleCardGroup="Create group"
         app:iconCardGroup="@drawable/ic_add"/>
 
     <com.slc.needle.components.CardGroup
@@ -92,7 +93,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        app:titleCardGroup="Unirse a un grupo"
+        app:titleCardGroup="Join group"
         app:iconCardGroup="@drawable/ic_search"/>
 
     <TextView
@@ -104,7 +105,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="10dp"
         android:textStyle="italic"
-        android:text="Developed by SLC Studios"
+        android:text="@string/developed"
         android:textSize="12sp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
