@@ -15,6 +15,51 @@
       },
       "oauth_client": [
         {
+          "client_id": "70131665417-guggqg3dpd59s8l8tgjvdgujdef6ogss.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.slc.amarn",
+            "certificate_hash": "b9e75e48a69bb1fadbb7c132ddf046a46e165f92"
+          }
+        },
+        {
+          "client_id": "70131665417-91lkj547em00j1k4srkhmq1kl1prklf2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChwGe0I0azgvw5PXZC2uKJZueEYFD85o0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "70131665417-91lkj547em00j1k4srkhmq1kl1prklf2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:70131665417:android:29d75436f951ec8dd706d8",
+        "android_client_info": {
+          "package_name": "com.slc.needle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "70131665417-fh1ohpapkg77vq8jjpku78vdsuc1moi7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.slc.needle",
+            "certificate_hash": "b9e75e48a69bb1fadbb7c132ddf046a46e165f92"
+          }
+        },
+        {
           "client_id": "70131665417-91lkj547em00j1k4srkhmq1kl1prklf2.apps.googleusercontent.com",
           "client_type": 3
         }
