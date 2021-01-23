@@ -1,4 +1,4 @@
-package com.slc.amarn.components
+package com.slc.needle.components
 
 import android.content.Context
 import android.util.AttributeSet
@@ -6,8 +6,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.slc.amarn.R
+import com.slc.needle.R
 
 class CardGroup @JvmOverloads constructor(
     context: Context, attributeSet: AttributeSet? = null, defStyleAttr: Int = 0

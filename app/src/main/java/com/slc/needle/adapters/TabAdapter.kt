@@ -1,4 +1,4 @@
-package com.slc.amarn.adapters
+package com.slc.needle.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

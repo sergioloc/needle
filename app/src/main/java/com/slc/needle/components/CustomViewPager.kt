@@ -1,4 +1,4 @@
-package com.slc.amarn.components
+package com.slc.needle.components
 
 import android.content.Context
 import android.util.AttributeSet

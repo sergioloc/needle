@@ -1,4 +1,4 @@
-package com.slc.amarn.adapters
+package com.slc.needle.adapters
 
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
-import com.slc.amarn.R
-import com.slc.amarn.models.Match
+import com.slc.needle.R
+import com.slc.needle.models.Match
 
 class MatchAdapter(private val matches: ArrayList<Match>, private val onMatchClickListener: OnMatchClickListener): RecyclerView.Adapter<MatchAdapter.UserViewHolder>() {
 

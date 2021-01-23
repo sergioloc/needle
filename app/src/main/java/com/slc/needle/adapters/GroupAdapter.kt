@@ -1,4 +1,4 @@
-package com.slc.amarn.adapters
+package com.slc.needle.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,10 +6,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.slc.amarn.R
-import com.slc.amarn.models.GroupId
-import com.slc.amarn.models.User
-import com.slc.amarn.utils.Info
+import com.slc.needle.R
+import com.slc.needle.models.GroupId
+import com.slc.needle.utils.Info
 
 class GroupAdapter(private val groups: ArrayList<GroupId>, private val onGroupClickListener: OnGroupClickListener): RecyclerView.Adapter<GroupAdapter.UserViewHolder>() {
 

@@ -1,4 +1,4 @@
-package com.slc.amarn.adapters
+package com.slc.needle.adapters
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -11,9 +11,7 @@ import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
-import com.slc.amarn.R
-import com.slc.amarn.utils.Info
-import kotlinx.android.synthetic.main.activity_edit.*
+import com.slc.needle.R
 
 class PhotoAdapter(var context: Context, var photos: List<String>): PagerAdapter() {
 

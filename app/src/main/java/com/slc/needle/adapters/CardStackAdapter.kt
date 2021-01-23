@@ -1,4 +1,4 @@
-package com.slc.amarn.adapters
+package com.slc.needle.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,10 +8,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
-import com.slc.amarn.R
-import com.slc.amarn.models.EmailGroup
-import com.slc.amarn.models.UserPreview
-import com.slc.amarn.utils.Age
+import com.slc.needle.R
+import com.slc.needle.models.EmailGroup
+import com.slc.needle.models.UserPreview
+import com.slc.needle.utils.Age
 
 class CardStackAdapter(
     private var users: List<UserPreview> = emptyList()
