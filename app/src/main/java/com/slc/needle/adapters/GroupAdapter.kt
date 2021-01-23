@@ -22,8 +22,8 @@ class GroupAdapter(private val groups: ArrayList<GroupId>, private val onGroupCl
         val group = groups[position]
         holder.name?.text = group.name
         holder.id?.text = "ID: " + group.id
-        if (group.owner == Info.email)
-            holder?.delete?.visibility = View.VISIBLE
+        //if (group.owner == Info.email)
+        //    holder?.delete?.visibility = View.VISIBLE
         holder.copy?.setOnClickListener { onGroupClickListener.onCopyClick(group.id) }
         holder.leave?.setOnClickListener { onGroupClickListener.onLeaveClick(group.id) }
         holder.delete?.setOnClickListener { onGroupClickListener.onDeleteClick(group.id) }
