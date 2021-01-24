@@ -88,17 +88,23 @@ class SwipeFragment : Fragment(), CardStackListener {
                     if (!Info.user.visible){ // Hidden
                         loader.visibility = View.GONE
                         lock.visibility = View.VISIBLE
+                        profile.visibility = View.GONE
+                        alone.visibility = View.GONE
                         tv_message.text = resources.getString(R.string.profile_hidden)
                         tv_message.visibility = View.VISIBLE
                     }
                     else if (Info.user.orientation == 0 || Info.user.gender == 0 || Info.user.dateOfBirth.isNullOrEmpty()){ // Incomplete profile
                         loader.visibility = View.GONE
+                        lock.visibility = View.GONE
                         profile.visibility = View.VISIBLE
+                        alone.visibility = View.GONE
                         tv_message.text = resources.getString(R.string.profile_incomplete)
                         tv_message.visibility = View.VISIBLE
                     }
                     else if (Info.user.groups.isEmpty()) { // No groups
                         loader.visibility = View.GONE
+                        lock.visibility = View.GONE
+                        profile.visibility = View.GONE
                         alone.visibility = View.VISIBLE
                         tv_message.text = resources.getString(R.string.no_group)
                         tv_message.visibility = View.VISIBLE
