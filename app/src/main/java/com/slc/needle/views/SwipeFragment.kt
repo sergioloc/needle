@@ -122,7 +122,7 @@ class SwipeFragment : Fragment(), CardStackListener {
                 it.onSuccess {list ->
                     done.visibility = View.GONE
                     tv_message.visibility = View.GONE
-                    
+
                     adapter = CardStackAdapter(list)
                     position = 0
                     emailList = adapter.getEmailList()

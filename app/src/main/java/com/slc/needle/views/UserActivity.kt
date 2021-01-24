@@ -1,5 +1,6 @@
 package com.slc.needle.views
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.slc.needle.R
@@ -11,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_user.*
 class UserActivity : AppCompatActivity() {
 
     var user: User? = null
-    var adapter: PhotoAdapter? = null
+    private var adapter: PhotoAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,6 +20,7 @@ class UserActivity : AppCompatActivity() {
         initVariables()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initVariables(){
         user = intent.getSerializableExtra("user") as User
         tv_name.text = user?.name

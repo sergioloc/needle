@@ -54,7 +54,7 @@ class MatchFragment : Fragment(), MatchAdapter.OnMatchClickListener {
 
     override fun onMatchClick(match: Match) {
         val i = Intent(context, UserActivity::class.java)
-        val user = User(
+        val u = User(
             name = match.name,
             dateOfBirth = match.dateOfBirth,
             city = match.city,
@@ -65,7 +65,7 @@ class MatchFragment : Fragment(), MatchAdapter.OnMatchClickListener {
             images = match.images
 
         )
-        i.putExtra("user", user)
+        i.putExtra("user", u)
         startActivity(i)
     }
 

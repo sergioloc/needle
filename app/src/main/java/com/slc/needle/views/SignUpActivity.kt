@@ -13,7 +13,6 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
-import com.slc.needle.MainActivity
 import com.slc.needle.R
 import com.slc.needle.viewmodels.SignUpViewModel
 import kotlinx.android.synthetic.main.activity_register.*

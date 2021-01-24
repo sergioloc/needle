@@ -22,7 +22,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.slc.needle.R
@@ -38,16 +38,15 @@ import kotlin.collections.ArrayList
 
 class EditActivity: AppCompatActivity() {
 
-    lateinit var editViewModel: EditViewModel
+    private lateinit var editViewModel: EditViewModel
     //Data
     private var chipMen = false
     private var chipWomen = false
-    private val RESULT_LOAD_IMG = 1
     private var user: User? = null
     private var initUser: User? = null
 
     //Photos
-    lateinit var grayDrawable: Drawable
+    private lateinit var grayDrawable: Drawable
     private var newPhotoPosition = 0
     private var isImageOneEmpty = true
     private var isImageTwoEmpty = true
@@ -264,7 +263,7 @@ class EditActivity: AppCompatActivity() {
     private fun setPhotoInImageView() {
         for (i in 0 until Info.user.images.size){
             val imageView = getImageView(Info.user.images[i])
-            Glide.with(applicationContext).load(Info.user.images[i]).into(object : SimpleTarget<Drawable?>() {
+            Glide.with(applicationContext).load(Info.user.images[i]).into(object : CustomTarget<Drawable?>() {
                 override fun onResourceReady(resource: Drawable,transition: Transition<in Drawable?>?) {
                     imageView.setImageDrawable(resource)
                     when (imageView) {
@@ -273,6 +272,7 @@ class EditActivity: AppCompatActivity() {
                         iv_three -> loaders?.get(2)?.visibility = View.GONE
                     }
                 }
+                override fun onLoadCleared(placeholder: Drawable?) { }
             })
         }
     }
@@ -333,7 +333,7 @@ class EditActivity: AppCompatActivity() {
         newPhotoPosition = i
         val photoPickerIntent = Intent(Intent.ACTION_PICK)
         photoPickerIntent.type = "image/*"
-        startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG)
+        startActivityForResult(photoPickerIntent, 1)
     }
 
     // Dialogs -------------------------------------------------------------------------------------
