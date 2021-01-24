@@ -48,11 +48,16 @@ class MainActivity : AppCompatActivity() {
 
             override fun onPageSelected(position: Int) {
                 when (position) {
+                    0 -> {
+                        nav_bar.setUpNavBarFrom(NavBar.PROFILE)
+                        viewPager.setPagingEnabled(true)
+                    }
                     1 -> {
                         nav_bar.setUpNavBarFrom(NavBar.SWIPE)
                         viewPager.setPagingEnabled(false)
                     }
-                    else -> {
+                    2 -> {
+                        nav_bar.setUpNavBarFrom(NavBar.MATCH)
                         viewPager.setPagingEnabled(true)
                     }
                 }
@@ -60,6 +65,10 @@ class MainActivity : AppCompatActivity() {
 
             override fun onPageScrollStateChanged(state: Int) {}
         })
+    }
+
+    fun enablePaging(){
+        viewPager.setPagingEnabled(true)
     }
 
     private fun initButtons(){

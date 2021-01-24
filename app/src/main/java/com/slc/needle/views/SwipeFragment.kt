@@ -6,26 +6,29 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.view.animation.LinearInterpolator
-import com.slc.needle.R
-import com.slc.needle.adapters.CardStackAdapter
-import com.yuyakaido.android.cardstackview.*
-import kotlinx.android.synthetic.main.fragment_swipe.*
 import android.view.animation.AccelerateInterpolator
-import android.widget.*
+import android.view.animation.LinearInterpolator
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.slc.needle.MainActivity
+import com.slc.needle.R
+import com.slc.needle.adapters.CardStackAdapter
 import com.slc.needle.models.EmailGroup
 import com.slc.needle.models.UserPreview
 import com.slc.needle.utils.Info
 import com.slc.needle.viewmodels.SwipeViewModel
+import com.yuyakaido.android.cardstackview.*
+import kotlinx.android.synthetic.main.fragment_swipe.*
 
 class SwipeFragment : Fragment(), CardStackListener {
 
@@ -174,6 +177,7 @@ class SwipeFragment : Fragment(), CardStackListener {
         tv_message.text = resources.getString(R.string.up_to_date)
         tv_message.visibility = View.VISIBLE
         done.visibility = View.VISIBLE
+        (activity as MainActivity?)?.enablePaging()
     }
 
     //Dialogs --------------------------------------------------------------------------------------
