@@ -1,18 +1,27 @@
 package com.slc.needle.views
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.view.animation.LinearInterpolator
 import com.slc.needle.R
 import com.slc.needle.adapters.CardStackAdapter
 import com.yuyakaido.android.cardstackview.*
 import kotlinx.android.synthetic.main.fragment_swipe.*
 import android.view.animation.AccelerateInterpolator
-import android.widget.Toast
+import android.widget.*
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.slc.needle.models.EmailGroup
 import com.slc.needle.models.UserPreview
 import com.slc.needle.utils.Info
@@ -62,8 +71,7 @@ class SwipeFragment : Fragment(), CardStackListener {
                     .build()
                 manager.setSwipeAnimationSetting(setting)
                 cardStackView.swipe()
-                adapter
-                swipeViewModel.swipeUser(emailList[position].email, emailList[position].group, true)
+                swipeViewModel.swipeUser(emailList[position].email, emailList[position].group,false)
             }
         }
 
@@ -76,7 +84,7 @@ class SwipeFragment : Fragment(), CardStackListener {
                     .build()
                 manager.setSwipeAnimationSetting(setting)
                 cardStackView.swipe()
-                swipeViewModel.swipeUser(emailList[position].email, emailList[position].group, true)
+                swipeViewModel.swipeUser(emailList[position].email, emailList[position].group,true)
             }
         }
     }
@@ -133,6 +141,17 @@ class SwipeFragment : Fragment(), CardStackListener {
                 }
             }
         )
+
+        swipeViewModel.match.observe(this,
+            Observer<Result<Boolean>> {
+                it.onSuccess {
+                    showMatchDialog()
+                }
+                it.onFailure {
+
+                }
+            }
+        )
     }
 
     private fun initVariables() {
@@ -157,13 +176,37 @@ class SwipeFragment : Fragment(), CardStackListener {
         done.visibility = View.VISIBLE
     }
 
-    //Overrides -----------------------------------------------------------------------------------
+    //Dialogs --------------------------------------------------------------------------------------
+
+    private fun showMatchDialog(){
+        val dialog = Dialog(context!!)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_match)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val btnOk = dialog.findViewById(R.id.btn_ok) as Button
+        val name = dialog.findViewById(R.id.tv_name) as TextView
+        val image = dialog.findViewById(R.id.iv_icon) as ImageView
+        name.text = adapter.getName(position)
+        Glide.with(context!!).load(adapter.getImage(position)).into(object : CustomTarget<Drawable?>() {
+            override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable?>?) {
+                image.setImageDrawable(resource)
+            }
+
+            override fun onLoadCleared(placeholder: Drawable?) {}
+        })
+        btnOk.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    //Overrides ------------------------------------------------------------------------------------
 
     override fun onCardSwiped(direction: Direction) {
         if (direction == Direction.Right)
-            swipeViewModel.swipeUser(emailList[position].email, emailList[position].group, true)
+            swipeViewModel.swipeUser(emailList[position].email, emailList[position].group,true)
         else
-            swipeViewModel.swipeUser(emailList[position].email, emailList[position].group, false)
+            swipeViewModel.swipeUser(emailList[position].email, emailList[position].group,false)
         position++
         if (emailList.size == position) //no more users
             upToDate()

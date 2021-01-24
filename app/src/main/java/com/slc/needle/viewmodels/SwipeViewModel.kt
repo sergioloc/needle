@@ -29,6 +29,9 @@ class SwipeViewModel: ViewModel() {
     private val _swipeList: MutableLiveData<Result<ArrayList<UserPreview>>> = MutableLiveData()
     val swipeList: LiveData<Result<ArrayList<UserPreview>>> get() = _swipeList
 
+    private val _match: MutableLiveData<Result<Boolean>> = MutableLiveData()
+    val match: LiveData<Result<Boolean>> get() = _match
+
     fun getMyUserInfo(){
         Info.email = FirebaseAuth.getInstance().currentUser?.email!!
         Info.email.let {
@@ -107,6 +110,7 @@ class SwipeViewModel: ViewModel() {
                         db.collection("users").document(Info.email).collection("matched").document(email).set(hashMapOf("date" to dateFormat.format(Date()), "group" to group))
                         db.collection("users").document(Info.email).collection("swiped").document(email).set(hashMapOf("like" to like))
                         db.collection("users").document(email).collection("matched").document(Info.email).set(hashMapOf("date" to dateFormat.format(Date()), "group" to group))
+                        _match.postValue(Result.success(true))
                     }
                     else { //User gave me dislike
                         db.collection("users").document(Info.email).collection("swiped").document(email).set(hashMapOf("like" to like))
