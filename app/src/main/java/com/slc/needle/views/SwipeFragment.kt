@@ -57,8 +57,14 @@ class SwipeFragment : Fragment(), CardStackListener {
 
     override fun onResume() {
         super.onResume()
-        if (!firstTime)
-            swipeViewModel.getMyUserInfo()
+        if (refresh.visibility == View.VISIBLE)
+            (activity as MainActivity?)?.enablePaging()
+        else if (!firstTime && done.visibility == View.VISIBLE){ // Show refresh button
+            done.visibility = View.GONE
+            refresh.visibility = View.VISIBLE
+            tv_message.text = resources.getString(R.string.refresh)
+            (activity as MainActivity?)?.enablePaging()
+        }
         else
             firstTime = false
 
@@ -90,6 +96,11 @@ class SwipeFragment : Fragment(), CardStackListener {
                 swipeViewModel.swipeUser(emailList[position].email, emailList[position].group,true)
             }
         }
+
+        refresh.setOnClickListener {
+            loader.visibility = View.VISIBLE
+            swipeViewModel.getMyUserInfo()
+        }
     }
 
     private fun initObservers(){
@@ -101,6 +112,7 @@ class SwipeFragment : Fragment(), CardStackListener {
                     profile.visibility = View.GONE
                     alone.visibility = View.GONE
                     done.visibility = View.GONE
+                    refresh.visibility = View.GONE
 
                     if (!Info.user.visible){ // Hidden
                         lock.visibility = View.VISIBLE
