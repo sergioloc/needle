@@ -71,7 +71,7 @@
         android:textStyle="bold"
         android:textColor="@color/colorAccent"
         android:textSize="20sp"
-        android:text="No group found"
+        tools:text="No group found"
         android:visibility="gone"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

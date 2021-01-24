@@ -137,16 +137,16 @@ class EditActivity: AppCompatActivity() {
             if (chipMen){
                 btn_men.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
                 if (chipWomen)
-                    user?.orientation = 3   //men yes, women yes
+                    user?.orientation = 1   //men no, women yes
                 else
-                    user?.orientation = 1   //men yes, women no
+                    user?.orientation = 0   //men no, women no
             }
             else{
                 btn_men.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
                 if (chipWomen)
-                    user?.orientation = 2   //men no, women yes
+                    user?.orientation = 3   //men yes, women yes
                 else
-                    user?.orientation = 0   //men no, women no
+                    user?.orientation = 2   //men yes, women no
             }
             chipMen = !chipMen
         }
@@ -154,16 +154,16 @@ class EditActivity: AppCompatActivity() {
             if (chipWomen){
                 btn_women.background = ContextCompat.getDrawable(this, R.drawable.chip_white)
                 if (chipMen)
-                    user?.orientation = 3   //women yes, man yes
+                    user?.orientation = 1   //women no, man yes
                 else
-                    user?.orientation = 2   //women yes, man no
+                    user?.orientation = 0   //women no, man no
             }
             else{
                 btn_women.background = ContextCompat.getDrawable(this, R.drawable.chip_accent)
                 if (chipMen)
-                    user?.orientation = 1   //women no, man yes
+                    user?.orientation = 3   //women yes, man yes
                 else
-                    user?.orientation = 0   //women no, man no
+                    user?.orientation = 2   //women yes, man no
             }
             chipWomen = !chipWomen
         }

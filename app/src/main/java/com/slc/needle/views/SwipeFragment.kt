@@ -75,12 +75,16 @@ class SwipeFragment : Fragment(), CardStackListener {
         swipeViewModel.getUser.observe(this,
             Observer<Result<Boolean>> {
                 it.onSuccess {
-                    if (Info.user.orientation == 0 || Info.user.gender == 0){ //Incomplete profile
+                    if (Info.user.orientation == 0 || Info.user.gender == 0 || Info.user.dateOfBirth.isNullOrEmpty()){ // Incomplete profile
                         loader.visibility = View.GONE
                         profile.visibility = View.VISIBLE
+                        tv_message.text = resources.getString(R.string.profile_incomplete)
+                        tv_message.visibility = View.VISIBLE
                     }
                     else if (Info.user.groups.isEmpty()) { // No groups
-                        tv_message.text = "You are not in any group"
+                        loader.visibility = View.GONE
+                        profile.visibility = View.VISIBLE
+                        tv_message.text = resources.getString(R.string.no_group)
                         tv_message.visibility = View.VISIBLE
                     }
                     else

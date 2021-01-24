@@ -1,10 +1,12 @@
 package com.slc.needle.viewmodels
 
+import android.content.res.Resources
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.slc.needle.R
 import com.slc.needle.models.Group
 import com.slc.needle.models.User
 import com.slc.needle.models.UserPreview
