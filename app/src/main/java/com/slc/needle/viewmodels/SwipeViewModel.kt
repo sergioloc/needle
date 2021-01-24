@@ -119,7 +119,7 @@ class SwipeViewModel: ViewModel() {
     }
 
     private fun isCompatible(user: User): Boolean{
-        if (user.visible){
+        if (user.visible && user.dateOfBirth.isNotEmpty()){
             //MAN
             if ((Info.user.gender == 1 || Info.user.gender == 4) && Info.user.orientation == 1){ // I am a man looking for a man
                 if (user.gender == 1 || user.gender == 4) // Is a man
