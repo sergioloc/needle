@@ -9,7 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -37,6 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
+                tools:ignore="contentDescription"
                 android:src="@color/gray" />
 
         </androidx.cardview.widget.CardView>
@@ -57,6 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
+                tools:ignore="contentDescription"
                 android:src="@color/gray"/>
 
         </androidx.cardview.widget.CardView>
@@ -68,7 +70,7 @@
             app:layout_constraintTop_toTopOf="@id/cv_one"
             app:layout_constraintStart_toEndOf="@id/cd_two"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             app:cardCornerRadius="20dp">
 
             <ImageView
@@ -76,6 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
+                tools:ignore="contentDescription"
                 android:src="@color/gray"/>
 
         </androidx.cardview.widget.CardView>
@@ -130,10 +133,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="30dp"
-            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:maxLines="1"
             android:ellipsize="end"
-            android:text="About me"/>
+            android:text="@string/about_me"/>
 
         <EditText
             android:id="@+id/et_description"
@@ -147,8 +151,10 @@
             android:lines="5"
             android:maxLines="5"
             android:ellipsize="end"
-            android:gravity="top|left"
-            android:background="@color/white"/>
+            android:gravity="top|start"
+            android:background="@color/white"
+            android:autofillHints=""
+            tools:ignore="LabelFor" />
 
         <TextView
             android:id="@+id/tv_gender"
@@ -158,10 +164,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="30dp"
-            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:maxLines="1"
             android:ellipsize="end"
-            android:text="I'm a..." />
+            android:text="@string/i_am" />
 
         <Button
             android:id="@+id/btn_man"
@@ -174,7 +181,7 @@
             android:layout_marginTop="10dp"
             android:textAllCaps="false"
             android:textSize="12sp"
-            android:text="Man"/>
+            android:text="@string/man"/>
 
         <Button
             android:id="@+id/btn_woman"
@@ -186,7 +193,7 @@
             app:layout_constraintEnd_toStartOf="@id/btn_other"
             android:textAllCaps="false"
             android:textSize="12sp"
-            android:text="Woman"/>
+            android:text="@string/woman"/>
 
         <Button
             android:id="@+id/btn_other"
@@ -198,7 +205,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:textAllCaps="false"
             android:textSize="12sp"
-            android:text="Other"/>
+            android:text="@string/other"/>
 
         <TextView
             android:id="@+id/tv_orientation"
@@ -208,10 +215,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="30dp"
-            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:maxLines="1"
             android:ellipsize="end"
-            android:text="Looking for..." />
+            android:text="@string/looking_for" />
 
         <Button
             android:id="@+id/btn_men"
@@ -224,7 +232,7 @@
             android:layout_marginTop="10dp"
             android:textAllCaps="false"
             android:textSize="12sp"
-            android:text="Men"/>
+            android:text="@string/men"/>
 
         <Button
             android:id="@+id/btn_women"
@@ -236,7 +244,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:textAllCaps="false"
             android:textSize="12sp"
-            android:text="Women"/>
+            android:text="@string/women"/>
 
         <TextView
             android:id="@+id/tv_social"
@@ -246,10 +254,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="30dp"
-            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:maxLines="2"
             android:ellipsize="end"
-            android:text="Only your matches can see your social media" />
+            android:text="@string/only_matches" />
 
         <EditText
             android:id="@+id/et_instagram"
@@ -263,7 +272,9 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:textSize="15sp"
-            android:hint="instagram"/>
+            android:hint="@string/instagram"
+            android:autofillHints=""
+            android:inputType="text"/>
 
         <EditText
             android:id="@+id/et_facebook"
@@ -276,7 +287,9 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:textSize="15sp"
-            android:hint="facebook"/>
+            android:hint="@string/facebook"
+            android:autofillHints=""
+            android:inputType="text" />
 
         <EditText
             android:id="@+id/et_phone"
@@ -290,7 +303,8 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:textSize="15sp"
-            android:hint="phone"/>
+            android:hint="@string/phone"
+            android:autofillHints="" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -298,6 +312,7 @@
             app:layout_constraintTop_toTopOf="@id/et_instagram"
             app:layout_constraintBottom_toBottomOf="@id/et_instagram"
             app:layout_constraintStart_toStartOf="@id/btn_man"
+            tools:ignore="contentDescription"
             android:src="@drawable/ic_instagram"
             app:tint="@color/colorAccent"/>
 
@@ -307,6 +322,7 @@
             app:layout_constraintTop_toTopOf="@id/et_facebook"
             app:layout_constraintBottom_toBottomOf="@id/et_facebook"
             app:layout_constraintStart_toStartOf="@id/btn_man"
+            tools:ignore="contentDescription"
             android:src="@drawable/ic_facebook"
             app:tint="@color/colorAccent"/>
 
@@ -316,6 +332,7 @@
             app:layout_constraintTop_toTopOf="@id/et_phone"
             app:layout_constraintBottom_toBottomOf="@id/et_phone"
             app:layout_constraintStart_toStartOf="@id/btn_man"
+            tools:ignore="contentDescription"
             android:src="@drawable/ic_phone"
             app:tint="@color/colorAccent"/>
 

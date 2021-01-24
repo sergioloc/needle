@@ -12,4 +12,17 @@
     <string name="visible">Visible in Needle</string>
     <string name="sign_out">Sign out</string>
 
+    <string name="about_me">About me</string>
+    <string name="i_am">I\'m a…</string>
+    <string name="man">Man</string>
+    <string name="woman">Woman</string>
+    <string name="men">Men</string>
+    <string name="women">Women</string>
+    <string name="other">Other</string>
+    <string name="looking_for">Looking for…</string>
+    <string name="only_matches">Only your matches can see your social media</string>
+    <string name="instagram">instagram</string>
+    <string name="facebook">facebook</string>
+    <string name="phone">phone</string>
+
 </resources>
