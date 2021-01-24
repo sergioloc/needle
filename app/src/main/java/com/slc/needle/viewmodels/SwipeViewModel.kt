@@ -21,6 +21,7 @@ class SwipeViewModel: ViewModel() {
     private var users = ArrayList<UserPreview>()
     private var ignore = ArrayList<String>()
     private val dateFormat = SimpleDateFormat("dd/M/yyyy hh:mm:ss", Locale.getDefault())
+    var found = false
 
     private val _getUser: MutableLiveData<Result<Boolean>> = MutableLiveData()
     val getUser: LiveData<Result<Boolean>> get() = _getUser
@@ -70,15 +71,12 @@ class SwipeViewModel: ViewModel() {
                     db.collection("users").document(Info.email).set(Info.user)
                 }
                 else {
-                    var found = false
                     for (i in 0 until query.documents.size)
                         if (Info.email != query.documents[i].id) //If is not me
-                            if (!ignore.contains(query.documents[i].id)) { //If not swiped yet
-                                found = true
+                            if (!ignore.contains(query.documents[i].id)) //If not swiped yet
                                 getUserInfo(query.documents[i].id, group?.name ?: "")
-                            }
                     if (!found)
-                        _swipeList.postValue(Result.failure(Throwable("You are up to date")))
+                        _swipeList.postValue(Result.failure(Throwable("")))
                 }
             }
         }
@@ -89,6 +87,7 @@ class SwipeViewModel: ViewModel() {
             val u = documentSnapshot.toObject(User::class.java)
             u?.let {
                 if (isCompatible(u)){
+                    found = true
                     users.add(UserPreview(email, u.name, group, u.dateOfBirth, u.city, u.images))
                     _swipeList.postValue(Result.success(users))
                 }

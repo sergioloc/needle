@@ -85,32 +85,31 @@ class SwipeFragment : Fragment(), CardStackListener {
         swipeViewModel.getUser.observe(this,
             Observer<Result<Boolean>> {
                 it.onSuccess {
+                    loader.visibility = View.GONE
+                    lock.visibility = View.GONE
+                    profile.visibility = View.GONE
+                    alone.visibility = View.GONE
+                    done.visibility = View.GONE
+
                     if (!Info.user.visible){ // Hidden
-                        loader.visibility = View.GONE
                         lock.visibility = View.VISIBLE
-                        profile.visibility = View.GONE
-                        alone.visibility = View.GONE
                         tv_message.text = resources.getString(R.string.profile_hidden)
                         tv_message.visibility = View.VISIBLE
                     }
                     else if (Info.user.orientation == 0 || Info.user.gender == 0 || Info.user.dateOfBirth.isNullOrEmpty()){ // Incomplete profile
-                        loader.visibility = View.GONE
-                        lock.visibility = View.GONE
                         profile.visibility = View.VISIBLE
-                        alone.visibility = View.GONE
                         tv_message.text = resources.getString(R.string.profile_incomplete)
                         tv_message.visibility = View.VISIBLE
                     }
                     else if (Info.user.groups.isEmpty()) { // No groups
-                        loader.visibility = View.GONE
-                        lock.visibility = View.GONE
-                        profile.visibility = View.GONE
                         alone.visibility = View.VISIBLE
                         tv_message.text = resources.getString(R.string.no_group)
                         tv_message.visibility = View.VISIBLE
                     }
-                    else
+                    else{
+                        loader.visibility = View.GONE
                         swipeViewModel.getMembers()
+                    }
                 }
                 it.onFailure { result ->
                     Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
@@ -121,6 +120,9 @@ class SwipeFragment : Fragment(), CardStackListener {
             Observer<Result<ArrayList<UserPreview>>> {
                 loader.visibility = View.GONE
                 it.onSuccess {list ->
+                    done.visibility = View.GONE
+                    tv_message.visibility = View.GONE
+                    
                     adapter = CardStackAdapter(list)
                     position = 0
                     emailList = adapter.getEmailList()
@@ -150,7 +152,7 @@ class SwipeFragment : Fragment(), CardStackListener {
     }
 
     private fun upToDate(){
-        tv_message.text = "You are up to date"
+        tv_message.text = resources.getString(R.string.up_to_date)
         tv_message.visibility = View.VISIBLE
         done.visibility = View.VISIBLE
     }
