@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:padding="10dp">
 
     <TextView
@@ -13,11 +14,12 @@
         app:layout_constraintBottom_toTopOf="@id/tv_id"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/iv_copy"
+        tools:ignore="ContentDescription"
         android:maxLines="1"
         android:ellipsize="end"
         android:textSize="15sp"
         android:textStyle="bold"
-        android:text="BEST Madrid"/>
+        tools:text="Group name"/>
 
     <TextView
         android:id="@+id/tv_id"
@@ -27,11 +29,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/tv_name"
         app:layout_constraintEnd_toEndOf="@id/tv_name"
+        tools:ignore="ContentDescription"
         android:maxLines="1"
         android:ellipsize="end"
         android:textSize="12sp"
         android:textStyle="italic"
-        android:text="ID: kdjfnjdfjdfgjdfgg"/>
+        tools:text="ID: kdjfnjdfjdfgjdfgg"/>
 
     <ImageView
         android:id="@+id/iv_copy"
@@ -41,6 +44,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/iv_leave"
         android:padding="10dp"
+        tools:ignore="ContentDescription"
         android:src="@drawable/ic_copy"/>
 
     <ImageView
@@ -51,18 +55,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/iv_delete"
         android:padding="10dp"
+        tools:ignore="ContentDescription"
         android:src="@drawable/ic_remove"/>
 
     <ImageView
         android:id="@+id/iv_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:padding="10dp"
+        android:visibility="gone"
+        tools:ignore="ContentDescription"
         android:src="@drawable/ic_delete"
-        app:tint="@color/colorAccent"
-        android:visibility="visible" />
+        app:tint="@color/colorAccent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
