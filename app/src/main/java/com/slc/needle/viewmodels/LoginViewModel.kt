@@ -70,7 +70,7 @@ class LoginViewModel: ViewModel() {
         FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful){
                 user = FirebaseAuth.getInstance().currentUser
-                saveInFirestore(User(account.givenName!!,"01-01-1900", "",0,0,"","","","",false))
+                saveInFirestore(User(account.givenName!!,"", "",0,0,"","","","",false))
             }
             else {
                 _state.postValue(Result.failure(Throwable(it.exception)))
