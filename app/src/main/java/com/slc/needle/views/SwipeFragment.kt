@@ -26,6 +26,7 @@ class SwipeFragment : Fragment(), CardStackListener {
     lateinit var swipeViewModel: SwipeViewModel
     private var emailList: ArrayList<EmailGroup> = ArrayList()
     private var position = 0
+    private var firstTime = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_swipe, container, false)
@@ -40,6 +41,15 @@ class SwipeFragment : Fragment(), CardStackListener {
         initButtons()
         initObservers()
         swipeViewModel.getMyUserInfo()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!firstTime)
+            swipeViewModel.getMyUserInfo()
+        else
+            firstTime = false
+
     }
 
     private fun initButtons() {
@@ -83,7 +93,7 @@ class SwipeFragment : Fragment(), CardStackListener {
                     }
                     else if (Info.user.groups.isEmpty()) { // No groups
                         loader.visibility = View.GONE
-                        profile.visibility = View.VISIBLE
+                        alone.visibility = View.VISIBLE
                         tv_message.text = resources.getString(R.string.no_group)
                         tv_message.visibility = View.VISIBLE
                     }
