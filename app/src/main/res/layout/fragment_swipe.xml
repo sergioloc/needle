@@ -75,6 +75,20 @@
         app:lottie_repeatMode="reverse"
         android:visibility="gone"/>
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lock"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/fab_dislike"
+        app:layout_constraintStart_toStartOf="@id/fab_dislike"
+        app:layout_constraintEnd_toEndOf="@id/fab_like"
+        app:lottie_rawRes="@raw/lock"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_repeatMode="reverse"
+        android:visibility="gone"/>
+
     <TextView
         android:id="@+id/tv_message"
         android:layout_width="wrap_content"
@@ -83,7 +97,8 @@
         app:layout_constraintBottom_toBottomOf="@id/card_stack_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="180dp"
+        android:gravity="center"
         android:textStyle="italic"
         android:textColor="@color/colorAccent"
         android:textSize="15sp"
