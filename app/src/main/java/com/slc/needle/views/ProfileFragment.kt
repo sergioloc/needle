@@ -1,5 +1,6 @@
 package com.slc.needle.views
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -18,7 +19,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.google.firebase.auth.FirebaseAuth
 import com.slc.needle.R
@@ -30,7 +31,7 @@ import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : Fragment() {
 
-    lateinit var profileViewModel: ProfileViewModel
+    private lateinit var profileViewModel: ProfileViewModel
     private var createGroupDialog: Dialog? = null
     private var joinGroupDialog: Dialog? = null
 
@@ -45,6 +46,7 @@ class ProfileFragment : Fragment() {
         initObservers()
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onResume() {
         super.onResume()
         if (Info.user.name.isNotBlank()){
@@ -94,10 +96,11 @@ class ProfileFragment : Fragment() {
 
     private fun setIconImage(){
         if (Info.user.images.isNotEmpty()){
-            Glide.with(context!!).load(Info.user.images[0]).into(object : SimpleTarget<Drawable?>() {
+            Glide.with(context!!).load(Info.user.images[0]).into(object : CustomTarget<Drawable?>() {
                 override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable?>?) {
                     iv_icon.setImageDrawable(resource)
                 }
+                override fun onLoadCleared(placeholder: Drawable?) {}
             })
         }
     }

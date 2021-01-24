@@ -43,6 +43,14 @@ class CardStackAdapter(
         return users.size
     }
 
+    fun getName(i: Int): String{
+        return users[i-1].name
+    }
+
+    fun getImage(i: Int): String{
+        return users[i-1].images[0]
+    }
+
     fun getEmailList(): ArrayList<EmailGroup>{
         var result = ArrayList<EmailGroup>()
         for (u in users)

@@ -8,7 +8,6 @@ import androidx.lifecycle.Observer
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.GoogleAuthProvider
 import com.slc.needle.MainActivity
 import com.slc.needle.R
 import com.slc.needle.viewmodels.LoginViewModel

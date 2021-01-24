@@ -1,10 +1,12 @@
 package com.slc.needle.viewmodels
 
+import android.content.res.Resources
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.slc.needle.R
 import com.slc.needle.models.Group
 import com.slc.needle.models.User
 import com.slc.needle.models.UserPreview
@@ -19,12 +21,16 @@ class SwipeViewModel: ViewModel() {
     private var users = ArrayList<UserPreview>()
     private var ignore = ArrayList<String>()
     private val dateFormat = SimpleDateFormat("dd/M/yyyy hh:mm:ss", Locale.getDefault())
+    var found = false
 
     private val _getUser: MutableLiveData<Result<Boolean>> = MutableLiveData()
     val getUser: LiveData<Result<Boolean>> get() = _getUser
 
     private val _swipeList: MutableLiveData<Result<ArrayList<UserPreview>>> = MutableLiveData()
     val swipeList: LiveData<Result<ArrayList<UserPreview>>> get() = _swipeList
+
+    private val _match: MutableLiveData<Result<Boolean>> = MutableLiveData()
+    val match: LiveData<Result<Boolean>> get() = _match
 
     fun getMyUserInfo(){
         Info.email = FirebaseAuth.getInstance().currentUser?.email!!
@@ -68,15 +74,12 @@ class SwipeViewModel: ViewModel() {
                     db.collection("users").document(Info.email).set(Info.user)
                 }
                 else {
-                    var found = false
                     for (i in 0 until query.documents.size)
                         if (Info.email != query.documents[i].id) //If is not me
-                            if (!ignore.contains(query.documents[i].id)) { //If not swiped yet
-                                found = true
+                            if (!ignore.contains(query.documents[i].id)) //If not swiped yet
                                 getUserInfo(query.documents[i].id, group?.name ?: "")
-                            }
                     if (!found)
-                        _swipeList.postValue(Result.failure(Throwable("You are up to date")))
+                        _swipeList.postValue(Result.failure(Throwable("")))
                 }
             }
         }
@@ -87,6 +90,7 @@ class SwipeViewModel: ViewModel() {
             val u = documentSnapshot.toObject(User::class.java)
             u?.let {
                 if (isCompatible(u)){
+                    found = true
                     users.add(UserPreview(email, u.name, group, u.dateOfBirth, u.city, u.images))
                     _swipeList.postValue(Result.success(users))
                 }
@@ -106,6 +110,7 @@ class SwipeViewModel: ViewModel() {
                         db.collection("users").document(Info.email).collection("matched").document(email).set(hashMapOf("date" to dateFormat.format(Date()), "group" to group))
                         db.collection("users").document(Info.email).collection("swiped").document(email).set(hashMapOf("like" to like))
                         db.collection("users").document(email).collection("matched").document(Info.email).set(hashMapOf("date" to dateFormat.format(Date()), "group" to group))
+                        _match.postValue(Result.success(true))
                     }
                     else { //User gave me dislike
                         db.collection("users").document(Info.email).collection("swiped").document(email).set(hashMapOf("like" to like))
@@ -119,7 +124,7 @@ class SwipeViewModel: ViewModel() {
     }
 
     private fun isCompatible(user: User): Boolean{
-        if (user.visible){
+        if (user.visible && user.dateOfBirth.isNotEmpty()){
             //MAN
             if ((Info.user.gender == 1 || Info.user.gender == 4) && Info.user.orientation == 1){ // I am a man looking for a man
                 if (user.gender == 1 || user.gender == 4) // Is a man
