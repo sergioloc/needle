@@ -52,17 +52,17 @@ class MatchFragment : Fragment(), MatchAdapter.OnMatchClickListener {
         )
     }
 
-    override fun onMatchClick(match: Match) {
+    override fun onMatchClick(m: Match) {
         val i = Intent(context, UserActivity::class.java)
         val u = User(
-            name = match.name,
-            dateOfBirth = match.dateOfBirth,
-            city = match.city,
-            description = match.description,
-            instagram = match.instagram,
-            facebook = match.facebook,
-            phone = match.phone,
-            images = match.images
+            name = m.name,
+            dateOfBirth = m.dateOfBirth,
+            city = m.city,
+            description = m.description,
+            instagram = m.instagram,
+            facebook = m.facebook,
+            phone = m.phone,
+            images = m.images
 
         )
         i.putExtra("user", u)
