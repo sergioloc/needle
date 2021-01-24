@@ -13,6 +13,9 @@
     <string name="sign_out">Sign out</string>
 
     <string name="about_me">About me</string>
+    <string name="born">I was born on…</string>
+    <string name="default_age">DD-MM-YYYY</string>
+    <string name="over_18">You must be over 18 years old</string>
     <string name="i_am">I\'m a…</string>
     <string name="man">Man</string>
     <string name="woman">Woman</string>

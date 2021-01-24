@@ -4,7 +4,7 @@ import java.io.Serializable
 
 data class User(
     val name: String = "",
-    val dateOfBirth: String = "",
+    var dateOfBirth: String = "",
     val city: String = "",
     var gender: Int = 0,
     var orientation: Int = 0,

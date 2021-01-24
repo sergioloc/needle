@@ -1,7 +1,9 @@
 package com.slc.needle.views
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -15,10 +17,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.RadioButton
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -28,11 +27,14 @@ import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.slc.needle.R
 import com.slc.needle.models.User
+import com.slc.needle.utils.Age
 import com.slc.needle.utils.Info
 import com.slc.needle.viewmodels.EditViewModel
 import kotlinx.android.synthetic.main.activity_edit.*
 import java.io.FileNotFoundException
 import java.io.InputStream
+import java.util.*
+import kotlin.collections.ArrayList
 
 class EditActivity: AppCompatActivity() {
 
@@ -43,6 +45,7 @@ class EditActivity: AppCompatActivity() {
     private val RESULT_LOAD_IMG = 1
     private var user: User? = null
     private var initUser: User? = null
+
     //Photos
     lateinit var grayDrawable: Drawable
     private var newPhotoPosition = 0
@@ -72,6 +75,10 @@ class EditActivity: AppCompatActivity() {
 
         //Description
         et_description.text.insert(0, user?.description)
+
+        //Age
+        if (!user?.dateOfBirth.isNullOrEmpty())
+            tv_age.text = user?.dateOfBirth
 
         //Gender
         when (user?.gender){
@@ -107,6 +114,11 @@ class EditActivity: AppCompatActivity() {
     private fun initButtons(){
         toolbar.setNavigationOnClickListener {
             onBackPressed()
+        }
+
+        //Age
+        tv_age.setOnClickListener {
+            showDatePicker()
         }
 
         //Gender
@@ -358,6 +370,21 @@ class EditActivity: AppCompatActivity() {
         alertDialog.show()
     }
 
+    @SuppressLint("SetTextI18n")
+    private fun showDatePicker(){
+        val c = Calendar.getInstance()
+        DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, newYear, newMonth, newDay ->
+            var realMonth = "${newMonth+1}"
+            if (realMonth.toInt()<10) realMonth = "0$realMonth"
+            val age = "$newDay-$realMonth-$newYear"
+            if (Age().getAge(age) < 18)
+               Toast.makeText(this, R.string.over_18, Toast.LENGTH_SHORT).show()
+            else{
+                tv_age.text = age
+                user?.dateOfBirth = age
+            }
+        }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show()
+    }
 
     // Overrides -----------------------------------------------------------------------------------
 
