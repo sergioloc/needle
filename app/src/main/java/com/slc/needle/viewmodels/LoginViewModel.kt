@@ -5,10 +5,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
+import com.slc.needle.models.User
 
 class LoginViewModel: ViewModel() {
 
@@ -18,9 +23,15 @@ class LoginViewModel: ViewModel() {
     private val _googleSignInClient: MutableLiveData<Result<GoogleSignInClient>> = MutableLiveData()
     val googleSignInClient: LiveData<Result<GoogleSignInClient>> get() = _googleSignInClient
 
+    private val db = FirebaseFirestore.getInstance()
+    private var user: FirebaseUser? = null
+
     init {
-        if (FirebaseAuth.getInstance().currentUser != null)
-            _state.postValue(Result.success(true))
+        user = FirebaseAuth.getInstance().currentUser
+        user?.let {
+            if (it.isEmailVerified)
+                _state.postValue(Result.success(true))
+        }
     }
 
     fun signInWithMain(email: String, password: String){
@@ -30,7 +41,12 @@ class LoginViewModel: ViewModel() {
         else {
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener {
                 if (it.isSuccessful){
-                    _state.postValue(Result.success(true))
+                    user?.let {u ->
+                        if (u.isEmailVerified)
+                            _state.postValue(Result.success(true))
+                        else
+                            _state.postValue(Result.failure(Throwable("Email is not verify")))
+                    }
                 }
                 else {
                     _state.postValue(Result.failure(Throwable(it.exception)))
@@ -49,14 +65,24 @@ class LoginViewModel: ViewModel() {
         _googleSignInClient.postValue(Result.success(googleClient))
     }
 
-    fun signInWithCredential(credential: AuthCredential){
+    fun signInWithCredential(account: GoogleSignInAccount){
+        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful){
-                _state.postValue(Result.success(true))
+                user = FirebaseAuth.getInstance().currentUser
+                saveInFirestore(User(account.givenName!!,"", "",0,0,"","","","",false))
             }
             else {
                 _state.postValue(Result.failure(Throwable(it.exception)))
             }
         }
+    }
+
+    private fun saveInFirestore(u: User){
+        user?.email?.let { it ->
+            db.collection("users").document(it).set(u).addOnCompleteListener {
+                _state.postValue(Result.success(true))
+            }
+        }!!
     }
 }
