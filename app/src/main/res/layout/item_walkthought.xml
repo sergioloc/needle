@@ -6,6 +6,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/card_white"
+        android:layout_margin="20dp"/>
+
+    <ImageView
         android:id="@+id/iv_icon"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -14,7 +20,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:padding="50dp"
-        android:src="@drawable/ic_circle"/>
+        android:src="@drawable/ic_circle"
+        app:tint="@color/colorAccent" />
 
     <TextView
         android:id="@+id/tv_title"
@@ -28,6 +35,9 @@
         android:gravity="center"
         android:maxLines="1"
         android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:textColor="@color/colorAccent"
         tools:text="Title"/>
 
     <TextView
@@ -41,6 +51,8 @@
         android:paddingStart="50dp"
         android:paddingEnd="50dp"
         android:gravity="center"
+        android:textSize="17sp"
+        android:textColor="@color/darkgray"
         tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit sed, libero nascetur erat. " />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
