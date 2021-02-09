@@ -5,14 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.viewpager.widget.PagerAdapter
 import com.slc.needle.R
 import com.slc.needle.models.Step
+import com.slc.needle.views.WalkthroughActivity
 
-class WalkthroughAdapter(var context: Context, var steps: List<Step>): PagerAdapter() {
+class WalkthroughAdapter(val context: Context, private val steps: List<Step>, private val listener: WalkthroughActivity.OnTextClickListener): PagerAdapter() {
 
     lateinit var layoutInflater: LayoutInflater
 
@@ -27,10 +27,19 @@ class WalkthroughAdapter(var context: Context, var steps: List<Step>): PagerAdap
         val icon: ImageView = view.findViewById(R.id.iv_icon)
         val title: TextView = view.findViewById(R.id.tv_title)
         val description: TextView = view.findViewById(R.id.tv_desciption)
+        val skip: TextView = view.findViewById(R.id.tv_skip)
 
         icon.setImageResource(steps[position].photo)
         title.text = steps[position].title
         description.text = steps[position].description
+        if (position == count-1)
+            skip.text = "Done"
+        else
+            skip.text = "Skip"
+        skip.setOnClickListener {
+            listener.onSkipClick()
+        }
+
 
         container.addView(view)
         return view

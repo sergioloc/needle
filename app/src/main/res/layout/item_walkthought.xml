@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
+        android:id="@+id/iv_back"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/card_white"
@@ -20,7 +21,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:padding="50dp"
-        android:src="@drawable/ic_circle"
+        android:src="@drawable/ic_logo"
         app:tint="@color/colorAccent" />
 
     <TextView
@@ -52,7 +53,19 @@
         android:paddingEnd="50dp"
         android:gravity="center"
         android:textSize="17sp"
-        android:textColor="@color/darkgray"
-        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit sed, libero nascetur erat. " />
+        android:textColor="@color/defaut_text"
+        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit sed, libero nascetur erat." />
+
+    <TextView
+        android:id="@+id/tv_skip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/iv_back"
+        app:layout_constraintEnd_toEndOf="@id/iv_back"
+        android:padding="20dp"
+        android:maxLines="1"
+        android:textSize="13sp"
+        android:textColor="@color/defaut_text"
+        tools:text="Skip"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
