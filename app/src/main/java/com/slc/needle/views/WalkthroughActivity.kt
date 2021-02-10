@@ -1,5 +1,6 @@
 package com.slc.needle.views
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import com.slc.needle.R
 import com.slc.needle.adapters.WalkthroughAdapter
 import com.slc.needle.models.Tip
 import kotlinx.android.synthetic.main.activity_walkthrough.*
+
 
 class WalkthroughActivity : AppCompatActivity() {
 
@@ -32,6 +34,8 @@ class WalkthroughActivity : AppCompatActivity() {
     }
 
     fun goToMainActivity() {
+        val prefs = getSharedPreferences("Preferences", Context.MODE_PRIVATE)
+        prefs.edit().putBoolean("walkthrough", false).apply()
         startActivity(Intent(this, MainActivity::class.java))
     }
 
