@@ -1,5 +1,6 @@
 package com.slc.needle.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,7 @@ class CardStackAdapter(
         return ViewHolder(inflater.inflate(R.layout.item_user, parent, false))
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val user = users[position]
         val adapter = PhotoAdapter(holder.name.context, user.images)
@@ -52,7 +54,7 @@ class CardStackAdapter(
     }
 
     fun getEmailList(): ArrayList<EmailGroup>{
-        var result = ArrayList<EmailGroup>()
+        val result = ArrayList<EmailGroup>()
         for (u in users)
             result.add(EmailGroup(u.email, u.group))
         return result

@@ -1,14 +1,13 @@
 package com.slc.needle.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.slc.needle.R
 import com.slc.needle.models.GroupId
-import com.slc.needle.utils.Info
 
 class GroupAdapter(private val groups: ArrayList<GroupId>, private val onGroupClickListener: OnGroupClickListener): RecyclerView.Adapter<GroupAdapter.UserViewHolder>() {
 
@@ -18,6 +17,7 @@ class GroupAdapter(private val groups: ArrayList<GroupId>, private val onGroupCl
 
     override fun getItemCount(): Int = groups.size
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val group = groups[position]
         holder.name?.text = group.name

@@ -55,6 +55,6 @@ class MatchAdapter(private val matches: ArrayList<Match>, private val onMatchCli
     }
 
     interface OnMatchClickListener {
-        fun onMatchClick(user: Match)
+        fun onMatchClick(m: Match)
     }
 }

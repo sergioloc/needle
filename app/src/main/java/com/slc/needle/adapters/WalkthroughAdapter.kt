@@ -33,9 +33,9 @@ class WalkthroughAdapter(val context: Context, private val tips: List<Tip>, priv
         title.text = tips[position].title
         description.text = tips[position].description
         if (position == count-1)
-            skip.text = "Done"
+            skip.text = context.resources.getString(R.string.done)
         else
-            skip.text = "Skip"
+            skip.text = context.resources.getString(R.string.skip)
         skip.setOnClickListener {
             listener.onSkipClick()
         }

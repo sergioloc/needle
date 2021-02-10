@@ -38,6 +38,8 @@
     <string name="phone">phone</string>
 
     <!--- Walkthrough -->
+    <string name="skip">Saltar</string>
+    <string name="done">Finalizar</string>
     <string name="tip_complete">Completa tu perfil</string>
     <string name="tip_social">Añade tus redes sociales</string>
     <string name="tip_group">Crea o únete a un grupo</string>

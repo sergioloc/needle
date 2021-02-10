@@ -1,5 +1,6 @@
 package com.slc.needle.components
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -9,6 +10,7 @@ class CustomViewPager(context: Context, attrs: AttributeSet?) : ViewPager(contex
 
     private var active = false
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         return if (active) {
             super.onTouchEvent(event)

@@ -10,7 +10,6 @@ import com.slc.needle.adapters.WalkthroughAdapter
 import com.slc.needle.models.Tip
 import kotlinx.android.synthetic.main.activity_walkthrough.*
 
-
 class WalkthroughActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,5 +41,4 @@ class WalkthroughActivity : AppCompatActivity() {
     interface OnTextClickListener {
         fun onSkipClick()
     }
-
 }

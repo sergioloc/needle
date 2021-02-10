@@ -19,7 +19,7 @@ class MatchViewModel: ViewModel() {
 
     fun getMatches(){
         db.collection("users").document(Info.email).collection("matched").get().addOnSuccessListener {query ->
-            var matchPreviewList = ArrayList<MatchPreview>()
+            val matchPreviewList = ArrayList<MatchPreview>()
             for (i in 0 until query.documents.size)
                 matchPreviewList.add(MatchPreview(query.documents[i].id, query.documents[i].get("group") as String, query.documents[i].get("date") as String))
             getMatchesInfo(matchPreviewList)

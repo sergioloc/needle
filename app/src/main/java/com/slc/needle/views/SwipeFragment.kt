@@ -32,10 +32,10 @@ import kotlinx.android.synthetic.main.fragment_swipe.*
 
 class SwipeFragment : Fragment(), CardStackListener {
 
-    lateinit var manager: CardStackLayoutManager
-    lateinit var adapter: CardStackAdapter
-    lateinit var cardStackView: CardStackView
-    lateinit var swipeViewModel: SwipeViewModel
+    private lateinit var manager: CardStackLayoutManager
+    private lateinit var adapter: CardStackAdapter
+    private lateinit var cardStackView: CardStackView
+    private lateinit var swipeViewModel: SwipeViewModel
     private var emailList: ArrayList<EmailGroup> = ArrayList()
     private var position = 0
     private var firstTime = true

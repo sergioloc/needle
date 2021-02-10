@@ -8,7 +8,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
@@ -35,7 +34,7 @@ class LoginViewModel: ViewModel() {
     }
 
     fun signInWithMain(email: String, password: String){
-        if (email.isNullOrEmpty() || password.isNullOrEmpty()){
+        if (email.isEmpty() || password.isEmpty()){
             _state.postValue(Result.failure(Throwable("Complete all fields")))
         }
         else {

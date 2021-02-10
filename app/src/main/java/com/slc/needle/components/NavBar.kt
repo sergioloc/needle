@@ -12,7 +12,6 @@ import androidx.core.content.ContextCompat
 import androidx.transition.AutoTransition
 import androidx.transition.Transition
 import androidx.transition.TransitionManager
-import com.google.android.material.tabs.TabLayout
 import com.slc.needle.R
 
 class NavBar : ConstraintLayout {

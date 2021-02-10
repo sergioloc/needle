@@ -4,7 +4,7 @@ import java.util.*
 
 class Age {
     fun getAge(dateOfBirth: String): Int {
-        if (dateOfBirth.isNullOrEmpty())
+        if (dateOfBirth.isEmpty())
             return 0
         val date = dateOfBirth.split("-").toTypedArray()
         val dob = Calendar.getInstance()

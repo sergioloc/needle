@@ -38,7 +38,7 @@ class EditViewModel: ViewModel() {
         bitmap.compress(Bitmap.CompressFormat.JPEG, QUALITY, baos)
         val data = baos.toByteArray()
 
-        var uploadTask = storage.putBytes(data)
+        val uploadTask = storage.putBytes(data)
         uploadTask.addOnSuccessListener {
            savePhotoInUser()
         }.addOnFailureListener {
