@@ -13,28 +13,41 @@
         android:layout_margin="20dp"/>
 
     <ImageView
+        android:id="@+id/iv_circle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="@id/iv_back"
+        app:layout_constraintBottom_toTopOf="@id/tv_title"
+        app:layout_constraintStart_toStartOf="@id/iv_back"
+        app:layout_constraintEnd_toEndOf="@id/iv_back"
+        android:src="@drawable/ic_cirlce_accent"
+        android:padding="50dp" />
+
+    <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/iv_icon"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_back"
         app:layout_constraintBottom_toTopOf="@id/tv_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/iv_back"
+        app:layout_constraintEnd_toEndOf="@id/iv_back"
         android:padding="50dp"
-        android:src="@drawable/ic_logo"
-        app:tint="@color/colorAccent" />
+        app:lottie_rawRes="@raw/swipe"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"/>
 
     <TextView
         android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:padding="20dp"
+        app:layout_constraintStart_toStartOf="@id/iv_back"
+        app:layout_constraintEnd_toEndOf="@id/iv_back"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:gravity="center"
-        android:maxLines="1"
+        android:maxLines="2"
         android:textAllCaps="true"
         android:textStyle="bold"
         android:textSize="25sp"
@@ -43,14 +56,14 @@
 
     <TextView
         android:id="@+id/tv_desciption"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tv_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/iv_back"
+        app:layout_constraintEnd_toEndOf="@id/iv_back"
         android:layout_marginTop="20dp"
-        android:paddingStart="50dp"
-        android:paddingEnd="50dp"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp"
         android:gravity="center"
         android:textSize="17sp"
         android:textColor="@color/defaut_text"

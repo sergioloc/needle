@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.viewpager.widget.PagerAdapter
+import com.airbnb.lottie.LottieAnimationView
 import com.slc.needle.R
 import com.slc.needle.models.Step
 import com.slc.needle.views.WalkthroughActivity
@@ -24,12 +25,12 @@ class WalkthroughAdapter(val context: Context, private val steps: List<Step>, pr
         layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = layoutInflater.inflate(R.layout.item_walkthought, container, false)
 
-        val icon: ImageView = view.findViewById(R.id.iv_icon)
+        val icon: LottieAnimationView = view.findViewById(R.id.iv_icon)
         val title: TextView = view.findViewById(R.id.tv_title)
         val description: TextView = view.findViewById(R.id.tv_desciption)
         val skip: TextView = view.findViewById(R.id.tv_skip)
 
-        icon.setImageResource(steps[position].photo)
+        icon.setAnimation(steps[position].photo)
         title.text = steps[position].title
         description.text = steps[position].description
         if (position == count-1)

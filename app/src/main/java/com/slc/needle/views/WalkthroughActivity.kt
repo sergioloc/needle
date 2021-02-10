@@ -11,10 +11,11 @@ import kotlinx.android.synthetic.main.activity_walkthrough.*
 
 class WalkthroughActivity : AppCompatActivity() {
 
-    val steps = listOf(
-        Step(R.drawable.ic_circle, "Paso 1", "D1"),
-        Step(R.drawable.ic_circle, "Paso 2", "D2"),
-        Step(R.drawable.ic_circle, "Paso 3", "D3")
+    private val steps = listOf(
+        Step(R.raw.complete, "Completa tu perfil", "Rellena los campos necesarios para poder usar Needle."),
+        Step(R.raw.security, "Accede a tu parte privada", "Tan solo los usuarios con los que tengas match podrán ver esa información."),
+        Step(R.raw.cube, "Crea o únete a un grupo", "Podrás pertenecer a tantos grupos como quieras."),
+        Step(R.raw.swipe, "Desliza entre los miembros", "Tan solo podrás deslizar usuarios que pertenezcan a un grupo del que formas parte. Aquí surge la chispa.")
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
