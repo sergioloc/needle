@@ -1,5 +1,6 @@
 package com.slc.needle.views
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -52,7 +53,13 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.state.observe(this,
             Observer<Result<Boolean>> {
                 if (it.isSuccess){
-                    startActivity(Intent(this, MainActivity::class.java))
+                    val prefs = getSharedPreferences("Preferences", Context.MODE_PRIVATE)
+                    val goToWalkthrough = prefs.getBoolean("walkthrough", true)
+
+                    if (goToWalkthrough)
+                        startActivity(Intent(this, WalkthroughActivity::class.java))
+                    else
+                        startActivity(Intent(this, MainActivity::class.java))
                 }
                 else {
                     it.onFailure { result ->
