@@ -38,7 +38,6 @@ class SwipeFragment : Fragment(), CardStackListener {
     lateinit var swipeViewModel: SwipeViewModel
     private var emailList: ArrayList<EmailGroup> = ArrayList()
     private var position = 0
-    private var firstTime = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_swipe, container, false)
@@ -53,21 +52,6 @@ class SwipeFragment : Fragment(), CardStackListener {
         initButtons()
         initObservers()
         swipeViewModel.getMyUserInfo()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (refresh.visibility == View.VISIBLE)
-            (activity as MainActivity?)?.enablePaging()
-        else if (!firstTime && done.visibility == View.VISIBLE){ // Show refresh button
-            done.visibility = View.GONE
-            refresh.visibility = View.VISIBLE
-            tv_message.text = resources.getString(R.string.refresh)
-            (activity as MainActivity?)?.enablePaging()
-        }
-        else
-            firstTime = false
-
     }
 
     private fun initButtons() {
@@ -96,11 +80,6 @@ class SwipeFragment : Fragment(), CardStackListener {
                 swipeViewModel.swipeUser(emailList[position].email, emailList[position].group,true)
             }
         }
-
-        refresh.setOnClickListener {
-            loader.visibility = View.VISIBLE
-            swipeViewModel.getMyUserInfo()
-        }
     }
 
     private fun initObservers(){
@@ -112,7 +91,6 @@ class SwipeFragment : Fragment(), CardStackListener {
                     profile.visibility = View.GONE
                     alone.visibility = View.GONE
                     done.visibility = View.GONE
-                    refresh.visibility = View.GONE
 
                     if (!Info.user.visible){ // Hidden
                         lock.visibility = View.VISIBLE

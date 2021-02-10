@@ -89,18 +89,6 @@
         app:lottie_repeatMode="reverse"
         android:visibility="gone"/>
 
-    <ImageView
-        android:id="@+id/refresh"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/fab_dislike"
-        app:layout_constraintStart_toStartOf="@id/fab_dislike"
-        app:layout_constraintEnd_toEndOf="@id/fab_like"
-        android:src="@drawable/ic_circle"
-        app:tint="@color/colorAccent"
-        android:visibility="gone" />
-
     <TextView
         android:id="@+id/tv_message"
         android:layout_width="wrap_content"
