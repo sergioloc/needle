@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
+import com.slc.needle.R
 import com.slc.needle.models.User
 
 class LoginViewModel: ViewModel() {
@@ -33,9 +34,9 @@ class LoginViewModel: ViewModel() {
         }
     }
 
-    fun signInWithMain(email: String, password: String){
+    fun signInWithMain(email: String, password: String, context: Context){
         if (email.isEmpty() || password.isEmpty()){
-            _state.postValue(Result.failure(Throwable("Complete all fields")))
+            _state.postValue(Result.failure(Throwable(context.resources.getString(R.string.complete_field))))
         }
         else {
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener {
@@ -44,7 +45,7 @@ class LoginViewModel: ViewModel() {
                         if (u.isEmailVerified)
                             _state.postValue(Result.success(true))
                         else
-                            _state.postValue(Result.failure(Throwable("Email is not verify")))
+                            _state.postValue(Result.failure(Throwable(context.resources.getString(R.string.email_not_vefified))))
                     }
                 }
                 else {

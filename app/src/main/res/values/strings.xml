@@ -12,6 +12,9 @@
     <string name="enter">Enter</string>
     <string name="forgot_password">Forgot password</string>
     <string name="or_login">or login with</string>
+    <string name="complete_field">Complete all fields</string>
+    <string name="email_not_vefified">Email is not verify</string>
+    <string name="password_not_match">Passwords don\'t match</string>
 
     <!--- Register -->
     <string name="register">Register</string>
@@ -22,14 +25,14 @@
     <!--- Swipe -->
     <string name="profile_incomplete">Your profile is incomplete</string>
     <string name="profile_hidden">"Your profile is hidden\nGo to settings to change it"</string>
-    <string name="no_group">"You are not in any group"</string>
-    <string name="up_to_date">"You are up to date"</string>
+    <string name="no_group">You are not in any group</string>
+    <string name="up_to_date">You are up to date</string>
     <string name="its_match">"It's a match!"</string>
 
     <!--- Dialog -->
     <string name="verify_email">Verify email</string>
     <string name="verify_email_des">An email has been sent to confirm the account</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="group">Group</string>
     <string name="share_code">Share this code</string>
     <string name="copy">Copy</string>
@@ -46,6 +49,13 @@
     <string name="groups">Groups:</string>
     <string name="visible">Visible in Needle</string>
     <string name="sign_out">Sign out</string>
+    <string name="text_copied">Text copied to clipboard</string>
+    <string name="group_leaved">Group leaved</string>
+    <string name="alert">Alert</string>
+    <string name="leave_group">Do you want to leave this group?</string>
+    <string name="remove_group">Do you want to remove this group?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <!--- Edit profile -->
     <string name="about_me">About me</string>

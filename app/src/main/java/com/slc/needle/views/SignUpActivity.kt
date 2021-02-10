@@ -32,7 +32,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun initListeners(){
         btn_signup.setOnClickListener {
-            signUpViewModel.createUser(et_mail.text.toString(), et_password.text.toString(), et_confirm.text.toString(), et_name.text.toString(), et_dateOfBirth.text.toString())
+            signUpViewModel.createUser(et_mail.text.toString(), et_password.text.toString(), et_confirm.text.toString(), et_name.text.toString(), et_dateOfBirth.text.toString(), this)
         }
         et_dateOfBirth.setOnClickListener {
             val date = signUpViewModel.getCurrentDate()

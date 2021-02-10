@@ -80,7 +80,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/cg_join"
         android:layout_marginStart="20dp"
-        app:titleCardGroup="Create group"
+        app:titleCardGroup="@string/create_group"
         app:iconCardGroup="@drawable/ic_add"/>
 
     <com.slc.needle.components.CardGroup
@@ -93,7 +93,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        app:titleCardGroup="Join group"
+        app:titleCardGroup="@string/join_group"
         app:iconCardGroup="@drawable/ic_search"/>
 
     <TextView

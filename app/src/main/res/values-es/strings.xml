@@ -1,0 +1,91 @@
+<resources>
+    <string name="app_name">Needle</string>
+    <string name="developed">Desarrollado por SLC Studios</string>
+    <string name="edit">Editar</string>
+
+    <!--- Login -->
+    <string name="login">Iniciar sesión</string>
+    <string name="not_account">¿No tienes una cuenta?</string>
+    <string name="sign_up">Registrarse</string>
+    <string name="email">Email</string>
+    <string name="password">Contraseña</string>
+    <string name="enter">Entrar</string>
+    <string name="forgot_password">¿Contraseña olvidada?</string>
+    <string name="or_login">O inicia sesión con</string>
+    <string name="complete_field">Completa todos los campos</string>
+    <string name="email_not_vefified">El email no está verificado</string>
+    <string name="password_not_match">La contraseña no coincide</string>
+
+    <!--- Register -->
+    <string name="register">Registro</string>
+    <string name="name">Nombre</string>
+    <string name="date_of_birth">Fecha de nacimiento</string>
+    <string name="confirm_password">Confirmar contraseña</string>
+
+    <!--- Swipe -->
+    <string name="profile_incomplete">Tu perfil está incompleto</string>
+    <string name="profile_hidden">"Tu perfil está oculto\nVe a ajustes para cambiarlo"</string>
+    <string name="no_group">No estás en ningún grupo</string>
+    <string name="up_to_date">Estás al día</string>
+    <string name="its_match">"¡Es un match!"</string>
+
+    <!--- Dialog -->
+    <string name="verify_email">Verificar email</string>
+    <string name="verify_email_des">Se ha enviado un email a tu cuenta de correo</string>
+    <string name="ok">OK</string>
+    <string name="group">Grupo</string>
+    <string name="share_code">Comparte este código</string>
+    <string name="copy">Copiar</string>
+    <string name="close">Cerrar</string>
+    <string name="create">Crear</string>
+    <string name="create_group">Crear un grupo</string>
+    <string name="error">Error</string>
+    <string name="join">Unirse</string>
+    <string name="join_group">Unirse a un grupo</string>
+    <string name="code">Código</string>
+
+    <!--- Settings -->
+    <string name="settings">Ajustes</string>
+    <string name="groups">Grupos:</string>
+    <string name="visible">Visible en Needle</string>
+    <string name="sign_out">Cerrar sesión</string>
+    <string name="text_copied">Texto copiado al portapapeles</string>
+    <string name="group_leaved">Grupo abandonado</string>
+    <string name="alert">Alerta</string>
+    <string name="leave_group">Deseas abandonar el grupo?</string>
+    <string name="remove_group">Deseas eliminar el grupo?</string>
+    <string name="yes">Si</string>
+    <string name="no">No</string>
+
+    <!--- Edit profile -->
+    <string name="about_me">Acerca de mi</string>
+    <string name="born">Nací el…</string>
+    <string name="default_age">DD-MM-YYYY</string>
+    <string name="over_18">Debes tener al menos 18 años</string>
+    <string name="i_am">Soy…</string>
+    <string name="man">Hombre</string>
+    <string name="woman">Mujer</string>
+    <string name="men">Hombres</string>
+    <string name="women">Mujeres</string>
+    <string name="other">Otros</string>
+    <string name="trans_man">Hombre trans</string>
+    <string name="trans_woman">Muer trans</string>
+    <string name="looking_for">Buscando…</string>
+    <string name="only_matches">Solo tus matches podrán ver tus redes sociales</string>
+    <string name="instagram">instagram</string>
+    <string name="facebook">facebook</string>
+    <string name="phone">phone</string>
+
+    <!--- Walkthrough -->
+    <string name="skip">Saltar</string>
+    <string name="done">Terminar</string>
+    <string name="tip_complete">Completa tu perfil</string>
+    <string name="tip_social">Añade tus redes sociales</string>
+    <string name="tip_group">Crea o únete a un grupo</string>
+    <string name="tip_swipe">Desliza entre los miembros</string>
+    <string name="tip_complete_des">Rellena los campos necesarios para poder usar Needle.</string>
+    <string name="tip_social_des">Solo los usuarios con los que tengas match podrán ver esa información.</string>
+    <string name="tip_group_des">¡Podrás pertenecer a tantos grupos como quieras!</string>
+    <string name="tip_swipe_des">Desliza usuarios que pertenezcan a un grupo del que formas parte. Si ambos os dais me gusta… ¡Seguid en redes sociales!</string>
+
+</resources>

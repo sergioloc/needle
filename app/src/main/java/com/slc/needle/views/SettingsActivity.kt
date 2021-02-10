@@ -59,14 +59,14 @@ class SettingsActivity : AppCompatActivity(), GroupAdapter.OnGroupClickListener 
         settingsViewModel.textCopied.observe(this,
             Observer<Result<Boolean>> {
                 it.onSuccess {
-                    Toast.makeText(applicationContext, "Text copied to clipboard", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, resources.getString(R.string.text_copied), Toast.LENGTH_SHORT).show()
                 }
             }
         )
         settingsViewModel.leave.observe(this,
             Observer<Result<Boolean>> {
                 it.onSuccess {
-                    Toast.makeText(applicationContext, "Leave group", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, resources.getString(R.string.group_leaved), Toast.LENGTH_SHORT).show()
                     setAdapter()
                 }
             }
@@ -106,10 +106,10 @@ class SettingsActivity : AppCompatActivity(), GroupAdapter.OnGroupClickListener 
 
     private fun leaveGroupDialog(id: String){
         val alertDialog = AlertDialog.Builder(this)
-        alertDialog.setTitle("Alert")
-        alertDialog.setMessage("Do you want to leave this group?")
-        alertDialog.setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
-        alertDialog.setPositiveButton("Yes"){ _, _ ->
+        alertDialog.setTitle(resources.getString(R.string.alert))
+        alertDialog.setMessage(resources.getString(R.string.leave_group))
+        alertDialog.setNegativeButton(resources.getString(R.string.no)) { dialog, _ -> dialog.dismiss() }
+        alertDialog.setPositiveButton(resources.getString(R.string.yes)){ _, _ ->
             settingsViewModel.leaveGroup(id)
         }
         alertDialog.show()
@@ -117,10 +117,10 @@ class SettingsActivity : AppCompatActivity(), GroupAdapter.OnGroupClickListener 
 
     private fun deleteGroupDialog(id: String){
         val alertDialog = AlertDialog.Builder(this)
-        alertDialog.setTitle("Alert")
-        alertDialog.setMessage("Do you want to remove this group?")
-        alertDialog.setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
-        alertDialog.setPositiveButton("Yes"){ _, _ ->
+        alertDialog.setTitle(resources.getString(R.string.alert))
+        alertDialog.setMessage(resources.getString(R.string.remove_group))
+        alertDialog.setNegativeButton(resources.getString(R.string.no)) { dialog, _ -> dialog.dismiss() }
+        alertDialog.setPositiveButton(resources.getString(R.string.yes)){ _, _ ->
             settingsViewModel.removeGroup(id)
         }
         alertDialog.show()

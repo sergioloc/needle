@@ -59,9 +59,10 @@
         android:maxLines="1"
         android:ellipsize="end"
         android:hint="@string/date_of_birth"
-        tools:ignore="RtlSymmetry"
+        android:focusable="false"
+        tools:ignore="RtlSymmetry,TextFields"
         android:autofillHints=""
-        android:inputType="date" />
+        android:inputType="none" />
 
     <ImageView
         android:layout_width="wrap_content"

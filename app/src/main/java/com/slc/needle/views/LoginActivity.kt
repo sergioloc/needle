@@ -41,7 +41,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         btn_login.setOnClickListener {
-            loginViewModel.signInWithMain(et_mail.text.toString(), et_password.text.toString())
+            loginViewModel.signInWithMain(et_mail.text.toString(), et_password.text.toString(), this)
         }
 
         btn_google.setOnClickListener {
