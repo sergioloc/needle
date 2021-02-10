@@ -38,6 +38,7 @@ class SwipeFragment : Fragment(), CardStackListener {
     lateinit var swipeViewModel: SwipeViewModel
     private var emailList: ArrayList<EmailGroup> = ArrayList()
     private var position = 0
+    private var firstTime = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_swipe, container, false)
@@ -52,6 +53,18 @@ class SwipeFragment : Fragment(), CardStackListener {
         initButtons()
         initObservers()
         swipeViewModel.getMyUserInfo()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (firstTime)
+            firstTime = false
+        else{
+            hideAllLotties()
+            loader.visibility = View.VISIBLE
+            swipeViewModel.getMembers()
+        }
+
     }
 
     private fun initButtons() {
@@ -86,18 +99,14 @@ class SwipeFragment : Fragment(), CardStackListener {
         swipeViewModel.getUser.observe(this,
             Observer<Result<Boolean>> {
                 it.onSuccess {
-                    loader.visibility = View.GONE
-                    lock.visibility = View.GONE
-                    profile.visibility = View.GONE
-                    alone.visibility = View.GONE
-                    done.visibility = View.GONE
+                    hideAllLotties()
 
                     if (!Info.user.visible){ // Hidden
                         lock.visibility = View.VISIBLE
                         tv_message.text = resources.getString(R.string.profile_hidden)
                         tv_message.visibility = View.VISIBLE
                     }
-                    else if (Info.user.orientation == 0 || Info.user.gender == 0 || Info.user.dateOfBirth.isNullOrEmpty()){ // Incomplete profile
+                    else if (Info.user.orientation == 0 || Info.user.gender == 0 || Info.user.dateOfBirth.isEmpty()){ // Incomplete profile
                         profile.visibility = View.VISIBLE
                         tv_message.text = resources.getString(R.string.profile_incomplete)
                         tv_message.visibility = View.VISIBLE
@@ -108,7 +117,6 @@ class SwipeFragment : Fragment(), CardStackListener {
                         tv_message.visibility = View.VISIBLE
                     }
                     else{
-                        loader.visibility = View.GONE
                         swipeViewModel.getMembers()
                     }
                 }
@@ -121,9 +129,6 @@ class SwipeFragment : Fragment(), CardStackListener {
             Observer<Result<ArrayList<UserPreview>>> {
                 loader.visibility = View.GONE
                 it.onSuccess {list ->
-                    done.visibility = View.GONE
-                    tv_message.visibility = View.GONE
-
                     adapter = CardStackAdapter(list)
                     position = 0
                     emailList = adapter.getEmailList()
@@ -168,6 +173,15 @@ class SwipeFragment : Fragment(), CardStackListener {
         tv_message.visibility = View.VISIBLE
         done.visibility = View.VISIBLE
         (activity as MainActivity?)?.enablePaging()
+    }
+
+    private fun hideAllLotties(){
+        loader.visibility = View.GONE
+        lock.visibility = View.GONE
+        profile.visibility = View.GONE
+        alone.visibility = View.GONE
+        done.visibility = View.GONE
+        tv_message.visibility = View.GONE
     }
 
     //Dialogs --------------------------------------------------------------------------------------
