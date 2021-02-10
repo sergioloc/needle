@@ -26,7 +26,7 @@
         android:textColor="@color/colorAccent"
         android:textStyle="bold"
         android:textSize="40sp"
-        android:text="Login"/>
+        android:text="@string/login"/>
 
     <TextView
         android:id="@+id/tv_account"
@@ -37,7 +37,7 @@
         android:layout_marginTop="10dp"
         android:textSize="15sp"
         android:textColor="@color/black"
-        android:text="Don't have an account?"/>
+        android:text="@string/not_account"/>
 
     <TextView
         android:id="@+id/tv_create"
@@ -50,7 +50,7 @@
         android:layout_marginEnd="40dp"
         android:textColor="@color/colorAccent"
         android:textSize="15sp"
-        android:text="Sign up"/>
+        android:text="@string/sign_up"/>
 
     <EditText
         android:id="@+id/et_mail"
@@ -64,7 +64,9 @@
         android:inputType="textEmailAddress"
         android:maxLines="1"
         android:ellipsize="end"
-        android:hint="Email"/>
+        android:hint="@string/email"
+        tools:ignore="RtlSymmetry"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/et_password"
@@ -78,7 +80,9 @@
         android:inputType="textPassword"
         android:maxLines="1"
         android:ellipsize="end"
-        android:hint="Password"/>
+        android:hint="@string/password"
+        tools:ignore="RtlSymmetry"
+        android:autofillHints="" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -86,6 +90,7 @@
         app:layout_constraintTop_toTopOf="@id/et_mail"
         app:layout_constraintBottom_toBottomOf="@id/et_mail"
         app:layout_constraintEnd_toEndOf="@id/et_mail"
+        tools:ignore="contentDescription"
         android:src="@drawable/ic_mail"
         app:tint="@color/colorAccent"/>
 
@@ -95,6 +100,7 @@
         app:layout_constraintTop_toTopOf="@id/et_password"
         app:layout_constraintBottom_toBottomOf="@id/et_password"
         app:layout_constraintEnd_toEndOf="@id/et_password"
+        tools:ignore="contentDescription"
         android:src="@drawable/ic_key"
         app:tint="@color/colorAccent"/>
 
@@ -106,7 +112,7 @@
         app:layout_constraintEnd_toEndOf="@id/et_mail"
         android:layout_marginTop="10dp"
         android:textSize="14sp"
-        android:text="Forgot password"/>
+        android:text="@string/forgot_password"/>
 
     <Button
         android:id="@+id/btn_login"
@@ -118,7 +124,7 @@
         android:layout_marginTop="40dp"
         android:background="@drawable/chip_accent"
         android:textColor="@color/white"
-        android:text="Login"/>
+        android:text="@string/enter"/>
 
     <TextView
         android:id="@+id/tv_alternative"
@@ -129,7 +135,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="40dp"
         android:textSize="14sp"
-        android:text="Or Login with"/>
+        android:text="@string/or_login"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_facebook"

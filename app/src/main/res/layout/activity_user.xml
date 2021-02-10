@@ -9,7 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/vp_photos"
@@ -35,14 +35,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/tv_age"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
-            android:paddingRight="10dp"
+            android:layout_marginStart="20dp"
+            android:paddingEnd="10dp"
             android:maxLines="1"
             android:ellipsize="end"
             android:textSize="25sp"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:text="Name"/>
+            android:text="@string/name"
+            tools:ignore="RtlSymmetry" />
 
         <TextView
             android:id="@+id/tv_age"
@@ -50,13 +51,13 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@id/tv_name"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
             android:maxLines="1"
             android:ellipsize="end"
-            android:gravity="right"
+            android:gravity="end"
             android:textSize="20sp"
             android:textColor="@color/black"
-            android:text="24 years"/>
+            tools:text="XX years"/>
 
         <TextView
             android:id="@+id/tv_city"
@@ -66,12 +67,13 @@
             app:layout_constraintStart_toStartOf="@id/tv_name"
             app:layout_constraintEnd_toEndOf="@id/tv_age"
             android:layout_marginTop="10dp"
-            android:paddingRight="10dp"
+            android:paddingEnd="10dp"
             android:maxLines="1"
             android:ellipsize="end"
             android:textSize="15sp"
             android:textColor="@color/black"
-            android:text="Madrid"/>
+            tools:text="City"
+            tools:ignore="RtlSymmetry" />
 
         <TextView
             android:id="@+id/tv_desciption"
@@ -83,7 +85,7 @@
             android:layout_marginTop="30dp"
             android:textSize="15sp"
             android:textColor="@color/darkgray"
-            android:text="This is a description."/>
+            tools:text="This is a description."/>
 
         <ImageView
             android:id="@+id/iv_instagram"
@@ -92,6 +94,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_desciption"
             app:layout_constraintStart_toStartOf="@id/tv_name"
             android:layout_marginTop="30dp"
+            tools:ignore="contentDescription"
             app:tint="@color/colorAccent"
             android:src="@drawable/ic_instagram"/>
 
@@ -103,10 +106,10 @@
             app:layout_constraintBottom_toBottomOf="@id/iv_instagram"
             app:layout_constraintStart_toEndOf="@id/iv_instagram"
             app:layout_constraintEnd_toEndOf="@id/tv_age"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:textSize="15sp"
             android:textColor="@color/darkgray"
-            android:text="instagram"/>
+            tools:text="instagram"/>
 
         <ImageView
             android:id="@+id/iv_facebook"
@@ -115,6 +118,7 @@
             app:layout_constraintTop_toBottomOf="@id/iv_instagram"
             app:layout_constraintStart_toStartOf="@id/tv_name"
             android:layout_marginTop="10dp"
+            tools:ignore="contentDescription"
             app:tint="@color/colorAccent"
             android:src="@drawable/ic_facebook"/>
 
@@ -126,10 +130,10 @@
             app:layout_constraintBottom_toBottomOf="@id/iv_facebook"
             app:layout_constraintStart_toEndOf="@id/iv_facebook"
             app:layout_constraintEnd_toEndOf="@id/tv_age"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:textSize="15sp"
             android:textColor="@color/darkgray"
-            android:text="facebook"/>
+            tools:text="facebook"/>
 
         <ImageView
             android:id="@+id/iv_phone"
@@ -138,6 +142,7 @@
             app:layout_constraintTop_toBottomOf="@id/iv_facebook"
             app:layout_constraintStart_toStartOf="@id/tv_name"
             android:layout_marginTop="10dp"
+            tools:ignore="contentDescription"
             app:tint="@color/colorAccent"
             android:src="@drawable/ic_phone"/>
 
@@ -149,10 +154,10 @@
             app:layout_constraintBottom_toBottomOf="@id/iv_phone"
             app:layout_constraintStart_toEndOf="@id/iv_phone"
             app:layout_constraintEnd_toEndOf="@id/tv_age"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:textSize="15sp"
             android:textColor="@color/darkgray"
-            android:text="phone"/>
+            tools:text="phone"/>
 
         <View
             android:layout_width="match_parent"

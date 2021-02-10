@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/card_accent"
     android:padding="10dp">
 
@@ -13,6 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="contentDescription"
         app:tint="@color/white"
         android:src="@drawable/ic_add"/>
 
@@ -27,6 +29,6 @@
         android:layout_marginTop="10dp"
         android:textSize="15sp"
         android:textColor="@color/white"
-        android:text="Title"/>
+        tools:text="Title"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

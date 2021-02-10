@@ -19,7 +19,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:background="@color/white"
             app:navigationIcon="?attr/homeAsUpIndicator"
-            app:title="Edit" />
+            app:title="@string/edit" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_one"

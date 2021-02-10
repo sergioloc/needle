@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:padding="10dp"
     android:layout_margin="20dp"
     android:background="@drawable/card_white">
@@ -16,7 +17,7 @@
         android:textSize="25sp"
         android:textStyle="bold"
         android:textColor="@color/colorAccent"
-        android:text="Group"/>
+        android:text="@string/group"/>
 
     <TextView
         android:id="@+id/tv_code"
@@ -30,7 +31,7 @@
         android:textSize="20sp"
         android:textColor="@color/black"
         android:textStyle=""
-        android:text="XDTYHG"/>
+        tools:text="XDTYHG"/>
 
     <TextView
         android:id="@+id/tv_share"
@@ -41,7 +42,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:gravity="center"
         android:textSize="15sp"
-        android:text="Share this code"/>
+        android:text="@string/share_code"/>
 
     <Button
         android:id="@+id/btn_copy"
@@ -53,7 +54,7 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/chip_accent"
         android:textColor="@color/white"
-        android:text="Copy"/>
+        android:text="@string/copy"/>
 
     <Button
         android:id="@+id/btn_close"
@@ -65,6 +66,6 @@
         android:layout_marginStart="10dp"
         android:background="@drawable/chip_accent"
         android:textColor="@color/white"
-        android:text="Close"/>
+        android:text="@string/close"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

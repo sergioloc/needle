@@ -20,16 +20,18 @@
             android:id="@+id/rb_transman"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:text="Trans man"/>
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="@string/trans_man"/>
 
         <RadioButton
             android:id="@+id/rb_transwoman"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:paddingLeft="20dp"
-            android:text="Trans woman"/>
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="@string/trans_woman"/>
 
     </RadioGroup>
 

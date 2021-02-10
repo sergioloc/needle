@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="10dp"
     android:id="@+id/root">
 
@@ -18,6 +19,7 @@
             android:id="@+id/iv_icon"
             android:layout_width="70dp"
             android:layout_height="70dp"
+            tools:ignore="contentDescription"
             android:scaleType="centerCrop"
             android:src="@color/black"/>
 
@@ -31,12 +33,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/cardview"
         app:layout_constraintEnd_toStartOf="@id/chip_group"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:maxLines="1"
         android:ellipsize="end"
         android:textSize="18sp"
         android:textColor="@color/black"
-        android:text="Name"/>
+        tools:text="@string/name"/>
 
     <Button
         android:id="@+id/chip_group"
@@ -51,6 +53,6 @@
         android:textAllCaps="false"
         android:textSize="12sp"
         android:textColor="@color/white"
-        android:text="Group"/>
+        tools:text="group"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

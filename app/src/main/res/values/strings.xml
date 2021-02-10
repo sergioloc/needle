@@ -1,6 +1,23 @@
 <resources>
     <string name="app_name">Needle</string>
     <string name="developed">Developed by SLC Studios</string>
+    <string name="edit">Edit</string>
+
+    <!--- Login -->
+    <string name="login">Login</string>
+    <string name="not_account">Don\'t have an account?</string>
+    <string name="sign_up">Sign up</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="enter">Enter</string>
+    <string name="forgot_password">Forgot password</string>
+    <string name="or_login">or login with</string>
+
+    <!--- Register -->
+    <string name="register">Register</string>
+    <string name="name">Name</string>
+    <string name="date_of_birth">Date of birth</string>
+    <string name="confirm_password">Confirm password</string>
 
     <!--- Swipe -->
     <string name="profile_incomplete">Your profile is incomplete</string>
@@ -13,6 +30,16 @@
     <string name="verify_email">Verify email</string>
     <string name="verify_email_des">An email has been sent to confirm the account</string>
     <string name="ok">Ok</string>
+    <string name="group">Group</string>
+    <string name="share_code">Share this code</string>
+    <string name="copy">Copy</string>
+    <string name="close">Close</string>
+    <string name="create">Create</string>
+    <string name="create_group">Create group</string>
+    <string name="error">Error</string>
+    <string name="join">Join</string>
+    <string name="join_group">Join group</string>
+    <string name="code">Code</string>
 
     <!--- Settings -->
     <string name="settings">Settings</string>
@@ -31,6 +58,8 @@
     <string name="men">Men</string>
     <string name="women">Women</string>
     <string name="other">Other</string>
+    <string name="trans_man">Trans man</string>
+    <string name="trans_woman">Trans woman</string>
     <string name="looking_for">Looking for…</string>
     <string name="only_matches">Only your matches can see your social media</string>
     <string name="instagram">instagram</string>

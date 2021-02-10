@@ -11,8 +11,9 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/card_white"
-        android:layout_margin="20dp"/>
+        android:layout_margin="20dp"
+        tools:ignore="contentDescription"
+        android:background="@drawable/card_white" />
 
     <TextView
         android:id="@+id/tv_register"
@@ -27,7 +28,7 @@
         android:textColor="@color/colorAccent"
         android:textStyle="bold"
         android:textSize="40sp"
-        android:text="Register"/>
+        android:text="@string/register"/>
 
     <EditText
         android:id="@+id/et_name"
@@ -42,7 +43,9 @@
         android:inputType="textEmailAddress"
         android:maxLines="1"
         android:ellipsize="end"
-        android:hint="Name"/>
+        android:hint="@string/name"
+        tools:ignore="RtlSymmetry"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/et_dateOfBirth"
@@ -53,10 +56,12 @@
         app:layout_constraintEnd_toEndOf="@id/et_name"
         android:layout_marginTop="20dp"
         android:paddingEnd="20dp"
-        android:editable="false"
         android:maxLines="1"
         android:ellipsize="end"
-        android:hint="Date of birth"/>
+        android:hint="@string/date_of_birth"
+        tools:ignore="RtlSymmetry"
+        android:autofillHints=""
+        android:inputType="date" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -64,6 +69,7 @@
         app:layout_constraintTop_toTopOf="@id/et_name"
         app:layout_constraintBottom_toBottomOf="@id/et_name"
         app:layout_constraintEnd_toEndOf="@id/et_name"
+        tools:ignore="contentDescription"
         android:src="@drawable/ic_person"
         app:tint="@color/colorAccent"/>
 
@@ -73,6 +79,7 @@
         app:layout_constraintTop_toTopOf="@id/et_dateOfBirth"
         app:layout_constraintBottom_toBottomOf="@id/et_dateOfBirth"
         app:layout_constraintEnd_toEndOf="@id/et_dateOfBirth"
+        tools:ignore="contentDescription"
         android:src="@drawable/ic_calendar"
         app:tint="@color/colorAccent"/>
 
@@ -88,7 +95,9 @@
         android:inputType="textEmailAddress"
         android:maxLines="1"
         android:ellipsize="end"
-        android:hint="Email"/>
+        android:hint="@string/email"
+        tools:ignore="RtlSymmetry"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/et_password"
@@ -102,7 +111,9 @@
         android:inputType="textPassword"
         android:maxLines="1"
         android:ellipsize="end"
-        android:hint="Password"/>
+        android:hint="@string/password"
+        tools:ignore="RtlSymmetry"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/et_confirm"
@@ -116,7 +127,9 @@
         android:inputType="textPassword"
         android:maxLines="1"
         android:ellipsize="end"
-        android:hint="Confirm password"/>
+        android:hint="@string/confirm_password"
+        tools:ignore="RtlSymmetry"
+        android:autofillHints="" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -124,6 +137,7 @@
         app:layout_constraintTop_toTopOf="@id/et_mail"
         app:layout_constraintBottom_toBottomOf="@id/et_mail"
         app:layout_constraintEnd_toEndOf="@id/et_mail"
+        tools:ignore="contentDescription"
         android:src="@drawable/ic_mail"
         app:tint="@color/colorAccent"/>
 
@@ -133,6 +147,7 @@
         app:layout_constraintTop_toTopOf="@id/et_confirm"
         app:layout_constraintBottom_toBottomOf="@id/et_confirm"
         app:layout_constraintEnd_toEndOf="@id/et_confirm"
+        tools:ignore="contentDescription"
         android:src="@drawable/ic_key"
         app:tint="@color/colorAccent"/>
 
@@ -142,6 +157,7 @@
         app:layout_constraintTop_toTopOf="@id/et_password"
         app:layout_constraintBottom_toBottomOf="@id/et_password"
         app:layout_constraintEnd_toEndOf="@id/et_password"
+        tools:ignore="contentDescription"
         android:src="@drawable/ic_key"
         app:tint="@color/colorAccent"/>
 
@@ -155,6 +171,6 @@
         android:layout_marginTop="40dp"
         android:background="@drawable/chip_accent"
         android:textColor="@color/white"
-        android:text="Sign up"/>
+        android:text="@string/sign_up"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

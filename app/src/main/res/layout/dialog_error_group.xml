@@ -16,7 +16,7 @@
         android:textSize="25sp"
         android:textStyle="bold"
         android:textColor="@color/colorAccent"
-        android:text="Error"/>
+        android:text="@string/error"/>
 
     <TextView
         android:id="@+id/tv_message"
@@ -27,6 +27,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="20dp"
         android:textSize="15sp"
-        android:text="Error"/>
+        android:text="@string/error"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
